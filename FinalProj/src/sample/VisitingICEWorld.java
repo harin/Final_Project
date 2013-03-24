@@ -1,7 +1,5 @@
 package sample;
 
-package iceworld.sample;
-
 //------------------------------------------------------------------------------
 //This example shows:
 //  - how to login to the ICE World as Inhabitants/Aliens.
@@ -62,7 +60,7 @@ public class VisitingICEWorld{
 		// It is a good idea to find a way ensuring that different
 		// instances of your ICE Port running on the same machine
 		// do not use duplicated port numbers.
-		tester.setListeningPort("800");
+		tester.setListeningPort(800);
 		IcetizenLook look = new IcetizenLook();
 		look.gidB = "B001";
 		look.gidS = "S001";
