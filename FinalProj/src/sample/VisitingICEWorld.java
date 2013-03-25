@@ -123,16 +123,17 @@ public class VisitingICEWorld{
 		look2.gidH = "H008";
 		look2.gidW = "W046";
 		tester.setIcetizenLook(look);
-		if (ICEWorld.customization(look2)){
+		if (immigration.customization(look2)){
 			System.out.println("Customization OK");
 		}
 		// ----------------------------------------------------------
 
 		// ----------------------------------------------------------
 		// Log out of the ICE World
-		if (ICEWorld.logout()){
+		if (immigration.logout()){
 			System.out.println("Logout OK");
 		}
+
 		// ----------------------------------------------------------
 
 	}
