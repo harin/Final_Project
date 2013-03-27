@@ -1,83 +1,57 @@
 package peek;
 
-import java.awt.*;
-import java.awt.event.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Scanner;
 
-import javax.swing.*;
-
-public class ICEWorldPeek extends JFrame implements ActionListener{
-	
-	private final String newline = "\n"	;
-	private JTextField textField;
-	private JTextArea textArea;
-	private JScrollPane textAreaScroll;
-	
-	
-	public ICEWorldPeek(String s){
-		super(s);
-		this.setPreferredSize(new Dimension(600, 400));
-		setGUI();
-	}
-	
-	public static void createAndShowGUI(){
-		ICEWorldPeek console = new ICEWorldPeek("ICE World Peek");
-		console.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		console.pack();
-		console.setVisible(true);
-	}
-	
-	public void setGUI(){
-		
-		LayoutManager manager = new BorderLayout();
-		this.setLayout(manager);
-		
-		
-		textField = new JTextField();
-		textField.addActionListener(this);
-		
-		textArea = new JTextArea();
-		textArea.setLineWrap(true);
-		textAreaScroll = new JScrollPane(textArea);
-		
-		this.add(textField, BorderLayout.SOUTH);
-		this.add(textAreaScroll, BorderLayout.CENTER);
-	}
-	
-	public void actionPerformed(ActionEvent evt){
-		
-		String text = textField.getText();
-		textArea.append(">>> "+text + newline);
-		textField.setText("");
-		try{
+public class ICEWorldPeek {
+	public static void main(String[] args)throws Exception{
+		final String domain =  "http://iceworld.sls-atl.com/api/&cmd=";
+		String domain2 = "http://www.google.com";
+		String cmd;
+		//check connection
+		System.out.println("Testing connection...");
+		if(stillConnected(domain)) {
+			System.out.println("Connection successful.");
 			
-			textArea.append(fetch(text) + newline);
-
-		}catch (Exception e){}
-		//Make sure the new text is visible, event if there
-		//was a selection in the textArea
-		textArea.setCaretPosition(textArea.getDocument().getLength());
+			Scanner sc = new Scanner(System.in);
+			while(stillConnected(domain)){
+				System.out.println("Enter a command:");
+				cmd = sc.next();
+				System.out.println(cmd);
+				
+					URL iceworld = new URL(domain + cmd);
+					System.out.println(iceworld);
+					URLConnection con = iceworld.openConnection();
+					BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+					System.out.println(in.readLine());
+			}
+		}
+		else System.out.println("Connection failed.");
 	}
 	
-	public String fetch(String s) throws Exception{
-		URL iceworld = new URL(s);
-		URLConnection con = iceworld.openConnection();
-		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-		String ret = in.readLine();
-		return ret;
+	public static boolean stillConnected(String d){
+		boolean isCon;
+		//check connection
+		try{
+			URL testURL = new URL(d);
+			URLConnection testConnection = testURL.openConnection();
+			testConnection.setConnectTimeout(5000);
+			testConnection.connect();
+			isCon = true;
+		} catch (Exception e){
+			isCon = false;
+		}
+		return isCon;
 	}
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-
-	public static void main(String [] args){
-		//create a new thread which calls this class and run it.
-		javax.swing.SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
-				ICEWorldPeek.createAndShowGUI();
-			}
-		});
+	
+	public static boolean retry(){
+		return false;
 	}
+	
+	//shortkey
+	
+	
 }
