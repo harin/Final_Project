@@ -2,7 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
-	<classpathentry kind="lib" path="/Users/harinsanghirun/Dropbox/2nd Year/App Pro/Final Project/iceworldGiven.jar"/>
-	<classpathentry kind="lib" path="/Users/harinsanghirun/Dropbox/2nd Year/App Pro/Final Project/jasonParsingTool.jar"/>
+	<classpathentry kind="lib" path="E:/Dropbox/Dropbox/2nd Year/App Pro/Final Project/iceworldGiven.jar"/>
+	<classpathentry kind="lib" path="E:/Dropbox/Dropbox/2nd Year/App Pro/Final Project/jasonParsingTool.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
