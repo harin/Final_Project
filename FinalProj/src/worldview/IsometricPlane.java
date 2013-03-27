@@ -1,9 +1,9 @@
 package worldview;
-
+import javax.swing.*;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class IsometricPlane {
+public class IsometricPlane extends JPanel{
 	public static void drawBoardTile(Graphics g,int x,int y, int size, int tileSide){
 		for(int i =0 ; i<size; i++){ // x multiplier
 			for(int j=0; j<size; j++){// y multiplier
