@@ -113,6 +113,7 @@ public class VisitingICEWorld{
 		if (immigration.walk(9, 4)){
 			System.out.println("Walk OK");
 		}
+		
 		// ----------------------------------------------------------
 
 		// ----------------------------------------------------------
@@ -130,9 +131,9 @@ public class VisitingICEWorld{
 
 		// ----------------------------------------------------------
 		// Log out of the ICE World
-		if (immigration.logout()){
-			System.out.println("Logout OK");
-		}
+//		if (immigration.logout()){
+//			System.out.println("Logout OK");
+//		}
 
 		// ----------------------------------------------------------
 
