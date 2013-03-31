@@ -17,8 +17,8 @@ import javax.swing.JPanel;
 
 public class WorldView extends JPanel {
 		private final int size = 20;
-		private final int xOrigin = 300;
-		private final int yOrigin = 50;
+		private int xOrigin = 300;
+		private int yOrigin = 50;
 		private int tileSide = 50;
 		private Point[][] tileCoord;
 		private Point highlightTile;
@@ -63,7 +63,7 @@ public class WorldView extends JPanel {
 		}
 		
 //--------------------------------------------------------------------------------------------
-		
+//		navigation methods
 //--------------------------------------------------------------------------------------------
 		public void zoomIn(){
 			tileSide+=5;
@@ -72,6 +72,14 @@ public class WorldView extends JPanel {
 		
 		public void zoomOut(){
 			tileSide-=5;
+			repaint();
+		}
+		
+		public void moveOrigin(int x,int y){
+			System.out.print("Change origin from "+xOrigin+","+yOrigin+" to ");
+			xOrigin += x;
+			yOrigin += y;
+			System.out.println(xOrigin+","+yOrigin);
 			repaint();
 		}
 //--------------------------------------------------------------------------------------------
@@ -120,6 +128,7 @@ public class WorldView extends JPanel {
 		
 //--------------------------------------------------------------------------------------------			
 		class MouseHandler extends MouseAdapter implements MouseMotionListener{
+			private Point lastPress = new Point(-1,-1);
 			public void mouseMoved(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
@@ -137,6 +146,22 @@ public class WorldView extends JPanel {
 					highlightTile.y = coordY;
 					repaint();
 				}
+			}
+			public void mouseDragged(MouseEvent e){
+				//System.out.println("last press:"+lastPress);
+				int x = e.getX();
+				int y = e.getY();
+				int xMoved = x-lastPress.x;
+				int yMoved = y-lastPress.y;
+				System.out.println("moved "+xMoved+","+yMoved);
+				lastPress.x = x;
+				lastPress.y = y;
+				moveOrigin(xMoved,yMoved);
+			}
+			
+			public void mousePressed(MouseEvent e){
+				lastPress.x = e.getX();
+				lastPress.y = e.getY();
 			}
 			
 			public void mouseClicked(MouseEvent e){
