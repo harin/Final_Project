@@ -83,7 +83,7 @@ public class WorldView extends JPanel {
 			repaint();
 		}
 //--------------------------------------------------------------------------------------------
-		
+//		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 
 		public void drawIcetizen(Graphics g, int x, int y){
@@ -125,7 +125,7 @@ public class WorldView extends JPanel {
 		}
 		
 //--------------------------------------------------------------------------------------------
-		
+//		Handler class
 //--------------------------------------------------------------------------------------------			
 		class MouseHandler extends MouseAdapter implements MouseMotionListener{
 			private Point lastPress = new Point(-1,-1);
@@ -148,7 +148,8 @@ public class WorldView extends JPanel {
 				}
 			}
 			public void mouseDragged(MouseEvent e){
-				//System.out.println("last press:"+lastPress);
+				//Find the difference between the last mouse point and this point
+				//then make the origin of the isometric plane move by the same amount
 				int x = e.getX();
 				int y = e.getY();
 				int xMoved = x-lastPress.x;
@@ -160,6 +161,7 @@ public class WorldView extends JPanel {
 			}
 			
 			public void mousePressed(MouseEvent e){
+				//To ensure that lastPress is initialized properly for the mouseDragged
 				lastPress.x = e.getX();
 				lastPress.y = e.getY();
 			}
