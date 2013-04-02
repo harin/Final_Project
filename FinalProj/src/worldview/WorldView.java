@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 
 
 public class WorldView extends JPanel {
-		private final int size = 20;
+		private final int size = 100;
 		private int xOrigin = 300;
 		private int yOrigin = 50;
 		private int tileSide = 50;
