@@ -23,7 +23,8 @@ public class WorldView extends JPanel {
 		private Point[][] tileCoord;
 		private Point highlightTile;
 		private Point destination;
-		private NullIcetizen icetizen;
+		private NullIcetizen activeIcetizen;
+		private NullIcetizen [] icetizens;
 		
 		public WorldView(int width, int height){
 			super();
@@ -32,7 +33,7 @@ public class WorldView extends JPanel {
 			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
-			icetizen = new NullIcetizen();	
+			activeIcetizen = new NullIcetizen();	
 			MouseHandler mh = new MouseHandler();
 			this.addMouseMotionListener(mh);
 			this.addMouseListener(mh);
@@ -51,14 +52,13 @@ public class WorldView extends JPanel {
 			//highlight tile
 			if(highlightTile.x >= 0 && highlightTile.y >= 0
 					&& highlightTile.x < size && highlightTile.y < size){
-				//System.out.println("highlighting");
 				g.setColor(Color.RED);
 				Point tile = tileCoord[highlightTile.x][highlightTile.y];
 				IsometricPlane.fillTile(g,tile.x,  tile.y, tileSide);
 			}
 			
 			//draw icetizen
-			drawIcetizen(g,0,0);
+			drawActiveIcetizen(g,0,0);
 			
 		}
 		
@@ -86,7 +86,8 @@ public class WorldView extends JPanel {
 //		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 
-		public void drawIcetizen(Graphics g, int x, int y){
+		public void drawActiveIcetizen(Graphics g, int x, int y){
+			
 			String loc ="blue.png";
 			BufferedImage img = null;
 			try{
@@ -97,25 +98,25 @@ public class WorldView extends JPanel {
 			if(img!=null) {
 				Image scale = scaleToTile(img);
 			
-				if(!icetizen.getPos().equals(destination)){
+				if(!activeIcetizen.getPos().equals(destination)){
 					//System.out.println("animating");
-					int xMove = destination.x - icetizen.getPos().x;
-					int yMove = destination.y - icetizen.getPos().y;
-					if(xMove>0) icetizen.getPos().x++;
-					 else if (xMove<0) icetizen.getPos().x--;
+					int xMove = destination.x - activeIcetizen.getPos().x;
+					int yMove = destination.y - activeIcetizen.getPos().y;
+					if(xMove>0) activeIcetizen.getPos().x++;
+					 else if (xMove<0) activeIcetizen.getPos().x--;
 					 else {}//do nothing
 					
-					if(yMove>0) icetizen.getPos().y++;
-					else if (yMove<0) icetizen.getPos().y--;
+					if(yMove>0) activeIcetizen.getPos().y++;
+					else if (yMove<0) activeIcetizen.getPos().y--;
 					else {}//do nothing
 				}
 				
-				int xCoord = icetizen.getPos().x;
-				int yCoord = icetizen.getPos().y;
+				int xCoord = activeIcetizen.getPos().x;
+				int yCoord = activeIcetizen.getPos().y;
 				int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
 				int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/2 + tileSide/2 - scale.getWidth(null)/5;
 				g.drawImage(scale, xPos, yPos ,null);
-				if(!icetizen.getPos().equals(destination)) repaint();
+				if(!activeIcetizen.getPos().equals(destination)) repaint();
 			}
 		}
 		
