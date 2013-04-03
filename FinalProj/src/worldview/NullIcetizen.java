@@ -1,5 +1,6 @@
 package worldview;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,8 @@ public class NullIcetizen implements MyIcetizen{
 	private int listeningPort;
 	private Point pos;
 	private BufferedImage lookImage;
+	private Point destination;
+	private Image scaleImage;
 	
 	public NullIcetizen(){
 		this("Octopi", 246, 800, new IcetizenLook());
@@ -27,7 +30,9 @@ public class NullIcetizen implements MyIcetizen{
 		this.listeningPort = listeningPort;
 		this.look = look;
 		pos = new Point(0,0);
+		destination = new Point(0,0);
 		lookImage = null;
+		scaleImage= null;
 		prepareLookImage();
 	}
 	public void prepareLookImage(){
@@ -60,6 +65,10 @@ public class NullIcetizen implements MyIcetizen{
 		pos.x = x;
 		pos.y = y;
 	}
+	
+	public void rescale(){
+		scaleImage = null;
+	}
 	//---------------------------------------------------------------------------------
 	//Getter
 	//---------------------------------------------------------------------------------
@@ -68,6 +77,9 @@ public class NullIcetizen implements MyIcetizen{
 	}
 	public Point getPos(){
 		return pos;
+	}
+	public Point setDestination(){
+		return destination;
 	}
 	
 	@Override
@@ -89,6 +101,10 @@ public class NullIcetizen implements MyIcetizen{
 	public String getUsername() {
 		return username;
 	}
+	public Image getScale(){
+		return scaleImage;
+	}
+	
 	//---------------------------------------------------------------------------------
 	//Setter
 	//---------------------------------------------------------------------------------
@@ -112,6 +128,18 @@ public class NullIcetizen implements MyIcetizen{
 	public void setUsername(String arg0) {
 		username = arg0;
 		
+	}
+	
+	public void setPosition(Point p){
+		pos = p;
+	}
+	
+	public void setDestination(Point p){
+		destination = p;
+	}
+	
+	public void setScale(Image s){
+		scaleImage = s;
 	}
 
 }
