@@ -1,6 +1,11 @@
 package worldview;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+
+import javax.imageio.ImageIO;
 
 import iceworld.given.*;
 
@@ -10,6 +15,7 @@ public class NullIcetizen implements MyIcetizen{
 	private IcetizenLook look;
 	private int listeningPort;
 	private Point pos;
+	private BufferedImage lookImage;
 	
 	public NullIcetizen(){
 		this("Octopi", 246, 800, new IcetizenLook());
@@ -21,13 +27,45 @@ public class NullIcetizen implements MyIcetizen{
 		this.listeningPort = listeningPort;
 		this.look = look;
 		pos = new Point(0,0);
+		lookImage = null;
+		prepareLookImage();
+	}
+	public void prepareLookImage(){
+		String body ="blue.png";
+		String shirt = "t_ice.png";
+		String head = "crown1.png";
+		String weapon = "sword2.png";
+		
+		try{
+			BufferedImage bodyImg = ImageIO.read(new File(body));
+			BufferedImage shirtImg = ImageIO.read(new File(shirt));
+			BufferedImage headImg = ImageIO.read(new File(head));
+			BufferedImage weaponImg = ImageIO.read(new File(weapon));
+			lookImage = new BufferedImage(bodyImg.getWidth(),
+					bodyImg.getHeight(),
+					BufferedImage.TYPE_INT_ARGB);
+			Graphics g = lookImage.getGraphics();
+			g.drawImage(bodyImg,0,0,null);
+			g.drawImage(shirtImg,0,0,null);
+			g.drawImage(headImg,0,0,null);
+			g.drawImage(weaponImg,0,0,null);
+
+		} catch (Exception e){
+			System.err.println("Failed to load image");
+		}
+		
 	}
 	
 	public void move(int x, int y){
 		pos.x = x;
 		pos.y = y;
 	}
-
+	//---------------------------------------------------------------------------------
+	//Getter
+	//---------------------------------------------------------------------------------
+	public BufferedImage getLookImage(){
+		return lookImage;
+	}
 	public Point getPos(){
 		return pos;
 	}
@@ -51,6 +89,9 @@ public class NullIcetizen implements MyIcetizen{
 	public String getUsername() {
 		return username;
 	}
+	//---------------------------------------------------------------------------------
+	//Setter
+	//---------------------------------------------------------------------------------
 
 	@Override
 	public void setIcePortID(int arg0) {
