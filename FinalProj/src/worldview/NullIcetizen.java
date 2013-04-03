@@ -1,5 +1,6 @@
 package worldview;
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import iceworld.given.*;
 
@@ -12,7 +13,6 @@ public class NullIcetizen implements MyIcetizen{
 	
 	public NullIcetizen(){
 		this("Octopi", 246, 800, new IcetizenLook());
-		
 	}
 	
 	public NullIcetizen(String username, int portId, int listeningPort, IcetizenLook look){
@@ -27,7 +27,7 @@ public class NullIcetizen implements MyIcetizen{
 		pos.x = x;
 		pos.y = y;
 	}
-	
+
 	public Point getPos(){
 		return pos;
 	}

@@ -1,38 +1,35 @@
 package worldview;
 
-
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-//This applet is for testing purpose only
-public class IsometricPlaneApplet extends JApplet{
-	private WorldView wv;
-	public void init(){
-		wv = new WorldView();
-		this.add(wv);
-	}
-	
-	class WorldView extends JPanel{
-		private final int size = 5;
-		private final int xOrigin = 200;
-		private final int yOrigin = 50;
-		private final int tileSide = 100;
+import javax.imageio.ImageIO;
+import javax.swing.JPanel;
+
+
+public class WorldView extends JPanel {
+		private final int size = 100;
+		private int xOrigin = 300;
+		private int yOrigin = 50;
+		private int tileSide = 50;
 		private Point[][] tileCoord;
-		private Dimension d;
 		private Point highlightTile;
 		private Point destination;
 		private NullIcetizen icetizen;
 		
-		public WorldView(){
+		public WorldView(int width, int height){
 			super();
 			tileCoord = new Point[size][size];
-			this.setSize(500,500);
-			d = this.getSize();
+			this.setSize(width,height);
+			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
 			icetizen = new NullIcetizen();	
@@ -40,13 +37,16 @@ public class IsometricPlaneApplet extends JApplet{
 			this.addMouseMotionListener(mh);
 			this.addMouseListener(mh);
 		}
+		public WorldView(){
+			this(500,500);
+		}
 		
 		public void paintComponent(Graphics g){
 			//draw tile
 			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, d.width, d.height);
+			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 			g.setColor(Color.WHITE);
-			drawBoardTile(g, xOrigin, yOrigin, size, tileSide );
+			IsometricPlane.drawBoardTile(g, xOrigin, yOrigin, size, tileSide, tileCoord );
 			
 			//highlight tile
 			if(highlightTile.x >= 0 && highlightTile.y >= 0
@@ -54,30 +54,51 @@ public class IsometricPlaneApplet extends JApplet{
 				//System.out.println("highlighting");
 				g.setColor(Color.RED);
 				Point tile = tileCoord[highlightTile.x][highlightTile.y];
-				fillTile(g,tile.x,  tile.y, tileSide);
+				IsometricPlane.fillTile(g,tile.x,  tile.y, tileSide);
 			}
 			
 			//draw icetizen
 			drawIcetizen(g,0,0);
 			
 		}
-//--------------------------------------------------------------------------------------------
 		
+//--------------------------------------------------------------------------------------------
+//		navigation methods
+//--------------------------------------------------------------------------------------------
+		public void zoomIn(){
+			tileSide+=5;
+			repaint();
+		}
+		
+		public void zoomOut(){
+			tileSide-=5;
+			repaint();
+		}
+		
+		public void moveOrigin(int x,int y){
+			System.out.print("Change origin from "+xOrigin+","+yOrigin+" to ");
+			xOrigin += x;
+			yOrigin += y;
+			System.out.println(xOrigin+","+yOrigin);
+			repaint();
+		}
+//--------------------------------------------------------------------------------------------
+//		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 
 		public void drawIcetizen(Graphics g, int x, int y){
-			String loc ="resource/blue.png";
+			String loc ="blue.png";
 			BufferedImage img = null;
 			try{
 				img = ImageIO.read(new File(loc));
 			} catch (Exception e){
-				System.out.println("image load failed");
+				System.out.println("Failed to load image");
 			}
 			if(img!=null) {
 				Image scale = scaleToTile(img);
 			
 				if(!icetizen.getPos().equals(destination)){
-					System.out.println("animating");
+					//System.out.println("animating");
 					int xMove = destination.x - icetizen.getPos().x;
 					int yMove = destination.y - icetizen.getPos().y;
 					if(xMove>0) icetizen.getPos().x++;
@@ -88,13 +109,13 @@ public class IsometricPlaneApplet extends JApplet{
 					else if (yMove<0) icetizen.getPos().y--;
 					else {}//do nothing
 				}
-					int xCoord = icetizen.getPos().x;
-					int yCoord = icetizen.getPos().y;
-					int yPosFeet = tileCoord[xCoord][yCoord].y + tileSide/4;
-					int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
-					int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/2 
-							+ tileSide/2 - scale.getWidth(null)/5;
-					g.drawImage(scale, xPos, yPos ,null);
+				
+				int xCoord = icetizen.getPos().x;
+				int yCoord = icetizen.getPos().y;
+				int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
+				int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/2 + tileSide/2 - scale.getWidth(null)/5;
+				g.drawImage(scale, xPos, yPos ,null);
+				if(!icetizen.getPos().equals(destination)) repaint();
 			}
 		}
 		
@@ -102,32 +123,12 @@ public class IsometricPlaneApplet extends JApplet{
 			Image scale = img.getScaledInstance(tileSide, -1, Image.SCALE_SMOOTH);
 			return scale;
 		}
+		
 //--------------------------------------------------------------------------------------------
-		
-//--------------------------------------------------------------------------------------------		
-		public  void drawBoardTile(Graphics g,int x,int y, int size, int tileSide){
-			for(int i =0 ; i<size; i++){ // x multiplier
-				for(int j=0; j<size; j++){// y multiplier
-					int tileX = x + i*(tileSide) - j*(tileSide/2);
-					int tileY = y + j*(tileSide/2);
-					drawTile(g,tileX,tileY ,tileSide);
-					tileCoord[i][j] = new Point(tileX, tileY);
-					//System.out.println("tile["+i+"]["+j+"]=("+tileX+","+tileY+")");
-				}
-			}
-		}
-		public  void drawTile(Graphics g, int x, int y, int side){
-			int [] xCor = {x, x+side, x + side/2, x-side/2};
-			int [] yCor = {y, y, y + side/2 , y+side/2};
-			g.drawPolygon(xCor, yCor, 4);
-		}
-		public  void fillTile(Graphics g, int x, int y, int side){
-			int [] xCor = {x, x+side, x + side/2, x-side/2};
-			int [] yCor = {y, y, y + side/2 , y+side/2};
-			g.fillPolygon(xCor, yCor, 4);
-		}
-		
+//		Handler class
+//--------------------------------------------------------------------------------------------			
 		class MouseHandler extends MouseAdapter implements MouseMotionListener{
+			private Point lastPress = new Point(-1,-1);
 			public void mouseMoved(MouseEvent arg0) {
 				// TODO Auto-generated method stub
 				int x = arg0.getX();
@@ -146,6 +147,24 @@ public class IsometricPlaneApplet extends JApplet{
 					repaint();
 				}
 			}
+			public void mouseDragged(MouseEvent e){
+				//Find the difference between the last mouse point and this point
+				//then make the origin of the isometric plane move by the same amount
+				int x = e.getX();
+				int y = e.getY();
+				int xMoved = x-lastPress.x;
+				int yMoved = y-lastPress.y;
+				System.out.println("moved "+xMoved+","+yMoved);
+				lastPress.x = x;
+				lastPress.y = y;
+				moveOrigin(xMoved,yMoved);
+			}
+			
+			public void mousePressed(MouseEvent e){
+				//To ensure that lastPress is initialized properly for the mouseDragged
+				lastPress.x = e.getX();
+				lastPress.y = e.getY();
+			}
 			
 			public void mouseClicked(MouseEvent e){
 				//icetizen.move(highlightTile.x, highlightTile.y);
@@ -159,6 +178,3 @@ public class IsometricPlaneApplet extends JApplet{
 		
 		
 	}
-	
-	
-}
