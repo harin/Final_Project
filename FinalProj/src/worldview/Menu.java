@@ -1,8 +1,10 @@
+package worldview;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-package worldview;
+
 
 public class Menu extends JFrame {
 	JMenuBar menuBar;
@@ -11,10 +13,10 @@ public class Menu extends JFrame {
 	JPanel worldView;
 	
 	public Menu(){	
-		worldView= new JPanel();
-		worldView.setBackground(new Color(153, 153, 255));
-		setContentPane(worldView);
+		setTitle("The Null");
+		setSize(700,700);
 		setJMenuBar(makeMenuBar());
+		setGUI();
 	}
 	
 	
@@ -54,7 +56,12 @@ public class Menu extends JFrame {
 		
 		return menuBar;
 	}
-	
+		
+	public void setGUI(){
+		worldView = new WorldView(this.WIDTH, this.HEIGHT);
+		worldView.setLocation(0, 0);
+		this.add(worldView);
+	}
 	
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
@@ -88,8 +95,7 @@ public class Menu extends JFrame {
 		Menu gui=new Menu();
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gui.setVisible(true);
-		gui.setTitle("The Null");
-		gui.setSize(700,700);
+		
 	}
 
 }
