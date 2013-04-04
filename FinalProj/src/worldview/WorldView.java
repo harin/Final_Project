@@ -59,7 +59,10 @@ public class WorldView extends JPanel {
 		}
 		
 		public void paintComponent(Graphics g){
+			//bottom plane---------------------
+			Weather.raining(g, this.getWidth(), this.getHeight());
 			
+			//middle plane---------------------
 			//draw tile
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
@@ -79,6 +82,11 @@ public class WorldView extends JPanel {
 			//draw icetizen
 			drawActiveIcetizen(g,0,0);
 			drawIcetizen(g);
+			
+			//top plane ------------------------
+			//draw weather
+			Weather.snowing(g, this.getWidth(), this.getHeight());
+			
 		}
 		
 //--------------------------------------------------------------------------------------------
