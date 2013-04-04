@@ -51,7 +51,7 @@ public class VisitingICEWorld{
 		// Set its attributes.
 
 		TestMyIcetizen tester = new TestMyIcetizen();
-		// *** Stictly use the ICE Port ID assigned to your group
+		// *** Stictly use the ICE Port ID assigned to your group*******************
 		tester.setIcePortID(246);
 		tester.setUsername("Octopi");
 		// Pick any port number that this instance will use for
