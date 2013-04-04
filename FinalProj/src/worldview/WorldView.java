@@ -26,15 +26,15 @@ public class WorldView extends JPanel {
 		private NullIcetizen [] icetizens;
 		private Timer timer;
 		private int delay = 40;
-		private int walkRate;
+		private int walkRateX, walkRateY;
 		
 		public WorldView(int width, int height){
 			super();
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
 			//walkRate = (int)Math.ceil(tileSide /2.0 / 40);
-			walkRate = 5;
-			System.out.println(walkRate);
+			walkRateX = 5;
+			walkRateY = 5;
 			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
@@ -188,13 +188,25 @@ public class WorldView extends JPanel {
 					int xMove = DestPixel.x - activeIcetizen.getPixelPos().x;
 					int yMove = DestPixel.y - activeIcetizen.getPixelPos().y;
 					System.out.println(xMove+","+yMove);
-					if(xMove>0) activeIcetizen.getPixelPos().x+=walkRate;
-					else if (xMove<0) activeIcetizen.getPixelPos().x-=walkRate;
-					else {}//do nothing
 					
-					if(yMove>0) activeIcetizen.getPixelPos().y+=walkRate;
-					else if (yMove<0) activeIcetizen.getPixelPos().y-=walkRate;
-					else {}//do nothing
+					if(Math.abs(xMove)< walkRateX){
+						activeIcetizen.getPixelPos().x+=xMove;
+						
+					}else{
+						if(xMove>0) activeIcetizen.getPixelPos().x+=walkRateX;
+						else if (xMove<0) activeIcetizen.getPixelPos().x-=walkRateX;
+						else {}//do nothing
+					}
+					
+					if(Math.abs(yMove)< walkRateY){
+						activeIcetizen.getPixelPos().y+=yMove;
+						
+					} else{
+						if(yMove>0) activeIcetizen.getPixelPos().y+=walkRateY;
+						else if (yMove<0) activeIcetizen.getPixelPos().y-=walkRateY;
+						else {}//do nothing
+					}
+					
 					
 					int yPos = activeIcetizen.getPixelPos().y - scale.getHeight(null) + tileSide/4;
 					int xPos = activeIcetizen.getPixelPos().x - scale.getWidth(null)/5;
@@ -204,6 +216,7 @@ public class WorldView extends JPanel {
 					if(activeIcetizen.getPixelPos().equals(tileCoord[activeDest.x][activeDest.y])){
 						activeIcetizen.getPos().x = activeDest.x;
 						activeIcetizen.getPos().y = activeDest.y;
+						activeIcetizen.setPixelPos(null);
 					}	
 				}else {
 					//System.out.println("already at dest");
