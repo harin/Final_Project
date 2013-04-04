@@ -43,14 +43,12 @@ public class FetchStateTest {
 		Object weatherCondition =   weather.get("condition");
 		Object status = array.get("status"); // not know yet what can it do
 		
-		JSONObject user =(JSONObject) icetizen.get("user");
 		
 		
 	
 		System.out.println(weatherCondition);
 
 		System.out.println(status);
-		System.out.println(user);
 		
 		//*****
 		//{"1004":{"last_known_destination":{"timestamp":null,"position":null},"user":{"port":"0","username":"Badstrongbad","pid":"99","type":0,"ip":"161.200.80.247"}},"1008":
