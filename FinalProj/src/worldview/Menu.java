@@ -4,8 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
-
 public class Menu extends JFrame {
 	JMenuBar menuBar;
 	JMenu menuMenu;
@@ -14,7 +12,7 @@ public class Menu extends JFrame {
 	
 	public Menu(){	
 		setTitle("The Null");
-		setSize(700,700);
+		setSize(900,800);
 		setJMenuBar(makeMenuBar());
 		setGUI();
 	}
