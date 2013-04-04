@@ -88,7 +88,7 @@ public class NullIcetizen implements MyIcetizen{
 	public Point getPos(){
 		return pos;
 	}
-	public Point setDestination(){
+	public Point getDestination(){
 		return destination;
 	}
 	
