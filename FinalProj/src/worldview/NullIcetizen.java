@@ -15,9 +15,12 @@ public class NullIcetizen implements MyIcetizen{
 	private int icePortId;
 	private IcetizenLook look;
 	private int listeningPort;
-	private Point pos;
 	private BufferedImage lookImage;
-	private Point destination;
+	
+	private Point destination;//store destination tile coordinate
+	private Point pos;//store current tile coordinate
+	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
+	
 	private Image scaleImage;
 	
 	public NullIcetizen(){
@@ -29,8 +32,13 @@ public class NullIcetizen implements MyIcetizen{
 		this.icePortId = portId;
 		this.listeningPort = listeningPort;
 		this.look = look;
+		
+		//location properties
 		pos = new Point(0,0);
 		destination = new Point(0,0);
+		pixelPos = null;
+		
+		//look properties
 		lookImage = null;
 		scaleImage= null;
 		prepareLookImage();
@@ -58,7 +66,6 @@ public class NullIcetizen implements MyIcetizen{
 		} catch (Exception e){
 			System.err.println("Failed to load image");
 		}
-		
 	}
 	
 	public void move(int x, int y){
@@ -72,6 +79,9 @@ public class NullIcetizen implements MyIcetizen{
 	//---------------------------------------------------------------------------------
 	//Getter
 	//---------------------------------------------------------------------------------
+	public Point getPixelPos(){
+		return pixelPos;
+	}
 	public BufferedImage getLookImage(){
 		return lookImage;
 	}
@@ -108,7 +118,9 @@ public class NullIcetizen implements MyIcetizen{
 	//---------------------------------------------------------------------------------
 	//Setter
 	//---------------------------------------------------------------------------------
-
+	public void setPixelPos(Point p){
+		pixelPos = p;
+	}
 	@Override
 	public void setIcePortID(int arg0) {
 		icePortId = arg0;
