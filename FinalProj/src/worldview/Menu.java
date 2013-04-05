@@ -8,7 +8,7 @@ public class Menu extends JFrame {
 	JMenuBar menuBar;
 	JMenu menuMenu;
 	JMenuItem about,help,setting,quit;
-	JPanel worldView;
+	public JPanel worldView;
 	
 	public Menu(){	
 		setTitle("The Null");

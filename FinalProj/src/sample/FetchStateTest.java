@@ -4,9 +4,18 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.LinkedList;
+
 
 import org.json.simple.*;
+
+import worldview.Menu;
+import worldview.NullIcetizen;
+import worldview.WorldView;
 
 public class FetchStateTest {
 	public static void main(String[] args)throws Exception{
@@ -14,6 +23,8 @@ public class FetchStateTest {
 		String domain2 = "http://www.google.com";
 		String cmd;
 		//check connection
+		//NullIcetizen
+		//
 		URL iceworld = new URL(domain);
 		URLConnection con = iceworld.openConnection();
 		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
@@ -23,33 +34,102 @@ public class FetchStateTest {
 		Object obj=JSONValue.parse(json);
 		JSONObject array=(JSONObject)obj;
 		System.out.println(array);
+		System.out.println("Print status");
 		System.out.println(array.get("status"));
 		System.out.println(array.get("data"));
 		JSONObject data = (JSONObject)array.get("data");
 		System.out.println(data.get("icetizen"));
 		
-		
-		
+	
 		
 		JSONObject weather = (JSONObject) data.get("weather");
 		JSONObject icetizen = (JSONObject) data.get("icetizen");
 		
 		System.out.println("weather:"+weather); //{"last_change":1365011760,"condition":"Sunny"}
-		System.out.println("icetizen:" +icetizen); 
+		System.out.println("icetizen:*****" +icetizen); 
+	
+//		JSONObject lastKnowDestination = (JSONObject) data.get("last_known_destination");
+//		System.out.println("Lastdes!!!!!!!!!!!!!:  "+lastKnowDestination);
+		
+		//What we need to loop for icetizen
+		Set m = icetizen.keySet(); //[66, 1020, 77] <<<<<<<userID
+
+		Iterator inw =m.iterator();
+		int number = m.size();
+		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
+		JSONObject[] userInformation = new JSONObject[number];
 		
 		
+		while(inw.hasNext()){
+			
+		
+			for(int i=0; i<number;i++){
+			String keyWord = (String) inw.next();
+			userInformation[i] = (JSONObject) icetizen.get(keyWord) ; 
+			
+			}
+		}
+		
+		System.out.println("INFORMATION TESTTTTT!!!");
+		for(int loop=0;loop<userInformation.length; loop++)
+		System.out.println(userInformation[loop]);
+		
+		
+		Set t = userInformation[0].keySet(); // [last_known_destination, user]
+
+		System.out.println("Prinnnt t\n\n"+t);
+		//Strating loop
+//		Iterator<JSONObject> test = (Iterator<JSONObject>) icetizen.keySet();
+//		while(test.hasNext()){
+//			System.out.println("What error");
+//			
+//		}
+		
+		
+		System.out.println("Printing m***********");
+		System.out.println(m);
+		
+
+		
+		System.out.println(number);
+		System.out.println();
+		
+	
+		
+		
+		
+		
+		
+		
+		//
+		
+//		
+//		 jObject = new JSONObject(contents.trim());
+//		 Iterator<?> keys = jObject.keys();
+//
+//		 while( keys.hasNext() ){
+//			 String key = (String)keys.next();
+
+//		 }
+		
+			
 		
 		//increasing part
+		Long timeWeatherLastChange = (Long) weather.get("last_change");// in Unix time
 		Object weatherCondition =   weather.get("condition");
 		Object status = array.get("status"); // not know yet what can it do
 		
+		//"66":{"last_known_destination":{"timestamp":1365084372,"position":"(52,48)"},"user":{"port":0,"username":"SivaGod","pid":0,"type":1,"ip":"Heavenly IP"}}
 		
 		
-	
+		
+		Menu.worldView.updateWeather(weatherCondtion);
+		
+		System.out.println("***************************");
 		System.out.println(weatherCondition);
 
 		System.out.println(status);
-		
+		System.out.println(timeWeatherLastChange);
 		//*****
 		//{"1004":{"last_known_destination":{"timestamp":null,"position":null},"user":{"port":"0","username":"Badstrongbad","pid":"99","type":0,"ip":"161.200.80.247"}},"1008":
 		//{"last_known_destination":{"timestamp":"1364441726","position":"(9,4)"},"user":{"port":"0","username":"Babeltarotank","pid":"246","type":0,"ip":"161.200.80.85"}},"1005":
