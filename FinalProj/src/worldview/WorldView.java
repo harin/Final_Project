@@ -26,6 +26,7 @@ public class WorldView extends JPanel {
 		private Timer timer;
 		private int delay = 40;
 		private int walkRateX, walkRateY;
+		private String currentWeather ="";
 		
 		public WorldView(int width, int height){
 			super();
@@ -88,10 +89,26 @@ public class WorldView extends JPanel {
 			
 			//top plane ------------------------
 			//draw weather
-			Weather.raining(g, this.getWidth(), this.getHeight());
+			
+			drawWeather(g);
 			
 		}
 		
+		public void drawWeather(Graphics g){
+			switch (currentWeather){
+				case "Sunny":
+					Weather.sunny(g);
+				case "Cloudy":
+					Weather.cloudy(g);
+				case "Raining":
+					Weather.raining(g, this.getWidth(), this.getHeight());
+				case "Snowing":
+					Weather.snowing(g, this.getWidth(), this.getHeight());
+				default:
+					Weather.raining(g, this.getWidth(), this.getHeight());
+				
+			} 
+		}
 //--------------------------------------------------------------------------------------------
 //		navigation methods
 //--------------------------------------------------------------------------------------------
@@ -222,6 +239,15 @@ public class WorldView extends JPanel {
 				
 			}
 		}
+
+//--------------------------------------------------------------------------------------------
+//		update methods
+//--------------------------------------------------------------------------------------------
+
+		public void updateWeather(String s){
+			currentWeather = s;
+		}
+		
 		
 //--------------------------------------------------------------------------------------------
 //		Handler class
