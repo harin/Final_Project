@@ -36,14 +36,36 @@ public class FetchTest2 {
 	  JSONParser parser = new JSONParser();
 	  
 	  JSONObject state = (JSONObject) parser.parse(json);
+	  System.out.println("Priting State!!!!!!!!!!!");
 	  System.out.println(state);
+	  Set keyInState = state.keySet();
+	  System.out.println("key in state:"+keyInState);
+	  System.out.println("********************************************");
+
 	  
 	  JSONObject data = (JSONObject) state.get("data");
+	  Set keyInData = data.keySet();
+	  System.out.println("Priting data!!!!!!!!!!!");
+	  System.out.println(data);
+	  System.out.println("key in data:"+keyInData);
+	  System.out.println("********************************************");
+
 	  JSONObject icetizen = (JSONObject) data.get("icetizen");
+	  System.out.println("Priting Icetizen!!!!!!!!!!!");
 	  System.out.println(icetizen);
-	  
 	  Set keys = icetizen.keySet();
+	  System.out.println("Key in icetizen"+keys);
+	  System.out.println("********************************************");
+
 	  
+	  JSONObject weather = (JSONObject) data.get("weather");
+	  Set weatherKey = weather.keySet();
+	  System.out.println("Key in weather is:"+weatherKey);
+	  Long lastWeatherChange = (long) weather.get("last_change");
+	  System.out.println("Last weather time change: "+lastWeatherChange);
+	  String weatherConditon = (String) weather.get("condition");
+	  System.out.println("weather condition: "+weatherConditon);
+
 	  for(Object key:keys){
 	   JSONObject userid = (JSONObject) icetizen.get(key);
 	   JSONObject user   = (JSONObject) userid.get("user");
