@@ -47,7 +47,12 @@ public class fetchInformation {
 		  //end of weather condition
 		  
 		  
-		  
+		  for(Object key:keys){
+			  JSONObject userid = (JSONObject) icetizen.get(key);
+			   JSONObject user   = (JSONObject) userid.get("user");
+			  list.add(new NullIcetizen((String) user.get("username"),(int) user.get("port"),()));
+			  
+		  }
 		  
 		  
 		}catch(Exception e){
