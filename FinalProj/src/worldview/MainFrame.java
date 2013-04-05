@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
 	private JMenuItem about,help,setting,quit;
 	public JPanel worldView;
 	private LoginPage loginPage;
+	private NullIcetizen activeIcetizen;
 	private ICEWorldImmigration immigrant;
 	
 	public MainFrame(){	
@@ -63,9 +64,10 @@ public class MainFrame extends JFrame {
 	public void setGUI(){
 		worldView = new WorldView(this.WIDTH, this.HEIGHT);
 		worldView.setLocation(0, 0);
+		add(worldView);
 		
 		loginPage = new LoginPage();
-		add(loginPage);
+		//add(loginPage);
 	}
 	
 	public class AboutEvent implements ActionListener {
