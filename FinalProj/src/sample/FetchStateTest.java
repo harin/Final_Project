@@ -13,7 +13,7 @@ import java.util.LinkedList;
 
 import org.json.simple.*;
 
-import worldview.Menu;
+import worldview.MainFrame;
 import worldview.NullIcetizen;
 import worldview.WorldView;
 
@@ -123,7 +123,7 @@ public class FetchStateTest {
 		
 		
 		
-		Menu.worldView.updateWeather(weatherCondtion);
+		MainFrame.worldView.updateWeather(weatherCondtion);
 		
 		System.out.println("***************************");
 		System.out.println(weatherCondition);

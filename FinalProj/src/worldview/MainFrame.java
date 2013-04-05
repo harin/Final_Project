@@ -4,13 +4,13 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class Menu extends JFrame {
+public class MainFrame extends JFrame {
 	JMenuBar menuBar;
 	JMenu menuMenu;
 	JMenuItem about,help,setting,quit;
 	public JPanel worldView;
 	
-	public Menu(){	
+	public MainFrame(){	
 		setTitle("The Null");
 		setSize(900,800);
 		setJMenuBar(makeMenuBar());
@@ -90,7 +90,7 @@ public class Menu extends JFrame {
 	 
 	
 	public static void main (String[] args){
-		Menu gui=new Menu();
+		MainFrame gui=new MainFrame();
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		gui.setVisible(true);
 		
