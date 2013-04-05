@@ -28,6 +28,7 @@ public class FetchTest2 {
 	  
 	  
 	  try{
+		  System.out.println("Test of keys and necessary information");
 	  URL iceworld = new URL(domain);
 	  URLConnection con = iceworld.openConnection();
 	  BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
