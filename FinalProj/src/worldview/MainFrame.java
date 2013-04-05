@@ -1,5 +1,7 @@
 package worldview;
 
+import iceworld.given.ICEWorldImmigration;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -11,6 +13,7 @@ public class MainFrame extends JFrame {
 	private JMenuItem about,help,setting,quit;
 	public JPanel worldView;
 	private LoginPage loginPage;
+	private ICEWorldImmigration immigrant;
 	
 	public MainFrame(){	
 		setTitle("The Null");
@@ -144,17 +147,27 @@ public class MainFrame extends JFrame {
 			add(usernameBox);
 			
 			
-			JButton LoginBut = new JButton("Login");
-			LoginBut.setBounds(216, 166, 117, 29);
-			add(LoginBut);
-			
-			JButton LoginAlienBut = new JButton("Alien Login");
-			LoginAlienBut.addActionListener(new ActionListener() {
+			JButton loginBut = new JButton("Login");
+			loginBut.setBounds(216, 166, 117, 29);
+			loginBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
+					
+					
+					
 				}
 			});
-			LoginAlienBut.setBounds(98, 166, 117, 29);
-			add(LoginAlienBut);
+			add(loginBut);
+			
+			JButton loginAlienBut = new JButton("Alien Login");
+			loginAlienBut.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					
+					
+				}
+			});
+			loginAlienBut.setBounds(98, 166, 117, 29);
+			add(loginAlienBut);
 		}
 	}
 
