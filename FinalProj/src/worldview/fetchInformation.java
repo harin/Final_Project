@@ -15,6 +15,7 @@ public class fetchInformation {
 	  String domain2 = "http://www.google.com";
 	  String cmd;
 	  Set keys;
+	  
 	  JSONParser parser;
 	  JSONObject state;
 	  JSONObject data;
@@ -50,7 +51,7 @@ public class fetchInformation {
 		  for(Object key:keys){
 			  JSONObject userid = (JSONObject) icetizen.get(key);
 			   JSONObject user   = (JSONObject) userid.get("user");
-			  list.add(new NullIcetizen((String) user.get("username"),(int) user.get("port"),()));
+			  list.add(new NullIcetizen((String) user.get("username"),(int) user.get("pid"),   listeningPort,  IcetizenLook, (String) user.get("ip")));
 			  
 		  }
 		  
