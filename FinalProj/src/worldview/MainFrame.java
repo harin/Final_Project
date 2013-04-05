@@ -9,7 +9,7 @@ public class MainFrame extends JFrame {
 	private JMenu menuMenu;
 	private JMenuItem about,help,setting,quit;
 	public JPanel worldView;
-	private Login loginPage;
+	private LoginNew loginPage;
 	
 	public MainFrame(){	
 		setTitle("The Null");
@@ -60,7 +60,7 @@ public class MainFrame extends JFrame {
 		worldView = new WorldView(this.WIDTH, this.HEIGHT);
 		worldView.setLocation(0, 0);
 		
-		loginPage = new Login();
+		loginPage = new LoginNew();
 		add(loginPage);
 	}
 	
