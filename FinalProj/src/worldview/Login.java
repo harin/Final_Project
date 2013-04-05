@@ -1,3 +1,5 @@
+package worldview;
+
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -13,7 +15,9 @@ public class Login extends JPanel{
 	JPanel loginPanel;
 	JLabel id, pw;
 	JButton loginAlien, loginIce;
-	JTextArea idArea, pwArea;
+	JTextField idArea, pwArea;
+	String username;
+	String password;
 	
 	public Login(){
 		//Label
@@ -25,47 +29,19 @@ public class Login extends JPanel{
 		loginIce=new JButton("Login as Ice-tizen");
 		
 		//Text Area
-		idArea=new JTextArea();
-		pwArea=new JTextArea();
+		idArea=new JTextField();
+		pwArea=new JTextField();
 		
 		//Add Component
-		loginPanel.setLayout(new GridLayout(6,1,2,2));
-		loginPanel.add(id);
-		loginPanel.add(idArea);
-		loginPanel.add(pw);
-		loginPanel.add(pwArea);
-		loginPanel.add(loginAlien);
-		loginPanel.add(loginIce);	
-		
-		//Listener
-		username x=new username();
-		password y=new password();
-		alien w=new alien();
-		ice z=new ice();
+		setLayout(new GridLayout(6,1,2,2));
+		add(id);
+		add(idArea);
+		add(pw);
+		add(pwArea);
+		add(loginAlien);
+		add(loginIce);	
 	}
 	
-	public class username extends Applet implements ActionListener {
-		public void actionPerformed(ActionEvent e){
-			
-		}
-	}
-	
-	public class password extends Applet implements ActionListener {
-		public void actionPerformed(ActionEvent e){
-			
-		}
-	}
-	
-	public class alien extends Applet implements ActionListener {
-		public void actionPerformed(ActionEvent e){
-			
-		}
-	}
-	
-	public class ice extends Applet implements ActionListener {
-		public void actionPerformed(ActionEvent e){
-			
-		}
-	}
+
 	
 }

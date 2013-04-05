@@ -5,10 +5,11 @@ import java.awt.event.*;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
-	JMenuBar menuBar;
-	JMenu menuMenu;
-	JMenuItem about,help,setting,quit;
+	private JMenuBar menuBar;
+	private JMenu menuMenu;
+	private JMenuItem about,help,setting,quit;
 	public JPanel worldView;
+	private Login loginPage;
 	
 	public MainFrame(){	
 		setTitle("The Null");
@@ -58,7 +59,9 @@ public class MainFrame extends JFrame {
 	public void setGUI(){
 		worldView = new WorldView(this.WIDTH, this.HEIGHT);
 		worldView.setLocation(0, 0);
-		this.add(worldView);
+		
+		loginPage = new Login();
+		add(loginPage);
 	}
 	
 	public class AboutEvent implements ActionListener {
