@@ -23,6 +23,7 @@ public class fetchInformation {
 	  Long timeWeatherLastChange;
 	  String weatherCondition;
 	  
+	  //linkedlist of NullIcetizen
 		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
 	  
 	  public fetchInformation(){
@@ -44,6 +45,9 @@ public class fetchInformation {
 		  timeWeatherLastChange = (long) weather.get("last_change");
 		  weatherCondition = (String) weather.get("condition");
 		  //end of weather condition
+		  
+		  
+		  
 		  
 		  
 		}catch(Exception e){
