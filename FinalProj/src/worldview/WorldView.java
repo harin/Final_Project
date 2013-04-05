@@ -13,7 +13,6 @@ import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-
 public class WorldView extends JPanel {
 		private final int size = 100;
 		private int xOrigin = 300;
@@ -84,12 +83,12 @@ public class WorldView extends JPanel {
 			}
 			
 			//draw icetizen
-			drawActiveIcetizen(g,0,0);
+			drawActiveIcetizen(g);
 			drawIcetizen(g);
 			
 			//top plane ------------------------
 			//draw weather
-			Weather.snowing(g, this.getWidth(), this.getHeight());
+			Weather.raining(g, this.getWidth(), this.getHeight());
 			
 		}
 		
@@ -135,32 +134,13 @@ public class WorldView extends JPanel {
 					scale = n.getScale();
 				}
 				if(scale!=null){
-				
-//					if(!activeIcetizen.getPos().equals(destination)){
-//						//System.out.println("animating");
-//						int xMove = destination.x - activeIcetizen.getPos().x;
-//						int yMove = destination.y - activeIcetizen.getPos().y;
-//						if(xMove>0) activeIcetizen.getPos().x++;
-//						 else if (xMove<0) activeIcetizen.getPos().x--;
-//						 else {}//do nothing
-//						
-//						if(yMove>0) n.getPos().y++;
-//						else if (yMove<0) n.getPos().y--;
-//						else {}//do nothing
-//					}
-					
-					int xCoord = n.getPos().x;
-					int yCoord = n.getPos().y;
-					int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
-					int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/2 + tileSide/2 - scale.getWidth(null)/5;
-					g.drawImage(scale, xPos, yPos ,null);
-					//if(!activeIcetizen.getPos().equals(destination)) repaint();
+					walk(g, n);
 				}else{
 					System.out.println("Drawing active Icetizen failed");
 				}
 			}
 		}
-		public void drawActiveIcetizen(Graphics g, int x, int y){
+		public void drawActiveIcetizen(Graphics g){
 			//get image
 			Image scale = activeIcetizen.getScale();
 			if(scale == null){
@@ -169,68 +149,7 @@ public class WorldView extends JPanel {
 				scale = activeIcetizen.getScale();
 			}
 			if(scale!=null){
-			
-				//walking 
-				Point activeDest = activeIcetizen.getDestination();
-				if(!activeIcetizen.getPos().equals(activeDest)){
-					//System.out.println("trying to walk to dest");
-					//Need to WALK! damn it!
-					
-					if(activeIcetizen.getPixelPos() == null){
-						//instantiate pixelPos for walking in between tiles
-						Point currentPixelPos = tileCoord[activeIcetizen.getPos().x][activeIcetizen.getPos().y];
-						activeIcetizen.setPixelPos(new Point(currentPixelPos.x,currentPixelPos.y));
-						System.out.println("PixelPos set to :"+currentPixelPos);
-					}
-					//pixelPos already instantiate for walking - do the walking
-					// pixelPos not there yet...
-					Point DestPixel = tileCoord[activeDest.x][activeDest.y];
-					int xMove = DestPixel.x - activeIcetizen.getPixelPos().x;
-					int yMove = DestPixel.y - activeIcetizen.getPixelPos().y;
-					System.out.println(xMove+","+yMove);
-					
-					if(Math.abs(xMove)< walkRateX){
-						activeIcetizen.getPixelPos().x+=xMove;
-						
-					}else{
-						if(xMove>0) activeIcetizen.getPixelPos().x+=walkRateX;
-						else if (xMove<0) activeIcetizen.getPixelPos().x-=walkRateX;
-						else {}//do nothing
-					}
-					
-					if(Math.abs(yMove)< walkRateY){
-						activeIcetizen.getPixelPos().y+=yMove;
-						
-					} else{
-						if(yMove>0) activeIcetizen.getPixelPos().y+=walkRateY;
-						else if (yMove<0) activeIcetizen.getPixelPos().y-=walkRateY;
-						else {}//do nothing
-					}
-					
-					
-					int yPos = activeIcetizen.getPixelPos().y - scale.getHeight(null) + tileSide/4;
-					int xPos = activeIcetizen.getPixelPos().x - scale.getWidth(null)/5;
-					g.drawImage(scale, xPos, yPos ,null);
-					
-					//check if destination reached
-					if(activeIcetizen.getPixelPos().equals(tileCoord[activeDest.x][activeDest.y])){
-						activeIcetizen.getPos().x = activeDest.x;
-						activeIcetizen.getPos().y = activeDest.y;
-						activeIcetizen.setPixelPos(null);
-					}	
-				}else {
-					//System.out.println("already at dest");
-					//already at destination
-					int xCoord = activeIcetizen.getPos().x;
-					int yCoord = activeIcetizen.getPos().y;
-					int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
-					int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/5;
-					g.drawImage(scale, xPos, yPos ,null);
-					
-				}
-				
-				
-				//if(!activeIcetizen.getPos().equals(destination)) repaint();
+				walk(g, activeIcetizen);
 			}else{
 				System.out.println("Drawing active Icetizen failed");
 				
@@ -240,6 +159,68 @@ public class WorldView extends JPanel {
 		public Image scaleToTile(BufferedImage img){
 			Image scale = img.getScaledInstance(tileSide, -1, Image.SCALE_SMOOTH);
 			return scale;
+		}
+		
+		public void walk(Graphics g, NullIcetizen n){
+			//walking 
+			Point nDest = n.getDestination();
+			Image scale = n.getScale();
+			
+			// if not at destination, walk
+			if(!n.getPos().equals(nDest)){
+				//System.out.println("trying to walk to dest");
+				//Walking
+				
+				//pixelpos,intermediate pos, just for walking, if not walking will equal null
+				if(n.getPixelPos() == null){
+					//instantiate pixelPos for walking in between tiles
+					Point currentPixelPos = tileCoord[n.getPos().x][n.getPos().y];
+					n.setPixelPos(currentPixelPos);
+					System.out.println("PixelPos set to :"+currentPixelPos);
+				}
+				//pixelPos already instantiate for walking - do the walking
+				//pixelPos not there yet...
+				Point DestPixel = tileCoord[nDest.x][nDest.y];
+				int xMove = DestPixel.x - n.getPixelPos().x;
+				int yMove = DestPixel.y - n.getPixelPos().y;
+				System.out.println(xMove+","+yMove);
+				
+				if(Math.abs(xMove)< walkRateX){
+					n.getPixelPos().x+=xMove;
+				}else{
+					if(xMove>0) n.getPixelPos().x+=walkRateX;
+					else if (xMove<0) n.getPixelPos().x-=walkRateX;
+					else {}//do nothing
+				}
+				
+				if(Math.abs(yMove)< walkRateY){
+					activeIcetizen.getPixelPos().y+=yMove;
+				} else{
+					if(yMove>0) n.getPixelPos().y+=walkRateY;
+					else if (yMove<0) n.getPixelPos().y-=walkRateY;
+					else {}//do nothing
+				}
+				
+				int yPos = n.getPixelPos().y - scale.getHeight(null) + tileSide/4; //calculate offset for drawing
+				int xPos = n.getPixelPos().x - scale.getWidth(null)/5; //calculate offset for drawing
+				g.drawImage(scale, xPos, yPos ,null);
+				
+				//check if destination reached
+				if(n.getPixelPos().equals(tileCoord[nDest.x][nDest.y])){
+					n.getPos().x = nDest.x;
+					n.getPos().y = nDest.y;
+					n.setPixelPos(null);
+				}	
+			}else {
+				//System.out.println("already at dest");
+				//already at destination
+				int xCoord = n.getPos().x;
+				int yCoord = n.getPos().y;
+				int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
+				int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/5;
+				g.drawImage(scale, xPos, yPos ,null);
+				
+			}
 		}
 		
 //--------------------------------------------------------------------------------------------
@@ -276,6 +257,11 @@ public class WorldView extends JPanel {
 				lastPress.x = x;
 				lastPress.y = y;
 				moveOrigin(xMoved,yMoved);
+				Point pix = activeIcetizen.getPixelPos();
+				if(pix!=null){ // is walking
+					pix.x += xMoved;
+					pix.y += yMoved;
+				}
 			}
 			
 			public void mousePressed(MouseEvent e){
