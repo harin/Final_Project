@@ -1,6 +1,7 @@
 package help__dialog;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -31,56 +32,66 @@ public class NonModal extends JPanel
         JPanel customPanel = createCustomDialogBox();
         JPanel featuresPanel = createFeaturesDialogBox();
     	
-        tabbedPane.addTab(logging, null,loggingPanel,"logging in/out description");
-        tabbedPane.addTab(components, null,componentsPanel,"Map/ Message Typing / Video Control"); 
-        tabbedPane.addTab(viewing, null,viewingPanel,"Zooming Methods(pan, drag) zoom short keys"); 
-        tabbedPane.addTab(tranferring, null,tranferringPanel,"Transfer files to and from");
-        tabbedPane.addTab(custom, null,	customPanel,"Avartar/Sounds"); 
-        tabbedPane.addTab(features, null,featuresPanel,"Chat/yell/walk/special questions"); 
+        tabbedPane.addTab(logging, null,loggingPanel);
+        tabbedPane.addTab(components, null,componentsPanel); 
+        tabbedPane.addTab(viewing, null,viewingPanel); 
+        tabbedPane.addTab(tranferring, null,tranferringPanel);
+        tabbedPane.addTab(custom, null,	customPanel); 
+        tabbedPane.addTab(features, null,featuresPanel); 
  
         add(tabbedPane, BorderLayout.CENTER);
     }
     
     private JPanel createLoggingDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("logging in/out description");
+    	
+		panel.add(label);
     	
     	return panel;
     }
     private JPanel createComponentsDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("Map/ Message Typing / Video Control");
+    	
+		panel.add(label);
     	
     	return panel;
     }
     private JPanel createViewingDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("Zooming Methods(pan, drag) zoom short keys");
+    	
+		panel.add(label);
     	
     	return panel;
     }
     private JPanel createTransferringDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("Transfer files to and from");
+    	
+		panel.add(label);
     	
     	return panel;
     }
     private JPanel createCustomDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("Avartar/Sounds");
+    	
+		panel.add(label);
     	
     	return panel;
     }
     private JPanel createFeaturesDialogBox() {
     	JPanel panel = new JPanel();
-		panel.setLayout( null );
+    	JLabel label = new JLabel("Chat/yell/walk/special questions");
+    	
+		panel.add(label);
     	
     	return panel;
     }
   
     
-    
-  
   //  
   // 
   //  
