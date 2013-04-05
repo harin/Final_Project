@@ -71,6 +71,7 @@ public class FetchTest2 {
 	   JSONObject userid = (JSONObject) icetizen.get(key);
 	   JSONObject user   = (JSONObject) userid.get("user");
 	   System.out.println("==========================");
+	   System.out.println("UserID:"+ Integer.parseInt((String) key));
 	   System.out.println("username:" + user.get("username"));
 	   System.out.println("type:" + user.get("type"));
 	   System.out.println("ip:" + user.get("ip"));
