@@ -4,7 +4,10 @@ import iceworld.given.ICEWorldImmigration;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
+import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class MainFrame extends JFrame {
@@ -78,7 +81,7 @@ public class MainFrame extends JFrame {
 	
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
-
+			showAuthorDialog();
 		}
 	} 
 	public class HelpEvent implements ActionListener {
@@ -194,5 +197,40 @@ public class MainFrame extends JFrame {
 		}
 	}
 
+	//
+	// Author dialog
+	//
+	public void showAuthorDialog(){
+		final JDialog dialog = new JDialog();
+		Image img = null;
+		URL imgURL = getClass().getResource("/about.jpg");
+		try {
+			img = ImageIO.read(imgURL);
+			} 
+		catch (IOException e) {
+			e.printStackTrace();
+			}
+		dialog.setLayout(new BorderLayout());
+		
+		JLabel imgLabel = new JLabel(new ImageIcon(img));
+		JButton OKButton = new JButton("Close");	
+		
+		dialog.getContentPane().add(imgLabel, BorderLayout.CENTER);
+		dialog.getContentPane().add(OKButton,BorderLayout.SOUTH);
+		OKButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				dialog.dispose();
+			}
+		});
+		dialog.setModal(true);
+		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		dialog.setSize(800,600);
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
+	}
+	
+	
+	
+	
 }
 	
