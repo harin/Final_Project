@@ -26,7 +26,8 @@ public class FetchTest2 {
 	  String domain2 = "http://www.google.com";
 	  String cmd;
 	  //check connection
-	  
+	  int testing =1;
+
 	  
 	  try{
 		  System.out.println("Test of keys and necessary information");
@@ -68,30 +69,34 @@ public class FetchTest2 {
 	  System.out.println("Last weather time change: "+lastWeatherChange);
 	  String weatherConditon = (String) weather.get("condition");
 	  System.out.println("weather condition: "+weatherConditon);
-	  int testing =0;
+	  System.out.println();
+	  System.out.println();
 
+	  int countError =1;
+	  
+	  
 	  for(Object key:keys){
 		  
-		  testing++;
-		  System.out.println("Begining");
-		  System.out.println(testing);
+		  	System.out.println("############################");
+		   System.out.println("Right now you working with:"+ Integer.parseInt((String) key));
+		  	System.out.println("#########################");
+
+
 
 	   JSONObject userid = (JSONObject) icetizen.get(key);
 	   
 	   JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
 		
 	   
-	   
+	  
 	//   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null) )  {
 
 	   String timestampString = ""+last_known_destinantion.get("timestamp"); 
-		  System.out.println("error");
-
-	   if(!timestampString.equals(null)){
-	   long timestamp = Long.parseLong(timestampString);
 	   String stringPosition = (String) last_known_destinantion.get("position");
+
+	   if(!timestampString.equals(null) && !stringPosition.equals(null)){
+	   long timestamp = Long.parseLong(timestampString);
 	   
-	   System.out.println(stringPosition);
 
 	   
 	   int beginIndex = 1;
@@ -108,6 +113,8 @@ public class FetchTest2 {
 	   Point position = new Point( x , y);
 	   JSONObject user   = (JSONObject) userid.get("user");
 	   System.out.println("==========================");
+	   System.out.println(stringPosition);
+
 	   System.out.println("UserID:"+ Integer.parseInt((String) key));
 	   System.out.println("username:" + user.get("username"));
 	   System.out.println("type:" + user.get("type"));
@@ -117,13 +124,17 @@ public class FetchTest2 {
 	   System.out.println("stringpositon:"+stringPosition);
 	   System.out.println("postion:"+position);
 	   System.out.println("timestamp:"+timestamp);
-	   System.out.println("Testing:"+testing);
+	   System.out.println("Testing Subject:"+testing);
 		}
 	   
 		else{
-			System.out.println("Input error");
+			
+			System.out.println("Input error"+countError++);
 			// do nothing
 			}
+	   
+		  testing++;
+
 		}
 	  
 	   System.out.println("Testing:"+testing);
@@ -132,5 +143,9 @@ public class FetchTest2 {
 	}catch(Exception e){
 		//System.out.println(e);
 	}
+	  
+	   System.out.println("********************************");
+
+	  System.out.println("Total peole(included null positon):"+testing);
 	}
 }
