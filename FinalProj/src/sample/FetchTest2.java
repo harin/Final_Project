@@ -74,8 +74,7 @@ public class FetchTest2 {
 	   JSONObject userid = (JSONObject) icetizen.get(key);
 	   
 	   JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
-	   long timestamp = (long) last_known_destinantion.get("timestamp");
-	   
+	   long timestamp = (long) last_known_destinantion.get("timestamp");   
 	   String stringPosition = (String) last_known_destinantion.get("position");
 	   System.out.println(stringPosition);
 
@@ -84,7 +83,7 @@ public class FetchTest2 {
 	   int endIndex = stringPosition.indexOf(",");
 	   int beginIndex2 = endIndex+1;
 	   int endIndex2 = stringPosition.indexOf(")");
-;
+
 
 	   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
 	   

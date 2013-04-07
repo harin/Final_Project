@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import iceworld.given.*;
 
 public class NullIcetizen implements MyIcetizen{
+	private long timestamp;
 	private String userid;
 	private String username;
 	private int icePortId;
@@ -47,10 +48,10 @@ public class NullIcetizen implements MyIcetizen{
 
 	
 	public NullIcetizen(){
-		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1);
+		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730);
 	}
 	
-	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type){
+	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type,long timestamp){
 		this.userid = userid;
 		this.username = username;
 		this.icePortId = portId;
@@ -58,6 +59,8 @@ public class NullIcetizen implements MyIcetizen{
 		this.look = look;
 		this.ipAddress = ipAddress;
 		this.type = type;
+		this.timestamp = timestamp;
+		
 		//location properties
 		pos = new Point(0,0);
 		destination = new Point(0,0);

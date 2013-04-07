@@ -1,5 +1,6 @@
 package worldview;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -56,6 +57,20 @@ public class fetchInformation {
 			   int pid = (int) user.get("pid");
 			   String ip = (String) user.get("ip");
 			   IcetizenLook look =;
+			   
+			   //position and timestamp
+			   JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
+			   long timestamp = (long) last_known_destinantion.get("timestamp");   
+			   String stringPosition = (String) last_known_destinantion.get("position");
+			   int beginIndex = 1;
+			   int endIndex = stringPosition.indexOf(",");
+			   int beginIndex2 = endIndex+1;
+			   int endIndex2 = stringPosition.indexOf(")");
+			   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));		   
+			   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));			   
+			   
+			   Point position = new Point( x , y);
+			   
 			   
 			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip ));
 			  
