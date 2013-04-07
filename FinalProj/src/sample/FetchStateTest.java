@@ -1,5 +1,7 @@
 package sample;
 
+import MainFrame;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -13,7 +15,6 @@ import java.util.LinkedList;
 
 import org.json.simple.*;
 
-import worldview.MainFrame;
 import worldview.NullIcetizen;
 import worldview.WorldView;
 

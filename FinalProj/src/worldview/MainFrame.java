@@ -1,5 +1,6 @@
 package worldview;
 
+
 import help__dialog.NonModal;
 import iceworld.given.ICEWorldImmigration;
 
@@ -10,6 +11,7 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
 
 public class MainFrame extends JFrame {
 	private JMenuBar menuBar;

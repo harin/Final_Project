@@ -1,5 +1,7 @@
 package sample;
 
+import MainFrame;
+
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,7 +17,6 @@ import java.util.LinkedList;
 import org.json.simple.*;
 import org.json.simple.parser.JSONParser;
 
-import worldview.MainFrame;
 import worldview.NullIcetizen;
 import worldview.WorldView;
 
