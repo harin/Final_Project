@@ -72,7 +72,7 @@ public class fetchInformation {
 			   Point position = new Point( x , y);
 			   
 			   
-			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip ));
+			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip, timestamp ));
 			  
 		  }
 		  
