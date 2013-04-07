@@ -1,10 +1,11 @@
-package worldview;
+ package worldview;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.net.InetAddress;
 
 import javax.imageio.ImageIO;
 
@@ -16,23 +17,45 @@ public class NullIcetizen implements MyIcetizen{
 	private IcetizenLook look;
 	private int listeningPort;
 	private BufferedImage lookImage;
-	
+	private static InetAddress ip;
+	private String ipAddress;
+	private int type; //0 for alien, 1 for icetizen
 	private Point destination;//store destination tile coordinate
 	private Point pos;//store current tile coordinate
 	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
 	
 	private Image scaleImage;
 	
-	public NullIcetizen(){
-		this("Octopi", 246, 800, new IcetizenLook());
+	
+	
+	
+	public static String inputIpAddress(){
+		//use the ip address of host
+		  try {
+			  
+				ip = InetAddress.getLocalHost();
+				//System.out.println("Current IP address : " + ip.getHostAddress());
+			  } catch (Exception e) {
+		 
+		 
+			  }
+		  return ip.getHostAddress().toString();
 	}
 	
-	public NullIcetizen(String username, int portId, int listeningPort, IcetizenLook look){
+	
+
+	
+	public NullIcetizen(){
+		this("Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1);
+	}
+	
+	public NullIcetizen(String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type){
 		this.username = username;
 		this.icePortId = portId;
 		this.listeningPort = listeningPort;
 		this.look = look;
-		
+		this.ipAddress = ipAddress;
+		this.type = type;
 		//location properties
 		pos = new Point(0,0);
 		destination = new Point(0,0);
