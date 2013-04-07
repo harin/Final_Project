@@ -1,7 +1,7 @@
 package worldview;
 
+import help__dialog.NonModal;
 import iceworld.given.ICEWorldImmigration;
-import help__dialog.*;
 
 import java.awt.*;
 import java.awt.event.*;

@@ -4,10 +4,13 @@ import iceworld.given.ICEWorldImmigration;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.AffineTransform;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -122,7 +125,6 @@ public class WorldView extends JPanel {
 				n.rescale();
 			}
 			repaint();
-			
 		}
 		
 		public void zoomOut(){
@@ -158,6 +160,10 @@ public class WorldView extends JPanel {
 				}else{
 					System.out.println("Drawing active Icetizen failed");
 				}
+				if(n.getTalkSecondLeft() >0){
+					System.out.println("talking");
+					talk(g, n, n.getTalkMsg());
+				}
 			}
 		}
 		public void drawActiveIcetizen(Graphics g){
@@ -172,7 +178,11 @@ public class WorldView extends JPanel {
 				walk(g, activeIcetizen);
 			}else{
 				System.out.println("Drawing active Icetizen failed");
-				
+			}
+			
+			if(activeIcetizen.getTalkSecondLeft() >0){
+				System.out.println("talking");
+				talk(g, activeIcetizen, activeIcetizen.getTalkMsg());
 			}
 		}
 		
@@ -238,17 +248,47 @@ public class WorldView extends JPanel {
 				int yCoord = n.getPos().y;
 				int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
 				int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/5;
-				g.drawImage(scale, xPos, yPos ,null);
-				
+				g.drawImage(scale, xPos, yPos ,null);			
 			}
 		}
-
+//--------------------------------------------------------------------------------------------
+//		chat methods
+//--------------------------------------------------------------------------------------------
+		public void talk(Graphics g, NullIcetizen n, String msg){
+			//get coordinate of the head
+			Point p;
+			if(n.getPixelPos()!= null){//while walking
+				p = n.getPixelPos();
+			}else{//while stationary
+				p = tileCoord[n.getPos().x][n.getPos().y];
+			}
+			int x = p.x;
+			int y = p.y - n.getScale().getHeight(null);
+			
+			AffineTransform affinetransform = new AffineTransform();     
+			FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
+			Font font = this.getFont();
+			int textwidth = (int)(font.getStringBounds(msg, frc).getWidth());
+			int textheight = (int)(font.getStringBounds(msg, frc).getHeight());
+			g.setColor(Color.WHITE);
+			g.fillRoundRect(x, y-textheight, textwidth+10, textheight+5, 5, 5);
+			g.setColor(Color.BLACK);
+			g.drawString(msg, x+5, y);
+			
+		}
+		
+		
+		
 //--------------------------------------------------------------------------------------------
 //		update methods
 //--------------------------------------------------------------------------------------------
 
 		public void updateWeather(String s){
 			currentWeather = s;
+		}
+		
+		public void updateIcetizens(NullIcetizen [] n){
+			icetizens = n;
 		}
 		
 //--------------------------------------------------------------------------------------------
@@ -302,14 +342,15 @@ public class WorldView extends JPanel {
 				//icetizen.move(highlightTile.x, highlightTile.y);
 				Point dest = new Point(highlightTile.x, highlightTile.y);
 				activeIcetizen.setDestination(dest);
-				if (immigration.walk(dest.x, dest.y)){
-					System.out.println("Walk OK");
-				}
+//				if (immigration.walk(dest.x, dest.y)){
+//					System.out.println("Walk OK");
+//				}
+				
+				activeIcetizen.setTalkMsg("I am walking");
 
 				System.out.println("move to:"+ highlightTile.x +","+highlightTile.y);
 				//repaint();
 			}
-	
 		}
 		
 		
