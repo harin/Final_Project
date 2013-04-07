@@ -1,5 +1,7 @@
 package worldview;
 
+import iceworld.given.ICEWorldImmigration;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,15 +25,18 @@ public class WorldView extends JPanel {
 		private Point destination;
 		private NullIcetizen activeIcetizen;
 		private NullIcetizen [] icetizens;
+		private ICEWorldImmigration immigration;
 		private Timer timer;
 		private int delay = 40;
 		private int walkRateX, walkRateY;
 		private String currentWeather ="";
 		
-		public WorldView(int width, int height){
+		public WorldView(int width, int height, ICEWorldImmigration im){
 			super();
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
+			immigration = im;
+			
 			//walkRate = (int)Math.ceil(tileSide /2.0 / 40);
 			walkRateX = 5;
 			walkRateY = 5;
@@ -58,9 +63,7 @@ public class WorldView extends JPanel {
 			});
 			timer.start();
 		}
-		public WorldView(){
-			this(500,500);
-		}
+
 		
 		public void paintComponent(Graphics g){
 			//bottom plane---------------------

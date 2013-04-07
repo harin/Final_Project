@@ -14,9 +14,12 @@ public class MainFrame extends JFrame {
 	public JPanel worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
-	private ICEWorldImmigration immigrant;
+	private ICEWorldImmigration immigration;
 	
 	public MainFrame(){	
+		activeIcetizen = new NullIcetizen();
+		immigration = new ICEWorldImmigration(activeIcetizen);
+		
 		setTitle("The Null");
 		setSize(900,800);
 		setJMenuBar(makeMenuBar());
@@ -62,12 +65,15 @@ public class MainFrame extends JFrame {
 	}
 		
 	public void setGUI(){
-		worldView = new WorldView(this.WIDTH, this.HEIGHT);
-		worldView.setLocation(0, 0);
-		add(worldView);
-		
 		loginPage = new LoginPage();
-		//add(loginPage);
+		add(loginPage);
+	}
+	
+	public void switchToWorldView(){
+		worldView = new WorldView(this.WIDTH, this.HEIGHT, immigration);
+		worldView.setLocation(0, 0);
+		this.setContentPane(worldView);
+		revalidate();
 	}
 	
 	public class AboutEvent implements ActionListener {
@@ -75,21 +81,17 @@ public class MainFrame extends JFrame {
 
 		}
 	} 
-	
-	
 	public class HelpEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
 			 
 		 } 
 	}
-
 	
 	public class SettingEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
 			 
 		 } 
 	}
-	
 	
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
@@ -109,22 +111,17 @@ public class MainFrame extends JFrame {
 	//login page class
 	
 	public class LoginPage extends JPanel {
-		private JTextField passwordField;
+		private JPasswordField passwordField;
 		private String [] userHistory;
 		private String username;
 		private String password;
-		private JComboBox usernameBox;	
+		private JComboBox<String> usernameBox;	
 
 		/**
 		 * Create the panel.
 		 */
 		public LoginPage() {
 			setLayout(null);
-			
-			passwordField = new JTextField();
-			passwordField.setBounds(206, 123, 134, 28);
-			add(passwordField);
-			passwordField.setColumns(10);
 			
 			JLabel lblUsername = new JLabel("Username");
 			lblUsername.setBounds(122, 88, 72, 16);
@@ -134,16 +131,34 @@ public class MainFrame extends JFrame {
 			lblPassword.setBounds(122, 129, 61, 16);
 			add(lblPassword);
 			
-			usernameBox = new JComboBox();
+			passwordField = new JPasswordField();
+			passwordField.setBounds(206, 123, 134, 28);
+//			passwordField.addActionListener(new ActionListener(){
+//
+//				@Override
+//				public void actionPerformed(ActionEvent e) {
+//					// TODO Auto-generated method stub
+//					JTextField f = (JTextField) e.getSource();
+//					password = f.getText();
+//				}
+//				
+//			});
+			add(passwordField);
+			passwordField.setColumns(10);
+			
+			
+			
+			usernameBox = new JComboBox<String>();
 			usernameBox.setBounds(206, 84, 134, 27);
 			usernameBox.setEditable(true);
 			usernameBox.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
-						JComboBox cb = (JComboBox)e.getSource();
-						String username = (String) cb.getSelectedItem();
+						JComboBox<String> cb = (JComboBox<String>)e.getSource();
+						username = (String) cb.getSelectedItem();
+						activeIcetizen.setUsername(username) ;
 						usernameBox.addItem(username);
-						System.out.println("username:"+username);
+						System.out.println("username:"+activeIcetizen.getUsername());
 				}
 			});
 			add(usernameBox);
@@ -153,9 +168,15 @@ public class MainFrame extends JFrame {
 			loginBut.setBounds(216, 166, 117, 29);
 			loginBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
+					password = new String(passwordField.getPassword());
 					
-					
-					
+					if(immigration.login(password)){
+						System.out.println("Login OK");
+						switchToWorldView();
+						
+					}else{
+						System.out.println("Login failed");
+					}
 				}
 			});
 			add(loginBut);
@@ -163,9 +184,9 @@ public class MainFrame extends JFrame {
 			JButton loginAlienBut = new JButton("Alien Login");
 			loginAlienBut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
-					
-					
+					if (immigration.loginAlien()){
+						System.out.println("Login Alien OK");
+					}
 				}
 			});
 			loginAlienBut.setBounds(98, 166, 117, 29);
