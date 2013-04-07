@@ -33,6 +33,7 @@ public class WorldView extends JPanel {
 		private int delay = 40;
 		private int walkRateX, walkRateY;
 		private String currentWeather ="";
+		private Image grassTile;
 		
 		public WorldView(int width, int height, ICEWorldImmigration im){
 			super();
@@ -50,6 +51,15 @@ public class WorldView extends JPanel {
 			MouseHandler mh = new MouseHandler();
 			this.addMouseMotionListener(mh);
 			this.addMouseListener(mh);
+			
+			try{
+				BufferedImage grass = ImageIO.read(new File("Grasstile.png"));
+				grassTile = grass.getScaledInstance(-1, tileSide/2, Image.SCALE_SMOOTH);
+
+			}catch (Exception e){
+				System.out.println("load tile failed");
+			}
+			
 			
 			//generated nullicetizen for test
 			icetizens = new NullIcetizen[10];
@@ -78,6 +88,7 @@ public class WorldView extends JPanel {
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 			g.setColor(Color.WHITE);
 			IsometricPlane.drawBoardTile(g, xOrigin, yOrigin, size, tileSide, tileCoord );
+			//IsometricPlane.drawBoardTileImage(g, xOrigin, yOrigin, size, tileSide, grassTile);
 			//show FPS
 			g.setColor(Color.WHITE);
 			g.drawString(1.0/delay * 1000.0 +" FPS", 10, 20);
