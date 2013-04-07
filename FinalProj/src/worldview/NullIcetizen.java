@@ -26,6 +26,10 @@ public class NullIcetizen implements MyIcetizen{
 	private Point pos;//store current tile coordinate
 	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
 	
+	private final int talkDelay = 100; // 4 second for 25 fps
+	private int talkCountdown;
+	private String talkMsg;
+	
 	private Image scaleImage;
 	
 	
@@ -60,6 +64,10 @@ public class NullIcetizen implements MyIcetizen{
 		this.ipAddress = ipAddress;
 		this.type = type;
 		this.timestamp = timestamp;
+		
+		//talk properties
+		this.talkCountdown = 0;
+		this.talkMsg ="";
 		
 		//location properties
 		this.pos = position;	
@@ -135,9 +143,6 @@ public class NullIcetizen implements MyIcetizen{
 	public int getListeningPort() {
 		return listeningPort;
 	}
-
-	
-	
 	public String getUserid(){
 		return userid;
 	}
@@ -147,6 +152,15 @@ public class NullIcetizen implements MyIcetizen{
 	}
 	public Image getScale(){
 		return scaleImage;
+	}
+	public int getTalkSecondLeft(){
+		return this.talkCountdown;
+	}
+	
+	public String getTalkMsg(){
+		
+		this.talkCountdown--;
+		return this.talkMsg;
 	}
 	
 	//---------------------------------------------------------------------------------
@@ -187,6 +201,12 @@ public class NullIcetizen implements MyIcetizen{
 	public void setScale(Image s){
 		scaleImage = s;
 	}
+	
+	public void setTalkMsg(String s){
+		this.talkMsg = s;
+		talkCountdown = talkDelay;
+	}
+
 
 	
 	//compare NullIcetizen "Is he the same person"
