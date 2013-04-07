@@ -36,9 +36,8 @@ public class MainFrame extends JFrame {
 		menuBar.add(menuMenu);
 		
 		//about menu
-		AboutEvent x=new AboutEvent();
 		about=new JMenuItem("About");
-		about.addActionListener(x);
+		about.addActionListener(new AboutEvent());
 		menuMenu.add(about);
 		about.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 		
@@ -81,6 +80,7 @@ public class MainFrame extends JFrame {
 	
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
+			System.out.println("about called");
 			showAuthorDialog();
 		}
 	} 
@@ -201,36 +201,25 @@ public class MainFrame extends JFrame {
 	// Author dialog
 	//
 	public void showAuthorDialog(){
-		final JDialog dialog = new JDialog();
 		Image img = null;
+		final JDialog authorDialog = new JDialog();
+		authorDialog.setLayout(new BorderLayout());
 		URL imgURL = getClass().getResource("/about.jpg");
 		try {
 			img = ImageIO.read(imgURL);
-			} 
-		catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
-			}
-		dialog.setLayout(new BorderLayout());
-		
+		}
+
 		JLabel imgLabel = new JLabel(new ImageIcon(img));
-		JButton OKButton = new JButton("Close");	
-		
-		dialog.getContentPane().add(imgLabel, BorderLayout.CENTER);
-		dialog.getContentPane().add(OKButton,BorderLayout.SOUTH);
-		OKButton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent e){
-				dialog.dispose();
-			}
-		});
-		dialog.setModal(true);
-		dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		dialog.setSize(800,600);
-		dialog.setLocationRelativeTo(null);
-		dialog.setVisible(true);
+
+		authorDialog.getContentPane().add(imgLabel, BorderLayout.CENTER);
+		authorDialog.setModal(true);
+		authorDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		authorDialog.setSize(800,600);
+		authorDialog.setLocationRelativeTo(null);
+		authorDialog.pack();
+		authorDialog.setVisible(true);		
 	}
-	
-	
-	
-	
 }
-	
+
