@@ -149,6 +149,6 @@ public class FetchTest2 {
 		  
 	   System.out.println("********************************");
 
-	  System.out.println("Total peole(included null positon):"+testing);
+	  System.out.println("Total peole(included null positon):"+--testing);
 	}
 }
