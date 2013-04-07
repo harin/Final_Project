@@ -1,6 +1,7 @@
 package worldview;
 
 import iceworld.given.ICEWorldImmigration;
+import help__dialog.*;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -42,11 +43,10 @@ public class MainFrame extends JFrame {
 		about.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.Event.CTRL_MASK));
 		
 		//help menu
-		HelpEvent y=new HelpEvent();
 		help=new JMenuItem("Help");
-		help.addActionListener(y);
+		help.addActionListener(new HelpEvent());
 		menuMenu.add(help);
-		help.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_H, java.awt.Event.CTRL_MASK));	
+		help.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1,0));	
 
 		//setting menu
 		SettingEvent z=new SettingEvent();
@@ -86,13 +86,14 @@ public class MainFrame extends JFrame {
 	} 
 	public class HelpEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
-			 
-		 } 
+			 NonModal.main(null);
+		} 
 	}
 	
 	public class SettingEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
-			 
+			System.out.println("setting called");
+//			settingDialog();
 		 } 
 	}
 	
@@ -202,9 +203,9 @@ public class MainFrame extends JFrame {
 	//
 	public void showAuthorDialog(){
 		Image img = null;
-		final JDialog authorDialog = new JDialog();
+		final JDialog authorDialog = new JDialog(this,"Team members");
 		authorDialog.setLayout(new BorderLayout());
-		URL imgURL = getClass().getResource("/about.jpg");
+		URL imgURL = getClass().getResource("about.jpg");
 		try {
 			img = ImageIO.read(imgURL);
 		} catch (IOException e) {
@@ -221,5 +222,8 @@ public class MainFrame extends JFrame {
 		authorDialog.pack();
 		authorDialog.setVisible(true);		
 	}
+	//
+	//
+	//
 }
 

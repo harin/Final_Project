@@ -107,8 +107,8 @@ public class NonModal extends JPanel
     }
     private static void createAndShowGUI() {
         //Create and set up the window.
-        JFrame frame = new JFrame("You clicked Help, I'm here!");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("You asked for Help, I'm here!");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
  
         //Create and set up the content pane.
         NonModal newContentPane = new NonModal(frame);
