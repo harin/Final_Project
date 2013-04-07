@@ -302,6 +302,9 @@ public class WorldView extends JPanel {
 				//icetizen.move(highlightTile.x, highlightTile.y);
 				Point dest = new Point(highlightTile.x, highlightTile.y);
 				activeIcetizen.setDestination(dest);
+				if (immigration.walk(dest.x, dest.y)){
+					System.out.println("Walk OK");
+				}
 
 				System.out.println("move to:"+ highlightTile.x +","+highlightTile.y);
 				//repaint();
