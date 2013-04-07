@@ -48,10 +48,10 @@ public class NullIcetizen implements MyIcetizen{
 
 	
 	public NullIcetizen(){
-		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730);
+		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730,new Point(0,0), new Point(0,0));
 	}
 	
-	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type,long timestamp){
+	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type,long timestamp,Point position,Point destination){
 		this.userid = userid;
 		this.username = username;
 		this.icePortId = portId;
@@ -62,8 +62,9 @@ public class NullIcetizen implements MyIcetizen{
 		this.timestamp = timestamp;
 		
 		//location properties
-		pos = new Point(0,0);
-		destination = new Point(0,0);
+		this.pos = position;	
+		this.destination = destination;
+		
 		pixelPos = null;
 		
 		//look properties
@@ -129,12 +130,17 @@ public class NullIcetizen implements MyIcetizen{
 	public IcetizenLook getIcetizenLook() {
 		return look;
 	}
-
+	
 	@Override
 	public int getListeningPort() {
 		return listeningPort;
 	}
 
+	
+	
+	public String getUserid(){
+		return userid;
+	}
 	@Override
 	public String getUsername() {
 		return username;
@@ -182,4 +188,21 @@ public class NullIcetizen implements MyIcetizen{
 		scaleImage = s;
 	}
 
+	
+	//compare NullIcetizen "Is he the same person"
+	public boolean compare(NullIcetizen a, NullIcetizen b){
+		
+		if(a.getUserid().equalsIgnoreCase(b.getUserid())){
+			//same person
+		return true;
+		
+		}else{ 
+			//not sameperson
+			return false;		
+		}
+	}
+
+	
+	
+	
 }

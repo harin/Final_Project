@@ -68,14 +68,29 @@ public class FetchTest2 {
 	  System.out.println("Last weather time change: "+lastWeatherChange);
 	  String weatherConditon = (String) weather.get("condition");
 	  System.out.println("weather condition: "+weatherConditon);
+	  int testing =0;
 
-	  for(Object key:keys){ 
+	  for(Object key:keys){
 		  
+		  testing++;
+		  System.out.println("Begining");
+		  System.out.println(testing);
+
 	   JSONObject userid = (JSONObject) icetizen.get(key);
 	   
 	   JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
-	   long timestamp = (long) last_known_destinantion.get("timestamp");   
+		
+	   
+	   
+	//   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null) )  {
+
+	   String timestampString = ""+last_known_destinantion.get("timestamp"); 
+		  System.out.println("error");
+
+	   if(!timestampString.equals(null)){
+	   long timestamp = Long.parseLong(timestampString);
 	   String stringPosition = (String) last_known_destinantion.get("position");
+	   
 	   System.out.println(stringPosition);
 
 	   
@@ -102,8 +117,18 @@ public class FetchTest2 {
 	   System.out.println("stringpositon:"+stringPosition);
 	   System.out.println("postion:"+position);
 	   System.out.println("timestamp:"+timestamp);
+	   System.out.println("Testing:"+testing);
+		}
+	   
+		else{
+			System.out.println("Input error");
+			// do nothing
+			}
+		}
+	  
+	   System.out.println("Testing:"+testing);
 
-	  }
+
 	}catch(Exception e){
 		//System.out.println(e);
 	}

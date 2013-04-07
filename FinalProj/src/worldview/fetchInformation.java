@@ -13,7 +13,6 @@ import org.json.simple.parser.JSONParser;
 
 public class fetchInformation {
 	 final String domain =  "http://iceworld.sls-atl.com/api/&cmd=states";
-	  String domain2 = "http://www.google.com";
 	  String cmd;
 	  Set keys;
 	  
@@ -56,6 +55,7 @@ public class fetchInformation {
 			   String username =  (String) user.get("username");
 			   int pid = (int) user.get("pid");
 			   String ip = (String) user.get("ip");
+			   
 			   IcetizenLook look =;
 			   
 			   //position and timestamp
@@ -69,10 +69,15 @@ public class fetchInformation {
 			   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));		   
 			   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));			   
 			   
+			  int listeningPort=  Integer.parseInt( (String) user.get("port") ) ;
+
+			   
 			   Point position = new Point( x , y);
+			   Point destination = new Point(x,y);
 			   
 			   
-			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip, timestamp ));
+			   
+			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip, timestamp,position,destination ));
 			  
 		  }
 		  
