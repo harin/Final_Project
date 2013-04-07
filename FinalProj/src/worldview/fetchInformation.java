@@ -51,7 +51,13 @@ public class fetchInformation {
 		  for(Object key:keys){
 			  JSONObject userid = (JSONObject) icetizen.get(key);
 			   JSONObject user   = (JSONObject) userid.get("user");
-			  list.add(new NullIcetizen((String) user.get("username"),(int) user.get("pid"),   listeningPort,  IcetizenLook, (String) user.get("ip")));
+			   String id = (String) key;
+			   String username =  (String) user.get("username");
+			   int pid = (int) user.get("pid");
+			   String ip = (String) user.get("ip");
+			   IcetizenLook look =;
+			   
+			  list.add(new NullIcetizen(id,username ,pid,   listeningPort,  look, ip ));
 			  
 		  }
 		  

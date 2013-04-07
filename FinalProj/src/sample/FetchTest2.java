@@ -1,5 +1,6 @@
 package sample;
 
+import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -50,6 +51,7 @@ public class FetchTest2 {
 	  System.out.println(data);
 	  System.out.println("key in data:"+keyInData);
 	  System.out.println("********************************************");
+	  
 
 	  JSONObject icetizen = (JSONObject) data.get("icetizen");
 	  System.out.println("Priting Icetizen!!!!!!!!!!!");
@@ -67,8 +69,29 @@ public class FetchTest2 {
 	  String weatherConditon = (String) weather.get("condition");
 	  System.out.println("weather condition: "+weatherConditon);
 
-	  for(Object key:keys){
+	  for(Object key:keys){ 
+		  
 	   JSONObject userid = (JSONObject) icetizen.get(key);
+	   
+	   JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
+	   long timestamp = (long) last_known_destinantion.get("timestamp");
+	   
+	   String stringPosition = (String) last_known_destinantion.get("position");
+	   System.out.println(stringPosition);
+
+	   
+	   int beginIndex = 1;
+	   int endIndex = stringPosition.indexOf(",");
+	   int beginIndex2 = endIndex+1;
+	   int endIndex2 = stringPosition.indexOf(")");
+;
+
+	   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
+	   
+	   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
+	   
+	   
+	   Point position = new Point( x , y);
 	   JSONObject user   = (JSONObject) userid.get("user");
 	   System.out.println("==========================");
 	   System.out.println("UserID:"+ Integer.parseInt((String) key));
@@ -77,9 +100,13 @@ public class FetchTest2 {
 	   System.out.println("ip:" + user.get("ip"));
 	   System.out.println("port:" + user.get("port"));
 	   System.out.println("pid:" + user.get("pid"));
+	   System.out.println("stringpositon:"+stringPosition);
+	   System.out.println("postion:"+position);
+	   System.out.println("timestamp:"+timestamp);
+
 	  }
 	}catch(Exception e){
-		System.out.println(e);
+		//System.out.println(e);
 	}
 	}
 }

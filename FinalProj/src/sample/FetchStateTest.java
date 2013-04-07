@@ -123,7 +123,7 @@ public class FetchStateTest {
 		
 		
 		
-		MainFrame.worldView.updateWeather(weatherCondtion);
+		//MainFrame.worldView.updateWeather(weatherCondtion);
 		
 		System.out.println("***************************");
 		System.out.println(weatherCondition);
