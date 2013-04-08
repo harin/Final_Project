@@ -32,7 +32,7 @@ public class WorldView extends JPanel {
 		private Timer timer;
 		private int delay = 40;
 		private int walkRateX, walkRateY;
-		private String currentWeather ="";
+		private String currentWeather ="Sunny";
 		private Image grassTile;
 		
 		private BufferedImage bufferImage;
@@ -87,12 +87,10 @@ public class WorldView extends JPanel {
 		public void paintComponent(Graphics g){
 
 			//bottom plane---------------------
-			Weather.raining(g, this.getWidth(), this.getHeight());
+			drawBackgroundWeather(g);
 			
 			//middle plane---------------------
 			//draw tile
-			g.setColor(Color.WHITE);
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 			g.setColor(Color.BLACK);
 			IsometricPlane.drawBoardTile(g, xOrigin, yOrigin, size, tileSide, tileCoord );
 			//IsometricPlane.drawBoardTileImage(g, xOrigin, yOrigin, size, tileSide, grassTile);
@@ -114,23 +112,42 @@ public class WorldView extends JPanel {
 			//top plane ------------------------
 			//draw weather
 			
-			drawWeather(g);
+			drawForegroundWeather(g);
 			
 			
 		}
 		
-		public void drawWeather(Graphics g){
+		public void drawForegroundWeather(Graphics g){
 			switch (currentWeather){
 				case "Sunny":
-					Weather.sunny(g);
+					Weather.sunny(g, this.getWidth(), this.getHeight());
+					break;
 				case "Cloudy":
-					Weather.cloudy(g);
+					System.out.println("It's cloudy");
+					Weather.cloudy(g, this.getWidth(), this.getHeight());
+					break;
 				case "Raining":
 					Weather.raining(g, this.getWidth(), this.getHeight());
+					break;
 				case "Snowing":
 					Weather.snowing(g, this.getWidth(), this.getHeight());
+					break;
 				default:
+					System.out.println("it's default");
 					Weather.raining(g, this.getWidth(), this.getHeight());
+				
+			} 
+		}
+		public void drawBackgroundWeather(Graphics g){
+			switch (currentWeather){
+				case "Raining":
+				case "Snowing":
+					Weather.rainingBackground(g, this.getWidth(), this.getHeight());
+				break;
+				case "Cloudy":
+				case "Sunny":
+				default:
+					Weather.sunnyBackground(g, this.getWidth(), this.getHeight());
 				
 			} 
 		}
