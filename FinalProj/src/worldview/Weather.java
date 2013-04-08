@@ -12,7 +12,7 @@ public class Weather {
 		
 	}
 	public static void raining(Graphics g, int width, int height){
-		g.setColor(Color.WHITE);
+		g.setColor(Color.BLACK);
 		int i=0;
 		int x=0;
 		int y=0;

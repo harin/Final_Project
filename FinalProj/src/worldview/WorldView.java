@@ -35,6 +35,9 @@ public class WorldView extends JPanel {
 		private String currentWeather ="";
 		private Image grassTile;
 		
+		private BufferedImage bufferImage;
+		private Graphics bufferG;
+		
 		public WorldView(int width, int height, ICEWorldImmigration im){
 			super();
 			tileCoord = new Point[size][size];
@@ -44,6 +47,9 @@ public class WorldView extends JPanel {
 			//walkRate = (int)Math.ceil(tileSide /2.0 / 40);
 			walkRateX = 5;
 			walkRateY = 5;
+			
+			bufferImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			bufferG = bufferImage.getGraphics();
 			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
@@ -79,14 +85,15 @@ public class WorldView extends JPanel {
 
 		
 		public void paintComponent(Graphics g){
+
 			//bottom plane---------------------
 			Weather.raining(g, this.getWidth(), this.getHeight());
 			
 			//middle plane---------------------
 			//draw tile
-			g.setColor(Color.BLACK);
-			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, this.getWidth(), this.getHeight());
+			g.setColor(Color.BLACK);
 			IsometricPlane.drawBoardTile(g, xOrigin, yOrigin, size, tileSide, tileCoord );
 			//IsometricPlane.drawBoardTileImage(g, xOrigin, yOrigin, size, tileSide, grassTile);
 			//show FPS
@@ -108,6 +115,7 @@ public class WorldView extends JPanel {
 			//draw weather
 			
 			drawWeather(g);
+			
 			
 		}
 		
@@ -192,7 +200,6 @@ public class WorldView extends JPanel {
 			}
 			
 			if(activeIcetizen.getTalkSecondLeft() >0){
-				System.out.println("talking");
 				talk(g, activeIcetizen, activeIcetizen.getTalkMsg());
 			}
 		}
@@ -284,8 +291,7 @@ public class WorldView extends JPanel {
 			g.setColor(Color.WHITE);
 			g.fillRoundRect(x, y-textheight, textwidth+10, textheight+5, 5, 5);
 			g.setColor(Color.BLACK);
-			g.drawString(msg, x+5, y);
-			
+			g.drawString(msg, x+5, y);	
 		}
 		
 		

@@ -38,6 +38,10 @@ public class IsometricPlane{
 	public static  void drawTile(Graphics g, int x, int y, int side){
 		int [] xCor = {x, x+side, x + side/2, x-side/2};
 		int [] yCor = {y, y, y + side/2 , y+side/2};
+		
+		g.setColor(Color.GREEN);
+		g.fillPolygon(xCor, yCor, 4);
+		g.setColor(Color.BLACK);
 		g.drawPolygon(xCor, yCor, 4);
 	}
 	public static void fillTile(Graphics g, int x, int y, int side){
