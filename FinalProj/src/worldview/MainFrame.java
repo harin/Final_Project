@@ -17,17 +17,20 @@ public class MainFrame extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuMenu;
 	private JMenuItem about,help,setting,quit;
-	public JPanel worldView;
+	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
 	private ICEWorldImmigration immigration;
+	private JPanel worldViewPanel;
+	private final int WIDTH = 900;
+	private final int HEIGHT = 800;
 	
 	public MainFrame(){	
 		activeIcetizen = new NullIcetizen();
 		immigration = new ICEWorldImmigration(activeIcetizen);
 		
 		setTitle("The Null");
-		setSize(900,800);
+		setSize(WIDTH,HEIGHT);
 		setJMenuBar(makeMenuBar());
 		setGUI();
 	}
@@ -74,12 +77,69 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void switchToWorldView(){
-		worldView = new WorldView(this.WIDTH, this.HEIGHT, immigration);
-		worldView.setLocation(0, 0);
-		this.setContentPane(worldView);
+		worldViewPanel = new JPanel();
+		worldViewPanel.setSize(this.WIDTH,this.HEIGHT);
+		worldViewPanel.setLayout(null);
+		worldViewPanel.setBackground(Color.BLACK);
+		
+		JPanel zoomPanel = new JPanel();
+		zoomPanel.setBounds(WIDTH -60, HEIGHT-150,60,60);
+		JButton zoomIn = new JButton("+");
+		JButton zoomOut = new JButton("-");
+		zoomIn.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				worldView.zoomIn();
+			}
+		});
+		zoomOut.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				worldView.zoomOut();
+			}
+		});
+		zoomPanel.add(zoomIn);
+		zoomPanel.add(zoomOut);
+		
+		worldView = new WorldView(WIDTH,HEIGHT, immigration);
+		
+		this.getLayeredPane().add(zoomPanel, new Integer(100));
+
+		worldViewPanel.add(worldView);
+		
+		
+		
+		this.setContentPane(worldViewPanel);
 		revalidate();
 	}
+	//--------------------------------------------------------------------------------
+	// Author dialog
+	//--------------------------------------------------------------------------------
+	public void showAuthorDialog(){
+		Image img = null;
+		final JDialog authorDialog = new JDialog(this,"Team members");
+		authorDialog.setLayout(new BorderLayout());
+		URL imgURL = getClass().getResource("about.jpg");
+		try {
+			img = ImageIO.read(imgURL);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		JLabel imgLabel = new JLabel(new ImageIcon(img));
+
+		authorDialog.getContentPane().add(imgLabel, BorderLayout.CENTER);
+		authorDialog.setModal(true);
+		authorDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		authorDialog.setSize(800,600);
+		authorDialog.setLocationRelativeTo(null);
+		authorDialog.pack();
+		authorDialog.setVisible(true);		
+	}
+
 	
+	
+//----------------------------------------------------------------------
+//Action Listeners
+//------------------------------------------------------------------------
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
 			System.out.println("about called");
@@ -192,6 +252,9 @@ public class MainFrame extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					if (immigration.loginAlien()){
 						System.out.println("Login Alien OK");
+						switchToWorldView();
+					} else{
+						System.out.println("Login failed");
 					}
 				}
 			});
@@ -200,32 +263,6 @@ public class MainFrame extends JFrame {
 		}
 	}
 
-	//
-	// Author dialog
-	//
-	public void showAuthorDialog(){
-		Image img = null;
-		final JDialog authorDialog = new JDialog(this,"Team members");
-		authorDialog.setLayout(new BorderLayout());
-		URL imgURL = getClass().getResource("about.jpg");
-		try {
-			img = ImageIO.read(imgURL);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
-		JLabel imgLabel = new JLabel(new ImageIcon(img));
-
-		authorDialog.getContentPane().add(imgLabel, BorderLayout.CENTER);
-		authorDialog.setModal(true);
-		authorDialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		authorDialog.setSize(800,600);
-		authorDialog.setLocationRelativeTo(null);
-		authorDialog.pack();
-		authorDialog.setVisible(true);		
-	}
-	//
-	//
-	//
 }
 
