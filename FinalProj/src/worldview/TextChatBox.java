@@ -80,12 +80,12 @@ public class TextChatBox extends JFrame implements ActionListener{
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 
-	public static void main(String [] args){
-		//create a new thread which calls this class and run it.
-		javax.swing.SwingUtilities.invokeLater(new Runnable(){
-			public void run(){
-				TextChatBox.createAndShowGUI();
-			}
-		});
-	}
-}
+//	public static void main(String [] args){
+//		//create a new thread which calls this class and run it.
+//		javax.swing.SwingUtilities.invokeLater(new Runnable(){
+//			public void run(){
+//				TextChatBox.createAndShowGUI();
+//			}
+//		});
+//	}
+//}

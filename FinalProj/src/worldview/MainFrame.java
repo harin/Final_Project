@@ -14,9 +14,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Menu.SoundControlEvent;
-import Menu.SoundEvent;
-
 
 public class MainFrame extends JFrame {
 	private JMenuBar menuBar;
@@ -118,6 +115,11 @@ public class MainFrame extends JFrame {
 		worldView = new WorldView(WIDTH,HEIGHT, immigration);
 		
 		this.getLayeredPane().add(zoomPanel, new Integer(100));
+		
+		TextChatBox chatBox = new TextChatBox("Chat Box");
+		chatBox.createAndShowGUI();
+		worldViewPanel.add(chatBox);
+		
 
 		worldViewPanel.add(worldView);
 		
