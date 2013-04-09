@@ -11,7 +11,7 @@ import java.util.Set;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-public class fetchInformation {
+public class FetchInformation {
 	 final String domain =  "http://iceworld.sls-atl.com/api/&cmd=states";
 	  String cmd;
 	  Set keys;
@@ -27,7 +27,7 @@ public class fetchInformation {
 	  //linkedlist of NullIcetizen
 		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
 	  
-	  public fetchInformation(){
+	  public FetchInformation(){
 		  try{
 			  
 			  
