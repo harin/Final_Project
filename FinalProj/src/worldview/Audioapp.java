@@ -18,6 +18,7 @@ public class Audioapp extends JApplet{
 				song = AudioSystem.getClip();
 		        song.open(audioInputStream);
 		        song.start();
+		        
 				}catch(Exception e){
 									}// Satisfy the catch
 		}
