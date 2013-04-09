@@ -152,18 +152,47 @@ public class FetchTest2 {
 	  System.out.println("Total peole(included null positon):"+--testing);
 	}
 	//sample
-//	public void test(){
+//	import java.awt.Graphics;
+//	import java.awt.image.BufferedImage;
 //
-//			super.paintComponent(g);
-//			GetCharacterImage("http://iceworld.sls-atl.com/graphics/head/"+headnum[headcount]+".png","http://iceworld.sls-atl.com/graphics/body/"+bodynum[bodycount]+".png","http://iceworld.sls-atl.com/graphics/shirt/"+shirtnum[shirtcount]+".png","http://iceworld.sls-atl.com/graphics/weapon/"+weaponnum[weaponcount]+".png","null");
+//	import javax.swing.JPanel;
 //
-//			g.drawImage(background, 40,20, this);
 //
-//			g.drawImage(body, 50,25, this);
-//			g.drawImage(shirt, 50,25, this);
-//			g.drawImage(head, 50,25, this);
-//			g.drawImage(weapon,50,25,this);
-//			}
-//			
-//	
+//	public class CharacterLoad extends JPanel{
+//
+//	static BufferedImage head,body,shirt,weapon,background;
+//	int bodycount=0;
+//	int headcount=0;
+//	int shirtcount=0;
+//	int weaponcount=0;
+//	String [] shirtnum = {"t_ice","t_ice2","t_apppro","armor1","armor2","armor3","armor4","armor5","shirt1","shirt2","shirt3","shirt4","shirt5","shirt6","tank2","tank3","tank4","tank5","suit1","suit2","suit3","suit4","suit5"};
+//	String [] weaponnum = {"hammer1","hammer2","hammer3","hammer4","hammer5","sword1","sword2","sword3","sword4","sword5","stick1","stick2","stick3","stick4","sabre1","sabre2","sabre3","sabre4","sabre5"};
+//	String [] headnum = {"crown1","crown2","hat1","hat2","bighair1","bighair2","bighair3","bighair4","rider1","rider2","rider3"};
+//	String [] bodynum = {"skin","tan","blue","pink","yellow","pale","gray","orangy","blue",};
+//	public static void GetCharacterImage(String H,String B,String S,String W, String BG){
+//	try{
+//	head=ImageLoader.GetImageFromCloud(heart);
+//	body=ImageLoader.GetImageFromCloud(beer);
+//	shirt=ImageLoader.GetImageFromCloud(S);
+//	weapon=ImageLoader.GetImageFromCloud(W);
+//	}
+//	catch(Exception e){}
+//	/*background=ImageLoader.GetImageFromCloud(BG);*/
+//
+//
+//	}
+//
+//	public void paintComponent(Graphics g){
+//
+//	super.paintComponent(g);
+//	GetCharacterImage("http://iceworld.sls-atl.com/graphics/head/"+headnum[headcount]+".png","http://iceworld.sls-atl.com/graphics/body/"+bodynum[bodycount]+".png","http://iceworld.sls-atl.com/graphics/shirt/"+shirtnum[shirtcount]+".png","http://iceworld.sls-atl.com/graphics/weapon/"+weaponnum[weaponcount]+".png","null");
+//
+//	g.drawImage(background, 40,20, this);
+//
+//	g.drawImage(body, 50,25, this);
+//	g.drawImage(shirt, 50,25, this);
+//	g.drawImage(head, 50,25, this);
+//	g.drawImage(weapon,50,25,this);
+//	}
+//	}
 }
