@@ -32,7 +32,7 @@ public class WorldView extends JPanel {
 		private Timer timer;
 		private int delay = 40;
 		private int walkRateX, walkRateY;
-		private String currentWeather ="Sunny";
+		private String currentWeather ="Cloudy";
 		private Image grassTile;
 		
 		private BufferedImage bufferImage;
@@ -113,6 +113,8 @@ public class WorldView extends JPanel {
 			//draw weather
 			
 			drawForegroundWeather(g);
+			
+			
 			
 			
 		}
@@ -376,9 +378,9 @@ public class WorldView extends JPanel {
 				//icetizen.move(highlightTile.x, highlightTile.y);
 				Point dest = new Point(highlightTile.x, highlightTile.y);
 				activeIcetizen.setDestination(dest);
-//				if (immigration.walk(dest.x, dest.y)){
-//					System.out.println("Walk OK");
-//				}
+				if (immigration.walk(dest.x, dest.y)){
+					System.out.println("Walk OK");
+				}
 				
 				activeIcetizen.setTalkMsg("I am walking");
 

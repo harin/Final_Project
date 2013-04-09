@@ -11,6 +11,11 @@ import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import Menu.SoundControlEvent;
+import Menu.SoundEvent;
 
 
 public class MainFrame extends JFrame {
@@ -24,8 +29,13 @@ public class MainFrame extends JFrame {
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
+	JMenuItem sound;//
+	JSlider BGSound;//
+	Audioapp song;//
 	
 	public MainFrame(){	
+		song=new Audioapp("sound/BGSong.wav");//
+		song.playSound();//
 		activeIcetizen = new NullIcetizen();
 		immigration = new ICEWorldImmigration(activeIcetizen);
 		
@@ -59,6 +69,12 @@ public class MainFrame extends JFrame {
 		setting.addActionListener(z);
 		menuMenu.add(setting);
 		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));	
+		
+		//sound						
+		SoundEvent s= new SoundEvent();
+		sound=new JMenuItem("Sound");
+		sound.addActionListener(s);
+		menuMenu.add(sound);		
 		
 		//quit menu
 		QuitEvent q=new QuitEvent();
@@ -165,6 +181,33 @@ public class MainFrame extends JFrame {
 		 }
 	}
 	 
+	public class SoundEvent implements ActionListener{//
+		public void actionPerformed(ActionEvent e){
+			JDialog dialog=new JDialog();
+			BGSound=new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
+			BGSound.setMajorTickSpacing(10);
+			BGSound.setPaintTicks(true);
+			dialog.add(BGSound);
+			
+			SoundControlEvent slide=new SoundControlEvent();
+			BGSound.addChangeListener(slide);
+			
+			dialog.setLocationRelativeTo(null);
+			dialog.pack();
+			dialog.setVisible(true);	
+		}
+	}
+
+	public class SoundControlEvent implements ChangeListener{//
+		public void stateChanged(ChangeEvent e){
+			int value=BGSound.getValue();
+			if(value<50){
+				song.increaseSound();
+			}else{
+				song.decreaseSound();
+			}
+		}
+	}
 	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
