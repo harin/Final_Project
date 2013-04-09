@@ -138,7 +138,7 @@ public class MainFrame extends JFrame {
 	
 	
 //----------------------------------------------------------------------
-//Action Listeners
+//			Action Listeners
 //------------------------------------------------------------------------
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
@@ -174,8 +174,8 @@ public class MainFrame extends JFrame {
 	}
 	
 //----------------------------------------------------------------------------------------
-	//login page class
-	
+//			Login Page Class
+//----------------------------------------------------------------------------------------	
 	public class LoginPage extends JPanel {
 		private JPasswordField passwordField;
 		private String [] userHistory;
