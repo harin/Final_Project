@@ -14,9 +14,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import Menu.SoundControlEvent;
-import Menu.SoundEvent;
-
 
 public class MainFrame extends JFrame {
 	private JMenuBar menuBar;
