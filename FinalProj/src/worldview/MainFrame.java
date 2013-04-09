@@ -30,8 +30,10 @@ public class MainFrame extends JFrame {
 	JSlider BGSound;//
 	Audioapp song;//
 	
-	public MainFrame(){	
-		song=new Audioapp("sound/BGSong.wav");//
+	public MainFrame(){
+		try{
+		String songName = "BGSong.wav";
+		song=new Audioapp(songName);//
 		song.playSound();//
 		activeIcetizen = new NullIcetizen();
 		immigration = new ICEWorldImmigration(activeIcetizen);
@@ -40,6 +42,9 @@ public class MainFrame extends JFrame {
 		setSize(WIDTH,HEIGHT);
 		setJMenuBar(makeMenuBar());
 		setGUI();
+		}catch(Exception e){
+			System.out.println("Sound in mainframe :   "+e);
+		}
 	}
 	
 	

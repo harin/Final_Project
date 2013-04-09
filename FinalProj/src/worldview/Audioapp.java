@@ -9,8 +9,9 @@ import javax.sound.sampled.*;
 public class Audioapp extends JApplet{
 	//public class Sound{// Holds one audio file
 		private Clip song;// Sound player
-		 private URL songPath;// Sound path
+		private URL songPath;// Sound path
 		AudioClip audioClip;
+		
 		Audioapp(String filename){
 			try{
 				songPath = this.getClass().getClassLoader().getResource(filename);// Get the Sound URL
@@ -20,6 +21,7 @@ public class Audioapp extends JApplet{
 		        song.start();
 		        
 				}catch(Exception e){
+					System.out.println("Sound error is:  "+e);
 									}// Satisfy the catch
 		}
 		public void playSound(){
