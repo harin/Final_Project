@@ -151,4 +151,19 @@ public class FetchTest2 {
 
 	  System.out.println("Total peole(included null positon):"+--testing);
 	}
+	//sample
+//	public void test(){
+//
+//			super.paintComponent(g);
+//			GetCharacterImage("http://iceworld.sls-atl.com/graphics/head/"+headnum[headcount]+".png","http://iceworld.sls-atl.com/graphics/body/"+bodynum[bodycount]+".png","http://iceworld.sls-atl.com/graphics/shirt/"+shirtnum[shirtcount]+".png","http://iceworld.sls-atl.com/graphics/weapon/"+weaponnum[weaponcount]+".png","null");
+//
+//			g.drawImage(background, 40,20, this);
+//
+//			g.drawImage(body, 50,25, this);
+//			g.drawImage(shirt, 50,25, this);
+//			g.drawImage(head, 50,25, this);
+//			g.drawImage(weapon,50,25,this);
+//			}
+//			
+//	
 }
