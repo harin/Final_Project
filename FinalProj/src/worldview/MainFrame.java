@@ -28,12 +28,14 @@ public class MainFrame extends JFrame {
 	private final int HEIGHT = 800;
 	JMenuItem sound;//
 	JSlider BGSound;//
-	Audioapp song;//
+	//Audioapp song;//
+	Sound song;
 	
 	public MainFrame(){
 		try{
 		String songName = "BGSong.wav";
-		song=new Audioapp(songName);//
+		//song=new Audioapp(songName);//
+		song = new Sound(songName);
 		song.playSound();//
 		activeIcetizen = new NullIcetizen();
 		immigration = new ICEWorldImmigration(activeIcetizen);
