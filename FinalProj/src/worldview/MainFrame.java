@@ -18,7 +18,7 @@ import javax.swing.event.ChangeListener;
 public class MainFrame extends JFrame {
 	private JMenuBar menuBar;
 	private JMenu menuMenu;
-	private JMenuItem about,help,setting,quit;
+	private JMenuItem about,help,setting,logout,quit;
 	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
@@ -79,6 +79,12 @@ public class MainFrame extends JFrame {
 		sound=new JMenuItem("Sound");
 		sound.addActionListener(s);
 		menuMenu.add(sound);		
+		
+		//logout menu
+		logout=new JMenuItem("Log Out");
+		logout.addActionListener(new LogOutEvent());
+		menuMenu.add(help);
+				
 		
 		//quit menu
 		QuitEvent q=new QuitEvent();
@@ -183,7 +189,11 @@ public class MainFrame extends JFrame {
 //			settingDialog();
 		 } 
 	}
-	
+	public class LogOutEvent implements ActionListener{
+		 public void actionPerformed(ActionEvent e){
+			 System.exit(0);
+		 }
+	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 System.exit(0);
@@ -211,9 +221,9 @@ public class MainFrame extends JFrame {
 		public void stateChanged(ChangeEvent e){
 			int value=BGSound.getValue();
 			if(value<50){
-				song.increaseSound();
+				song.increase();
 			}else{
-				song.decreaseSound();
+				song.decrease();
 			}
 		}
 	}
