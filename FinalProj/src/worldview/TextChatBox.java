@@ -77,6 +77,7 @@ public class TextChatBox extends JFrame implements ActionListener{
 		String ret = in.readLine();
 		return ret;
 	}
+}
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 
