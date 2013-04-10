@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
+	
 //	JMenuItem sound;//
 //	JSlider BGSound;//
 	//Audioapp song;//
@@ -43,6 +44,7 @@ public class MainFrame extends JFrame {
 		
 		setTitle("The Null");
 		setSize(WIDTH,HEIGHT);
+		setLocationRelativeTo(null);
 		setJMenuBar(makeMenuBar());
 		setGUI();
 		}catch(Exception e){
@@ -129,9 +131,9 @@ public class MainFrame extends JFrame {
 		
 		this.getLayeredPane().add(zoomPanel, new Integer(100));
 		
-		TextChatBox chatBox = new TextChatBox("Chat Box");
-		chatBox.createAndShowGUI();
-		worldViewPanel.add(chatBox);
+
+		TextChatBox.createAndShowGUI();
+//		worldViewPanel.add(chatBox);
 		
 
 		worldViewPanel.add(worldView);
@@ -250,7 +252,7 @@ public class MainFrame extends JFrame {
 		 * Create the panel.
 		 */
 		public LoginPage() {
-			setLayout(null);
+			setLayout(null); 
 			
 			JLabel lblUsername = new JLabel("Username");
 			lblUsername.setBounds(122, 88, 72, 16);
@@ -294,7 +296,7 @@ public class MainFrame extends JFrame {
 			
 			
 			JButton loginBut = new JButton("Login");
-			loginBut.setBounds(216, 166, 117, 29);
+			loginBut.setBounds(216, 166, 117, 29); 
 			loginBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
 					password = new String(passwordField.getPassword());
