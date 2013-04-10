@@ -1,6 +1,6 @@
 package sample;
 
-import MainFrame;
+
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

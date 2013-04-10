@@ -21,7 +21,7 @@ public class NullIcetizen implements MyIcetizen{
 	private BufferedImage lookImage;
 	private static InetAddress ip;
 	private String ipAddress;
-	private int type; //0 for alien, 1 for icetizen
+	private long type; //0 for alien, 1 for icetizen
 	private Point destination;//store destination tile coordinate
 	private Point pos;//store current tile coordinate
 	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
@@ -55,7 +55,7 @@ public class NullIcetizen implements MyIcetizen{
 		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730,new Point(0,0), new Point(0,0));
 	}
 	
-	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,int type,long timestamp,Point position,Point destination){
+	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,long type,long timestamp,Point position,Point destination){
 		this.userid = userid;
 		this.username = username;
 		this.icePortId = portId;
