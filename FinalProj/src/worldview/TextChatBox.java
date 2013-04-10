@@ -26,7 +26,7 @@ public class TextChatBox extends JFrame implements ActionListener{
 	
 	public static void createAndShowGUI(){
 		TextChatBox console = new TextChatBox("Chat Box");
-		console.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		console.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		console.pack();
 		console.setVisible(true);
 	}
