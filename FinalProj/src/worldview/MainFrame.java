@@ -105,37 +105,41 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void switchToWorldView(){
+		
+		JLayeredPane lp = this.getLayeredPane();
+		
 		worldViewPanel = new JPanel();
 		worldViewPanel.setSize(this.WIDTH,this.HEIGHT);
 		worldViewPanel.setLayout(null);
 		worldViewPanel.setBackground(Color.BLACK);
-		
-		JPanel zoomPanel = new JPanel();
-		zoomPanel.setBounds(WIDTH -60, HEIGHT-150,60,60);
+
+		//zoom in
 		JButton zoomIn = new JButton("+");
-		JButton zoomOut = new JButton("-");
+		int zoomWidth = 50;
+		int zoomHeight = 50;
+		zoomIn.setBounds(this.WIDTH - zoomWidth -10	,this.HEIGHT - zoomHeight*3,zoomWidth,zoomHeight);
 		zoomIn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				worldView.zoomIn();
 			}
 		});
+		lp.add(zoomIn,new Integer(100));
+		
+		//zoom out
+		JButton zoomOut = new JButton("-");
+		zoomOut.setBounds(this.WIDTH - zoomWidth -10	,this.HEIGHT - zoomHeight*2,zoomWidth,zoomHeight);
 		zoomOut.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
 				worldView.zoomOut();
 			}
 		});
-		zoomPanel.add(zoomIn);
-		zoomPanel.add(zoomOut);
+		lp.add(zoomOut,new Integer(100));
+		
 		
 		worldView = new WorldView(WIDTH,HEIGHT, immigration);
-		
-		this.getLayeredPane().add(zoomPanel, new Integer(100));
-		
 
 		TextChatBox.createAndShowGUI();
-//		worldViewPanel.add(chatBox);
 		
-
 		worldViewPanel.add(worldView);
 		
 		this.setContentPane(worldViewPanel);
