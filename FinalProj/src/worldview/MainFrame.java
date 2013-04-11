@@ -138,11 +138,14 @@ public class MainFrame extends JFrame {
 
 		worldViewPanel.add(worldView);
 		
-		
-		
 		this.setContentPane(worldViewPanel);
 		revalidate();
 	}
+	
+	public void activeIcetizenTalk(String s){
+		this.activeIcetizen.setTalkMsg(s);
+	}
+	
 	//--------------------------------------------------------------------------------
 	// Author dialog
 	//--------------------------------------------------------------------------------

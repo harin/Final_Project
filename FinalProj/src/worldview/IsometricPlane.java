@@ -10,7 +10,6 @@ public class IsometricPlane{
 
 	public static void drawBoardTile(Graphics g,int x,int y, int size, int tileSide, Point[][] tileCoord){
 		
-		
 		for(int i =0 ; i<size; i++){ // x multiplier
 			for(int j=0; j<size; j++){// y multiplier
 				int tileX = x + i*(tileSide) - j*(tileSide/2);
