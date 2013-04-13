@@ -1,11 +1,15 @@
 package setting;
 
+import javax.swing.BorderFactory;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.GridLayout;
 
 
 @SuppressWarnings("serial")
@@ -33,16 +37,51 @@ public class Setting extends JPanel
     	JPanel panel = new JPanel();
     	JLabel label = new JLabel("BGM/soundFX");
     	
+    	
+    	
+    	
+    	
 		panel.add(label);
     	
     	return panel;
     }
     
     private JPanel customPanel() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Avartar  Body  Shirt  Headgear  Weapon");
+    	JPanel panel = new JPanel(new GridLayout(1,2,2,2));
+    	JPanel LeftPanel = new JPanel(new GridLayout(9,1,2,2));
+    	JPanel RightPanel = new JPanel(new GridLayout(1,1,4,4));
+    	LeftPanel.setBorder(BorderFactory.createTitledBorder("Avatar"));
+
+    	JLabel bodyLabel = new JLabel("Body");
+    	JLabel headLabel = new JLabel("Head");
+    	JLabel shirtLabel = new JLabel("Shirt");
+    	JLabel weaponLabel = new JLabel("Weapon");
+    	 
+    	String[] bodyStrings = {"B001","B002","B003","B004","B005","B006"};
+    	String[] headStrings = {"H001","H002","H003","H004","H005","H006"};
+    	String[] shirtStrings = {"S001","S002","S003","S004","S005","S006"};
+    	String[] weaponStrings = {"W001","W002","W003","W004","W005","W006"};
     	
-		panel.add(label);
+    	
+    	JComboBox bodyBox = new JComboBox(bodyStrings);
+    	JComboBox headBox = new JComboBox(headStrings);
+    	JComboBox shirtBox = new JComboBox(shirtStrings);
+    	JComboBox weaponBox = new JComboBox(weaponStrings);
+    	   	
+
+    	
+    	LeftPanel.add(bodyLabel);
+    	LeftPanel.add(bodyBox);
+    	LeftPanel.add(headLabel);
+    	LeftPanel.add(headBox);
+    	LeftPanel.add(shirtLabel);
+    	LeftPanel.add(shirtBox);
+    	LeftPanel.add(weaponLabel);
+    	LeftPanel.add(weaponBox);
+    	
+    	panel.add(LeftPanel);
+		panel.add(RightPanel);
+		add(panel);
     	
     	return panel;
     }
