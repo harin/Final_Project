@@ -91,28 +91,38 @@ public class FetchTest2 {
 	  
 	//   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null) )  {
 
-
 			   try{
+				   String stringPosition="no position";
+				   Point    position = new Point(0,0);
+				   long timestamp = -1;;
+				   String s;
 				   
-			  
-				   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null)){
+				   try{//4 loop
+					   if(last_known_destinantion.get("timestamp").equals(null) && last_known_destinantion.get("position").equals(null)){
+						   String timestampString = ""+last_known_destinantion.get("timestamp"); 
+						   stringPosition = (String) last_known_destinantion.get("position");
+						   timestamp = Long.parseLong(timestampString);
+						   
+						   int beginIndex = 1;
+						   int endIndex = stringPosition.indexOf(",");
+						   int beginIndex2 = endIndex+1;
+						   int endIndex2 = stringPosition.indexOf(")");
+					
+					
+						   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
+						   
+						   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
+						   
+						   
+						    position = new Point( x , y);
+					   }
+					   else{
+						   
+						    timestamp = -1;
+							  position = new Point(0,0);
+					   }
+				   }catch(Exception e){}
 				   
-					   String timestampString = ""+last_known_destinantion.get("timestamp"); 
-					   String stringPosition = (String) last_known_destinantion.get("position");
-					   long timestamp = Long.parseLong(timestampString);
-					   
-					   int beginIndex = 1;
-					   int endIndex = stringPosition.indexOf(",");
-					   int beginIndex2 = endIndex+1;
-					   int endIndex2 = stringPosition.indexOf(")");
-				
-				
-					   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
-					   
-					   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
-					   
-					   
-					   Point position = new Point( x , y);
 					   JSONObject user   = (JSONObject) userid.get("user");
 					   System.out.println("==========================");
 					   System.out.println(stringPosition);
@@ -127,20 +137,17 @@ public class FetchTest2 {
 					   System.out.println("postion:"+position);
 					   System.out.println("timestamp:"+timestamp);
 					   System.out.println("Testing Subject:"+testing);
-						}
-				   
-				   else{
 						
-						System.out.println("Input error"+countError++);
-						// do nothing
-						}
-			   }catch(Exception e){}
-			   
-				  testing++;
+				   
+				   
+			   }catch(Exception e){
+				   System.out.println("Error:"+e);
+			   		e.printStackTrace();}
+			testing++;
 		
-				}
+			}
 			  
-			   System.out.println("Testing:"+testing);
+		  	System.out.println("Testing:"+testing);
 		
 		
 		}catch(Exception e){
