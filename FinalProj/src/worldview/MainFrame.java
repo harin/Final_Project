@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
+	SplashScreen sp;
 	
 //	JMenuItem sound;//
 //	JSlider BGSound;//
@@ -39,6 +40,8 @@ public class MainFrame extends JFrame {
 //		//song=new Audioapp(songName);//
 //		song = new Sound(songName);
 //		song.playSound();//
+			
+		sp=new SplashScreen();
 		activeIcetizen = new NullIcetizen();
 		immigration = new ICEWorldImmigration(activeIcetizen);
 		
