@@ -10,14 +10,18 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
 
 
 @SuppressWarnings("serial")
-public class Setting extends JPanel
-{   JTabbedPane tabbedPane = new JTabbedPane();
+public class Setting extends JPanel{
+	LoadVisualResources avatar;
+	
+	
+	JTabbedPane tabbedPane = new JTabbedPane();
     JFrame frame;
 
-    public Setting(JFrame frame){
+    public Setting(JFrame frame) throws IOException{
     	
     	super(new BorderLayout());
     	this.frame = frame;
@@ -46,7 +50,10 @@ public class Setting extends JPanel
     	return panel;
     }
     
-    private JPanel customPanel() {
+    private JPanel customPanel() throws IOException {
+    	LoadVisualResources.init();
+    	avatar= new LoadVisualResources();
+    	
     	JPanel panel = new JPanel(new GridLayout(1,2,2,2));
     	JPanel LeftPanel = new JPanel(new GridLayout(9,1,2,2));
     	JPanel RightPanel = new JPanel(new GridLayout(1,1,4,4));
@@ -57,16 +64,16 @@ public class Setting extends JPanel
     	JLabel shirtLabel = new JLabel("Shirt");
     	JLabel weaponLabel = new JLabel("Weapon");
     	 
-    	String[] bodyStrings = {"B001","B002","B003","B004","B005","B006"};
-    	String[] headStrings = {"H001","H002","H003","H004","H005","H006"};
-    	String[] shirtStrings = {"S001","S002","S003","S004","S005","S006"};
-    	String[] weaponStrings = {"W001","W002","W003","W004","W005","W006"};
+//    	String[] bodyStrings = {"B001","B002","B003","B004","B005","B006"};
+//    	String[] headStrings = {"H001","H002","H003","H004","H005","H006"};
+//    	String[] shirtStrings = {"S001","S002","S003","S004","S005","S006"};
+//    	String[] weaponStrings = {"W001","W002","W003","W004","W005","W006"};
     	
     	
-    	JComboBox bodyBox = new JComboBox(bodyStrings);
-    	JComboBox headBox = new JComboBox(headStrings);
-    	JComboBox shirtBox = new JComboBox(shirtStrings);
-    	JComboBox weaponBox = new JComboBox(weaponStrings);
+    	JComboBox bodyBox = new JComboBox(avatar.bodyS);
+    	JComboBox headBox = new JComboBox(avatar.headS);
+    	JComboBox shirtBox = new JComboBox(avatar.shirtS);
+    	JComboBox weaponBox = new JComboBox(avatar.weaponS);
     	   	
 
     	
@@ -78,6 +85,8 @@ public class Setting extends JPanel
     	LeftPanel.add(shirtBox);
     	LeftPanel.add(weaponLabel);
     	LeftPanel.add(weaponBox);
+    	
+    	RightPanel.add(avatar);
     	
     	panel.add(LeftPanel);
 		panel.add(RightPanel);
@@ -96,11 +105,15 @@ public class Setting extends JPanel
         //creating and showing this application's GUI.
      javax.swing.SwingUtilities.invokeLater(new Runnable(){
          public void run(){
-             createAndShowGUI();          
+             try {
+				createAndShowGUI();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}          
          }
      });
     }
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws IOException {
         //Create and set up the window.
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
