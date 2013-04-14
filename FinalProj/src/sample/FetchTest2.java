@@ -29,7 +29,7 @@ public class FetchTest2 {
 	  int testing =1;
 
 	  
-	  try{
+	  try{ // 1 try
 		  System.out.println("Test of keys and necessary information");
 		  URL iceworld = new URL(domain);
 		  URLConnection con = iceworld.openConnection();
@@ -91,13 +91,13 @@ public class FetchTest2 {
 	  
 	//   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null) )  {
 
-			   try{
+			   try{ // 2 try
 				   String stringPosition="no position";
 				   Point    position = new Point(0,0);
 				   long timestamp = -1;;
 				   String s;
 				   
-				   try{//4 loop
+				   try{//3 try
 					   if(last_known_destinantion.get("timestamp").equals(null) && last_known_destinantion.get("position").equals(null)){
 						   String timestampString = ""+last_known_destinantion.get("timestamp"); 
 						   stringPosition = (String) last_known_destinantion.get("position");
