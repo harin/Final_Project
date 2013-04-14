@@ -41,6 +41,11 @@ public class FetchInformation {
 	  String weapon;
 	  String shirt;
 	  long type;
+	  int listeningPort;
+	  Point position;
+	  Point destination;
+	  long timestamp;
+	  
 	  //linkedlist of NullIcetizen
 		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
 	  
@@ -81,29 +86,30 @@ public class FetchInformation {
 						.get("last_known_destination");
 
 				try { // loop2
-					if (!last_known_destinantion.get("timestamp").equals(null)
-							&& !last_known_destinantion.get("position").equals(
-									null)) {
-
-						long timestamp = (long) last_known_destinantion
-								.get("timestamp");
-						String stringPosition = (String) last_known_destinantion
-								.get("position");
+					if (last_known_destinantion.get("timestamp").equals(null)&& last_known_destinantion.get("position").equals(null)) {
+						position = new Point(0, 0);
+						destination = new Point(0,0);
+						timestamp =-1;
+					}
+					else{
+						 timestamp = (long) last_known_destinantion.get("timestamp");
+						String stringPosition = (String) last_known_destinantion.get("position");
+						
 						int beginIndex = 1;
 						int endIndex = stringPosition.indexOf(",");
 						int beginIndex2 = endIndex + 1;
 						int endIndex2 = stringPosition.indexOf(")");
-						int x = Integer.parseInt(stringPosition.substring(
-								beginIndex, endIndex));
-						int y = Integer.parseInt(stringPosition.substring(
-								beginIndex2, endIndex2));
+						
+						int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
+						int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
 
-						int listeningPort = Integer.parseInt((String) user
-								.get("port"));
+						listeningPort = Integer.parseInt(user.get("port").toString());
 
-						Point position = new Point(x, y);
-						Point destination = new Point(x, y);
-
+						position = new Point(x, y);
+						destination = new Point(x, y);
+					}
+						
+						
 						// Doing icetizenLook
 						// object key ---> userid
 						// domain2 =
@@ -128,19 +134,14 @@ public class FetchInformation {
 									.parse(jcloth);
 							Set keyInResource = gresource.keySet();
 
-							JSONArray cloth = (JSONArray) gresource.get("data"); // cloth
-																					// =
-																					// data
-																					// is
-																					// a
-																					// array
+							JSONArray cloth = (JSONArray) gresource.get("data"); // cloth = data is a array
+																				
 
-							String clothString = cloth.toJSONString(); // cloth
-																		// in
-																		// string
+							String clothString = cloth.toJSONString(); // cloth in string
+																
 							clothString = clothString.substring(1,
-									clothString.length() - 1);// [ ] to cut out
-																// the bracket
+									clothString.length() - 1);// [ ] to cut out the bracket
+																
 							JSONParser clothparser = new JSONParser();
 							JSONObject clothSon = (JSONObject) clothparser
 									.parse(clothString);
@@ -159,13 +160,10 @@ public class FetchInformation {
 							list.add(new NullIcetizen(id, username, pid,listeningPort, look, ip, type, timestamp,position, destination));
 
 						} catch (Exception e) {
-							System.out
-									.println("error during get the look:" + e);
+							System.out.println("error during get the look:" + e);
 						}
 
-					} else {
-						// do nothing
-					}
+					
 				} catch (Exception e) {
 					System.out
 							.println("Cannot fetch the information from the server");
@@ -183,16 +181,14 @@ public class FetchInformation {
 	}
 	  
 	  
-	  public  BufferedImage loadImageFromRemote(String uri){
+	public static BufferedImage GetImageFromCloud(String url){
 		  BufferedImage image = null;
-
 		  try {
-		   image = ImageIO.read(new URL(uri));
+		   image = ImageIO.read(new URL(url));
 		  } catch (Exception e) {
-		   System.out.println("Error from trying to get the image:"+e);
+		   e.printStackTrace();
 		  } 
-		  return image;
-
+		 return image;
 		 }
 	  
 	  
@@ -203,4 +199,5 @@ public class FetchInformation {
 	  public String getWeatherCondition(){
 		  return weatherCondition;
 	  }
+	  
 }
