@@ -27,8 +27,9 @@ public class getUserTest {
 			 URLConnection con = iceworld.openConnection();
 			 BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			 String jcloth = in.readLine();
-			 System.out.println(jcloth);
-		  
+			 System.out.println("jcloth"+jcloth);
+			 in.close();
+			
 			 JSONParser dream = new JSONParser();
 			 JSONObject gresource = (JSONObject) dream.parse(jcloth);
 			  Set keyInResource 	= gresource.keySet();
@@ -63,6 +64,26 @@ public class getUserTest {
 
 		//	 System.out.println("Head is:"+cloth.get("H"));
 			 
+			 System.out.println("=============================");
+			 
+			 URL thelink = new URL(domain3+w);
+			 System.out.println(thelink);
+			 
+			 URLConnection con2 = thelink.openConnection();
+			 BufferedReader receive = new BufferedReader(new InputStreamReader(con2.getInputStream()));
+			 String image = receive.readLine();
+
+			 
+			 JSONParser dream2 = new JSONParser();
+			 JSONObject linkReturn = (JSONObject) dream2.parse(image);
+			 
+			 Set linkKey = linkReturn.keySet();
+			 System.out.println("linkey"+linkKey);
+			 
+			 JSONObject findLink = (JSONObject) linkReturn.get("data");
+			 System.out.println(findLink);
+			 String theLink = findLink.get("location").toString();
+			 System.out.println("The Link is:"+theLink);
 			 
 		 }catch(Exception e){
 			 System.out.println("error:"+e);

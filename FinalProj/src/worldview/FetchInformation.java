@@ -4,9 +4,12 @@ package worldview;
 
 import iceworld.given.*;
 
+import java.awt.Image;
+
 import java.awt.Point;
 import java.awt.image.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -19,6 +22,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
+
 public class FetchInformation {
 	 final String domain =  "http://iceworld.sls-atl.com/api/&cmd=states";
 	 final String domain2 = "http://iceworld.sls-atl.com/api/&cmd=gresources&uid=";
@@ -26,7 +33,10 @@ public class FetchInformation {
 	 final String domain4 = "http://iceworld.sls-atl.com/";
 	  
 	 
-	 
+	  Image weaponImage;
+	  Image bodyImage;
+	  Image shirtImage;
+	  Image headImage;
 	  String cmd;
 	  Set keys;
 	  JSONParser parser;
@@ -121,17 +131,13 @@ public class FetchInformation {
 						try {
 							String userLook = domain2 + key.toString();
 							URL userLookurl = new URL(userLook);
-							URLConnection lookCon = userLookurl
-									.openConnection();
-							BufferedReader lookBuff = new BufferedReader(
-									new InputStreamReader(
-											lookCon.getInputStream()));
+							URLConnection lookCon = userLookurl.openConnection();
+							BufferedReader lookBuff = new BufferedReader(new InputStreamReader(lookCon.getInputStream()));
 							String jcloth = lookBuff.readLine();
 							System.out.println(jcloth);
 
 							JSONParser dream = new JSONParser();
-							JSONObject gresource = (JSONObject) dream
-									.parse(jcloth);
+							JSONObject gresource = (JSONObject) dream.parse(jcloth);
 							Set keyInResource = gresource.keySet();
 
 							JSONArray cloth = (JSONArray) gresource.get("data"); // cloth = data is a array
@@ -139,20 +145,29 @@ public class FetchInformation {
 
 							String clothString = cloth.toJSONString(); // cloth in string
 																
-							clothString = clothString.substring(1,
-									clothString.length() - 1);// [ ] to cut out the bracket
+							clothString = clothString.substring(1,clothString.length() - 1);// [ ] to cut out the bracket
 																
 							JSONParser clothparser = new JSONParser();
-							JSONObject clothSon = (JSONObject) clothparser
-									.parse(clothString);
+							JSONObject clothSon = (JSONObject) clothparser.parse(clothString);
 
 							weapon = clothSon.get("W").toString();
 							body = clothSon.get("B").toString();
 							shirt = clothSon.get("S").toString();
 							head = clothSon.get("H").toString();
+							
+							String weaponURL = domain4+getURL(weapon);
+							String bodyURL =  domain4 + getURL(body);
+							String shirtURL = domain4 + getURL(shirt);
+							String headURL =  domain4 + getURL(head);
+							
+							weaponImage = fetchImageFromCloud(weaponURL);
+							bodyImage = fetchImageFromCloud(bodyURL);
+							shirtImage = fetchImageFromCloud(shirtURL);
+							headImage = fetchImageFromCloud(headURL);
 
 							// set the look!?!?!!??!??
-							look.gidB = body;
+							
+							look.gidB = weapon;
 							look.gidS = shirt;
 							look.gidH = head;
 							look.gidW = weapon;
@@ -180,17 +195,42 @@ public class FetchInformation {
 		System.out.println("Fetching OK");
 	}
 	  
-	  
-	public static BufferedImage GetImageFromCloud(String url){
-		  BufferedImage image = null;
-		  try {
-		   image = ImageIO.read(new URL(url));
-		  } catch (Exception e) {
-		   e.printStackTrace();
-		  } 
-		 return image;
-		 }
-	  
+	public BufferedImage fetchImageFromCloud(String url){
+		BufferedImage image = null;
+		try {
+			image = ImageIO.read(new URL(url));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	return image;
+	}
+
+	
+	public String getURL(String serial){
+		String URL =null ;
+		try{ 
+			
+			
+		URL thelink = new URL(domain3+serial);
+		 System.out.println(thelink);
+		 
+		 URLConnection con2 = thelink.openConnection();
+		 BufferedReader receive = new BufferedReader(new InputStreamReader(con2.getInputStream()));
+		 String image = receive.readLine();
+
+		 
+		 JSONParser dream2 = new JSONParser();
+		 JSONObject linkReturn = (JSONObject) dream2.parse(image);
+		 		 
+		 JSONObject findLink = (JSONObject) linkReturn.get("data");
+		 URL = findLink.get("location").toString();
+			
+		}catch(Exception e){
+			System.out.println("Cannot get the URL:"+e);
+		}
+		
+		return URL;
+	}
 	  
 	  public long  getTimeWeatherLastChange(){
 		  return  timeWeatherLastChange;
