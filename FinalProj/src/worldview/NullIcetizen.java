@@ -27,8 +27,11 @@ public class NullIcetizen implements MyIcetizen{
 	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
 	
 	private final int talkDelay = 100; // 4 second for 25 fps
+	private final int yellDelay = 125; // requirement 5 second
 	private int talkCountdown;
 	private String talkMsg;
+	private int yellCountdown;
+	private String yellMsg;
 	
 	private Image scaleImage;
 	
@@ -79,6 +82,10 @@ public class NullIcetizen implements MyIcetizen{
 		lookImage = null;
 		scaleImage= null;
 		prepareLookImage();
+		
+		//yell propreties
+		this.yellCountdown = 0;
+		this.yellMsg = "";
 	}
 	public void prepareLookImage(){
 		String body ="blue.png";
@@ -163,6 +170,17 @@ public class NullIcetizen implements MyIcetizen{
 		return this.talkMsg;
 	}
 	
+	//yell
+	public int getYellSecondLeft(){
+		return this.talkCountdown;
+	}
+	
+	public String getYellMsg(){
+		
+		this.yellCountdown--;
+		return this.yellMsg;
+	}
+	
 	//---------------------------------------------------------------------------------
 	//Setter
 	//---------------------------------------------------------------------------------
@@ -207,7 +225,12 @@ public class NullIcetizen implements MyIcetizen{
 		talkCountdown = talkDelay;
 	}
 
-
+	public void setYellMsg(String s){
+		this.yellMsg = s;
+		yellCountdown = yellDelay;
+	}
+	
+	
 	
 	//compare NullIcetizen "Is he the same person"
 	public boolean compare(NullIcetizen a, NullIcetizen b){

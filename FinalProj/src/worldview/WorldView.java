@@ -205,6 +205,12 @@ public class WorldView extends JPanel {
 					System.out.println("talking");
 					talk(g, n, n.getTalkMsg());
 				}
+				
+				if(n.getYellSecondLeft() >0){
+					System.out.println("yelling");
+					yell(g, n, n.getYellMsg());
+				}
+				
 			}
 		}
 		public void drawActiveIcetizen(Graphics g){
@@ -224,6 +230,11 @@ public class WorldView extends JPanel {
 			if(activeIcetizen.getTalkSecondLeft() >0){
 				talk(g, activeIcetizen, activeIcetizen.getTalkMsg());
 			}
+			
+			if(activeIcetizen.getYellSecondLeft() >0){
+				yell(g, activeIcetizen, activeIcetizen.getYellMsg());
+			}
+			
 		}
 		
 		public Image scaleToTile(BufferedImage img){
@@ -296,7 +307,6 @@ public class WorldView extends JPanel {
 //--------------------------------------------------------------------------------------------
 		public void talk(Graphics g, NullIcetizen n, String msg){
 			//get coordinate of the head
-			g.setFont(talkFont);
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
 				p = n.getPixelPos();
@@ -308,12 +318,11 @@ public class WorldView extends JPanel {
 			
 			AffineTransform affinetransform = new AffineTransform();     
 			FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
-			Font font = talkFont;			
+			Font font = this.getFont();			
 
 			
 			
-			
-
+	
 			int textwidth = (int)(font.getStringBounds(msg, frc).getWidth());
 			int textheight = (int)(font.getStringBounds(msg, frc).getHeight());
 			g.setColor(Color.WHITE);
@@ -331,18 +340,20 @@ public class WorldView extends JPanel {
 		public void yell(Graphics g, NullIcetizen n, String msg){
 			//get coordinate of the head
 			g.setFont(yellFont);
+			
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
 				p = n.getPixelPos();
 			}else{//while stationary
 				p = tileCoord[n.getPos().x][n.getPos().y];
 			}
+			
 			int x = p.x;
 			int y = p.y - n.getScale().getHeight(null);
 			
 			AffineTransform affinetransform = new AffineTransform();     
 			FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
-			Font font = this.getFont();
+			Font font = yellFont;
 			
 			
 			
@@ -350,7 +361,9 @@ public class WorldView extends JPanel {
 			
 			int textwidth = (int)(font.getStringBounds(msg, frc).getWidth());
 			int textheight = (int)(font.getStringBounds(msg, frc).getHeight());
-			x = x-textwidth/2;
+			
+			
+			x = x-textwidth/2;			
 			g.setColor(Color.YELLOW);
 			g.fillRoundRect(x, y-textheight, textwidth+20, textheight+5, 50, 50);
 			g.setColor(Color.RED);
@@ -424,6 +437,7 @@ public class WorldView extends JPanel {
 					System.out.println("Walk OK");
 				}
 				
+				activeIcetizen.setYellMsg("I'm Yelling");
 				activeIcetizen.setTalkMsg("I am walking");
 				
 
