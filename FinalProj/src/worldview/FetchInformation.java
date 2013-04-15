@@ -97,7 +97,7 @@ public class FetchInformation {
 				JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
 
 				try { // loop2
-					if (last_known_destinantion.get("timestamp").toString().equals(null)&& last_known_destinantion.get("position").toString().equals(null)) {
+					if ( (""+last_known_destinantion.get("timestamp")).equals("null") && (""+last_known_destinantion.get("position")).equals("null")) {
 						position = new Point(0, 0);
 						destination = new Point(0,0);
 						timestamp =-1;
@@ -161,22 +161,28 @@ public class FetchInformation {
 																
 							JSONParser clothparser = new JSONParser();
 							JSONObject clothSon = (JSONObject) clothparser.parse(clothString);
-							
-							if(timestamp!=-1 && !id.equalsIgnoreCase("66") && !id.equalsIgnoreCase("77") ){
-								System.out.println("ID:"+key+" =====case1");
-								weapon = clothSon.get("W").toString();
-								body = clothSon.get("B").toString();
-								shirt = clothSon.get("S").toString();
-								head = clothSon.get("H").toString();
-							}else{
-								System.out.println("ID:"+key+" =====case2");
-								System.out.println("timestamp is:"+timestamp);
-								weapon = "W075";
-								body = "B001";
-								shirt ="S019";
-								head = "H110";
+							try{
+								if(timestamp!=-1 && ! (""+clothSon.get("W")).equals("null") ){
+								//if(timestamp!=-1 && !id.equalsIgnoreCase("66") && !id.equalsIgnoreCase("77") && !clothSon.get("W").toString().equals(null) ){
+	
+									System.out.println("ID:"+key+" =====case1");
+									weapon = clothSon.get("W").toString();
+									body = clothSon.get("B").toString();
+									shirt = clothSon.get("S").toString();
+									head = clothSon.get("H").toString();
+								}else{
+									System.out.println("ID:"+key+" =====case2");
+									System.out.println("timestamp is:"+timestamp);
+									weapon = "W075";
+									body = "B001";
+									shirt ="S019";
+									head = "H110";
 								
-							}	
+							}
+							}catch(Exception e){
+								System.out.println("Errror in loop4:"+e);
+								e.printStackTrace();
+							}
 							String weaponURL =domain4+getURL(weapon);
 							String bodyURL =  domain4 + getURL(body);
 							String shirtURL = domain4 + getURL(shirt);

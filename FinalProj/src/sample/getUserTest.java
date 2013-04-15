@@ -19,7 +19,7 @@ public class getUserTest {
 		 final String domain2 = "http://iceworld.sls-atl.com/api/&cmd=gresources&uid=";
 		 final String domain3 =  "http://iceworld.sls-atl.com/api/&cmd=gurl&gid=";
 		 final String domain4 = "http://iceworld.sls-atl.com/";
-		 final String test0 = "35"; //userid 35 
+		 final String test0 = "66"; //userid 35 
 		 
 		 String tester = domain2+test0;
 		 try{
@@ -45,10 +45,10 @@ public class getUserTest {
 			 JSONParser clothparser = new JSONParser();
 			 JSONObject clothSon = (JSONObject) clothparser.parse(clothString);
 			 
-			 String w = clothSon.get("W").toString();
-			 String b = clothSon.get("B").toString();
-			 String s = clothSon.get("S").toString();
-			 String h = clothSon.get("H").toString();
+			 String w =""+ clothSon.get("W");
+			 String b =""+ clothSon.get("B");
+			 String s = ""+clothSon.get("S");
+			 String h =""+ clothSon.get("H");
 
 
 			 
@@ -61,7 +61,7 @@ public class getUserTest {
 			 System.out.println("B is: "+b);
 			 System.out.println("S is: "+s);
 			 System.out.println("H is: "+h);
-
+			 System.out.println("Is it equal to \"null\":"+w.equals("null"));
 		//	 System.out.println("Head is:"+cloth.get("H"));
 			 
 			 System.out.println("=============================");
