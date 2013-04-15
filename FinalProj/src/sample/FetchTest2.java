@@ -90,38 +90,44 @@ public class FetchTest2 {
 	   
 	  
 	//   if(!last_known_destinantion.get("timestamp").equals(null) && !last_known_destinantion.get("position").equals(null) )  {
-
+		  		int testsubject=0;
+		  		
 			   try{ // 2 try
+				   
 				   String stringPosition="no position";
 				   Point    position = new Point(0,0);
 				   long timestamp = -1;;
 				   String s;
-				   
+//				   System.out.println("fml:"+last_known_destinantion.get("timestamp").toString());
 				   try{//3 try
+					   testsubject++;
 					   if(last_known_destinantion.get("timestamp").equals(null) && last_known_destinantion.get("position").equals(null)){
-						   String timestampString = ""+last_known_destinantion.get("timestamp"); 
-						   stringPosition = (String) last_known_destinantion.get("position");
-						   timestamp = Long.parseLong(timestampString);
-						   
-						   int beginIndex = 1;
-						   int endIndex = stringPosition.indexOf(",");
-						   int beginIndex2 = endIndex+1;
-						   int endIndex2 = stringPosition.indexOf(")");
-					
-					
-						   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
-						   
-						   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
-						   
-						   
-						    position = new Point( x , y);
+						    timestamp = -1;
+						    position = new Point(0,0);
 					   }
 					   else{
 						   
-						    timestamp = -1;
-							  position = new Point(0,0);
+						
+							  
+							  String timestampString = ""+last_known_destinantion.get("timestamp"); 
+							   stringPosition = (String) last_known_destinantion.get("position");
+							   timestamp = Long.parseLong(timestampString);
+							   
+							   int beginIndex = 1;
+							   int endIndex = stringPosition.indexOf(",");
+							   int beginIndex2 = endIndex+1;
+							   int endIndex2 = stringPosition.indexOf(")");
+						
+						
+							   int x = Integer.parseInt(stringPosition.substring(beginIndex, endIndex));
+							   
+							   int y = Integer.parseInt(stringPosition.substring(beginIndex2, endIndex2));
+							   
+							   
+							    position = new Point( x , y);
+							  
 					   }
-				   }catch(Exception e){}
+				   }catch(Exception e){e.printStackTrace();}
 				   
 					   JSONObject user   = (JSONObject) userid.get("user");
 					   System.out.println("==========================");
@@ -141,8 +147,10 @@ public class FetchTest2 {
 				   
 				   
 			   }catch(Exception e){
-				   System.out.println("Error:"+e);
-			   		e.printStackTrace();}
+				   System.out.println("Error is: "+e);
+			   		e.printStackTrace();
+			   		System.out.println("Test subject #:"+testsubject);
+			   }
 			testing++;
 		
 			}

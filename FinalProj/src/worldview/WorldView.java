@@ -78,20 +78,20 @@ public class WorldView extends JPanel {
 			
 			
 			//generated nullicetizen for test
-			icetizens = new NullIcetizen[10];
-			for(int i =0; i< 10; i++){
-				icetizens[i] = new NullIcetizen();
-				icetizens[i].setPosition(new Point(i+1,i+1));
-				icetizens[i].setDestination(new Point(i+1,i+1));
-			}
-			
-			
-			//generated from fetch
-//			icetizens = new NullIcetizen[list.size()];
-//			for(int i=0; i<icetizens.length;i++){
-//				icetizens[i] = list.pop();
-//				
+//			icetizens = new NullIcetizen[10];
+//			for(int i =0; i< 10; i++){
+//				icetizens[i] = new NullIcetizen();
+//				icetizens[i].setPosition(new Point(i+1,i+1));
+//				icetizens[i].setDestination(new Point(i+1,i+1));
 //			}
+			
+			
+			//generated from fetch		
+			icetizens = new NullIcetizen[list.size()];
+			for(int i=0; i<icetizens.length;i++){
+				icetizens[i] = list.pop();
+				
+			}
 			
 			timer = new Timer(delay, new ActionListener(){
 				public void actionPerformed(ActionEvent e){
