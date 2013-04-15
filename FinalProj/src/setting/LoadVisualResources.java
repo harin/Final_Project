@@ -24,7 +24,7 @@ import org.json.simple.parser.ParseException;
 
 public class LoadVisualResources extends JPanel{
 
-	static BufferedImage head,body,shirt,weapon,background;
+	static BufferedImage head,body,shirt,weapon,background,resizedHead,resizedBody,resizedShirt,resizedWeapon;
 	int bodycount=0;
 	int headcount=0;
 	int shirtcount=0;
@@ -87,6 +87,14 @@ public class LoadVisualResources extends JPanel{
 			body=ImageLoader.GetImageFromCloud(B);
 			shirt=ImageLoader.GetImageFromCloud(S);
 			weapon=ImageLoader.GetImageFromCloud(W);
+			
+			resizedHead = new BufferedImage(new Double(head.getWidth()/2).intValue(), new Double(head.getHeight()/2).intValue(), head.getType());
+			resizedBody = new BufferedImage(new Double(body.getWidth()/2).intValue(), new Double(body.getHeight()/2).intValue(), body.getType());
+			resizedShirt = new BufferedImage(new Double(shirt.getWidth()/2).intValue(), new Double(shirt.getHeight()/2).intValue(), shirt.getType());
+			resizedWeapon = new BufferedImage(new Double(weapon.getWidth()/2).intValue(), new Double(weapon.getHeight()/2).intValue(), weapon.getType());
+			
+			//can't resized	
+			
 		}
 		catch(Exception e){}
 	}
@@ -190,12 +198,12 @@ public class LoadVisualResources extends JPanel{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		g.drawImage(background, 40,20, this);
+		g.drawImage(background, 0,0, this);
 		
-		g.drawImage(body, 50,25, this);
-		g.drawImage(shirt, 50,25, this);
-		g.drawImage(head, 50,25, this);
-		g.drawImage(weapon,50,25,this);
-		this.setSize(300,250);
+		g.drawImage(body, 0,0,body.getWidth()*3/4,body.getHeight()*3/4, this);
+		g.drawImage(shirt, 0,0,shirt.getWidth()*3/4,shirt.getHeight()*3/4, this);
+		g.drawImage(head, 0,0,head.getWidth()*3/4,head.getHeight()*3/4, this);
+		g.drawImage(weapon,0,0,weapon.getWidth()*3/4,weapon.getHeight()*3/4,this);
+		
 	}
 }

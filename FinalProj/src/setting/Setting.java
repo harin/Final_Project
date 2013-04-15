@@ -10,11 +10,13 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 
 
 @SuppressWarnings("serial")
-public class Setting extends JPanel{
+public class Setting extends JPanel implements ActionListener{
 	LoadVisualResources avatar;
 	
 	
@@ -74,9 +76,12 @@ public class Setting extends JPanel{
     	JComboBox headBox = new JComboBox(avatar.headS);
     	JComboBox shirtBox = new JComboBox(avatar.shirtS);
     	JComboBox weaponBox = new JComboBox(avatar.weaponS);
-    	   	
-
     	
+    	bodyBox.addActionListener(this);
+    	headBox.addActionListener(this);
+    	shirtBox.addActionListener(this);
+    	weaponBox.addActionListener(this);
+      	
     	LeftPanel.add(bodyLabel);
     	LeftPanel.add(bodyBox);
     	LeftPanel.add(headLabel);
@@ -129,5 +134,63 @@ public class Setting extends JPanel{
         dialog.setVisible(true);
         dialog.setLocation(400,400);
     }
-     
+    //
+    //
+    //action listener
+    public void actionPerformed(ActionEvent e) {
+    	JComboBox cb = (JComboBox)e.getSource();
+        String idResource = (String)cb.getSelectedItem();
+    	
+        if(idResource.charAt(0)=='B'){
+        	System.out.println("body select");
+        	int b = 0;
+        	for(int i=0;i<avatar.bodyS.length;i++){
+        		if(avatar.bodyS[i]!=idResource){
+        			b++;
+        		}else{
+        			break;
+        		}
+        	}System.out.println("index:"+b);
+        	avatar.bodycount= b;
+        	avatar.repaint();
+        }else if(idResource.charAt(0)=='H'){
+        	System.out.println("head select");
+        	int h = 0;
+        	for(int i=0;i<avatar.headS.length;i++){
+        		if(avatar.headS[i]!=idResource){
+        			h++;
+        		}else{
+        			break;
+        		}
+        	}System.out.println("index:"+h);
+        	avatar.headcount= h;
+        	avatar.repaint();
+        }else if(idResource.charAt(0)=='S'){
+        	System.out.println("shirt select");
+        	int s = 0;
+        	for(int i=0;i<avatar.shirtS.length;i++){
+        		if(avatar.shirtS[i]!=idResource){
+        			s++;
+        		}else{
+        			break;
+        		}
+        	}System.out.println("index:"+s);
+        	avatar.shirtcount= s;
+        	avatar.repaint();
+        }else if(idResource.charAt(0)=='W'){
+        	System.out.println("weapon select");
+        	int w = 0;
+        	for(int i=0;i<avatar.weaponS.length;i++){
+        		if(avatar.weaponS[i]!=idResource){
+        			w++;
+        		}else{
+        			break;
+        		}
+        	}System.out.println("index:"+w);
+        	avatar.weaponcount= w;
+        	avatar.repaint();
+        }else{
+        	System.err.print("ERROR");
+        }             
+    }  	
 }
