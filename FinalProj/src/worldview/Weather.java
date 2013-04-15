@@ -39,7 +39,8 @@ public class Weather {
 			i++;
 			x= random.nextInt(width);
 			y= random.nextInt(height);
-			g.drawLine(x, y, x, y);
+			g.fillOval(x, y,4, 4);
+			
 		}
 	}
 	public static void rainingBackground(Graphics g, int width, int height){

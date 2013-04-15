@@ -15,12 +15,17 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class WorldView extends JPanel {
+	
+		//get fetch
+		FetchInformation fetcher = new FetchInformation();
+		LinkedList<NullIcetizen> list = fetcher.getCitizen();
 	
 		Font talkFont = this.getFont();
 		Font yellFont = talkFont.deriveFont((float) 120.0);
@@ -37,7 +42,7 @@ public class WorldView extends JPanel {
 		private Timer timer;
 		private int delay = 40;
 		private int walkRateX, walkRateY;
-		private String currentWeather ="Cloudy";
+		private String currentWeather ="Snowing";
 		private Image grassTile;
 		
 		private BufferedImage bufferImage;
@@ -79,6 +84,14 @@ public class WorldView extends JPanel {
 				icetizens[i].setPosition(new Point(i+1,i+1));
 				icetizens[i].setDestination(new Point(i+1,i+1));
 			}
+			
+			
+			//generated from fetch
+//			icetizens = new NullIcetizen[list.size()];
+//			for(int i=0; i<icetizens.length;i++){
+//				icetizens[i] = list.pop();
+//				
+//			}
 			
 			timer = new Timer(delay, new ActionListener(){
 				public void actionPerformed(ActionEvent e){

@@ -178,7 +178,7 @@ public class FetchInformation {
 							System.out.println("error during get the look:" + e);
 						}
 
-					
+						
 				} catch (Exception e) {
 					System.out
 							.println("Cannot fetch the information from the server");
@@ -239,5 +239,14 @@ public class FetchInformation {
 	  public String getWeatherCondition(){
 		  return weatherCondition;
 	  }
+
 	  
+	  
+	  public long getTime(){
+		  return timestamp;
+	  }
+	  
+	  public LinkedList<NullIcetizen> getCitizen(){
+		  return list;
+	  }
 }
