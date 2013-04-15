@@ -284,6 +284,6 @@ public class FetchInformation {
 	  }
 	  
 	  public LinkedList<NullIcetizen> getCitizen(){
-		  return list;
+		  return (LinkedList<NullIcetizen>) list.clone();
 	  }
 }
