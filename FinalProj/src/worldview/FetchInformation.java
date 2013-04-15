@@ -33,10 +33,10 @@ public class FetchInformation {
 	 final String domain4 = "http://iceworld.sls-atl.com/";
 	  
 	 
-	  Image weaponImage;
-	  Image bodyImage;
-	  Image shirtImage;
-	  Image headImage;
+	  BufferedImage weaponImage;
+	  BufferedImage bodyImage;
+	  BufferedImage shirtImage;
+	  BufferedImage headImage;
 	  String cmd;
 	  Set keys;
 	  JSONParser parser;
@@ -172,7 +172,7 @@ public class FetchInformation {
 							look.gidH = head;
 							look.gidW = weapon;
 
-							list.add(new NullIcetizen(id, username, pid,listeningPort, look, ip, type, timestamp,position, destination));
+						list.add(new NullIcetizen(id, username, pid,listeningPort, look, ip, type, timestamp,position, destination, headImage, bodyImage, shirtImage,weaponImage));
 
 						} catch (Exception e) {
 							System.out.println("error during get the look:" + e);

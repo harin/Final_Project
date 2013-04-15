@@ -107,7 +107,7 @@ public class MainFrame extends JFrame {
 		add(loginPage);
 	}
 	
-	public void switchToWorldView(){
+	public void switchToWorldView() throws IOException{
 		
 		JLayeredPane lp = this.getLayeredPane();
 		
@@ -313,7 +313,12 @@ public class MainFrame extends JFrame {
 					
 					if(immigration.login(password)){
 						System.out.println("Login OK");
-						switchToWorldView();
+						try {
+							switchToWorldView();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 						
 					}else{
 						System.out.println("Login failed");
@@ -327,7 +332,12 @@ public class MainFrame extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					if (immigration.loginAlien()){
 						System.out.println("Login Alien OK");
-						switchToWorldView();
+						try {
+							switchToWorldView();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					} else{
 						System.out.println("Login failed");
 					}

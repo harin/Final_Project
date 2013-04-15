@@ -14,6 +14,8 @@ import java.awt.geom.AffineTransform;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
+
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -41,7 +43,7 @@ public class WorldView extends JPanel {
 		private BufferedImage bufferImage;
 		private Graphics bufferG;
 		
-		public WorldView(int width, int height, ICEWorldImmigration im){
+		public WorldView(int width, int height, ICEWorldImmigration im) throws IOException{
 			super();
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);

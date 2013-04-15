@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 
 import javax.imageio.ImageIO;
@@ -26,6 +27,12 @@ public class NullIcetizen implements MyIcetizen{
 	private Point pos;//store current tile coordinate
 	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
 	
+	
+	
+	BufferedImage bodyImage;
+	BufferedImage weaponImage;
+	BufferedImage headImage;
+	BufferedImage shirtImage;
 	private final int talkDelay = 100; // 4 second for 25 fps
 	private final int yellDelay = 125; // requirement 5 second
 	private int talkCountdown;
@@ -54,11 +61,20 @@ public class NullIcetizen implements MyIcetizen{
 	
 
 	
-	public NullIcetizen(){
-		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730,new Point(0,0), new Point(0,0));
+	public NullIcetizen() throws IOException{
+//		String body ="blue.png";
+//		String shirt = "t_ice.png";
+//		String head = "crown1.png";
+//		String weapon = "sword2.png";
+//		BufferedImage bodyImg = ImageIO.read(new File("blue.png"));
+//		BufferedImage shirtImg = ImageIO.read(new File("t_ice.png"));
+//		BufferedImage headImg = ImageIO.read(new File("crown1.png"));
+//		BufferedImage weaponImg = ImageIO.read(new File("sword2.png"));
+//		
+		this("SupremeID","Octopi", 246, 800, new IcetizenLook(),  inputIpAddress(),1,1365328730,new Point(0,0), new Point(0,0),ImageIO.read(new File("crown1.png")),ImageIO.read(new File("blue.png")),ImageIO.read(new File("t_ice.png")),ImageIO.read(new File("sword2.png")));
 	}
 	
-	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,long type,long timestamp,Point position,Point destination){
+	public NullIcetizen(String userid,String username, int portId, int listeningPort, IcetizenLook look,String ipAddress,long type,long timestamp,Point position,Point destination,BufferedImage headImage,BufferedImage bodyImage,BufferedImage shirtImage,BufferedImage weaponImage){
 		this.userid = userid;
 		this.username = username;
 		this.icePortId = portId;
@@ -79,6 +95,10 @@ public class NullIcetizen implements MyIcetizen{
 		pixelPos = null;
 		
 		//look properties
+		this.headImage=headImage;
+		this.bodyImage=bodyImage;
+		this.shirtImage=shirtImage;
+		this.weaponImage=weaponImage;
 		lookImage = null;
 		scaleImage= null;
 		prepareLookImage();
@@ -87,20 +107,24 @@ public class NullIcetizen implements MyIcetizen{
 		this.yellCountdown = 0;
 		this.yellMsg = "";
 	}
+	
+	
+	
 	public void prepareLookImage(){
-		String body ="blue.png";
-		String shirt = "t_ice.png";
-		String head = "crown1.png";
-		String weapon = "sword2.png";
+//		String body ="blue.png";
+//		String shirt = "t_ice.png";
+//		String head = "crown1.png";
+//		String weapon = "sword2.png";
 		
 		try{
-			BufferedImage bodyImg = ImageIO.read(new File(body));
-			BufferedImage shirtImg = ImageIO.read(new File(shirt));
-			BufferedImage headImg = ImageIO.read(new File(head));
-			BufferedImage weaponImg = ImageIO.read(new File(weapon));
-			lookImage = new BufferedImage(bodyImg.getWidth(),
-					bodyImg.getHeight(),
-					BufferedImage.TYPE_INT_ARGB);
+			BufferedImage bodyImg = bodyImage;
+			BufferedImage shirtImg = shirtImage;
+			BufferedImage headImg = headImage;
+			BufferedImage weaponImg = weaponImage;
+			lookImage = new BufferedImage(bodyImg.getWidth(),bodyImg.getHeight(),BufferedImage.TYPE_INT_ARGB);
+			
+			
+			
 			Graphics g = lookImage.getGraphics();
 			g.drawImage(bodyImg,0,0,null);
 			g.drawImage(shirtImg,0,0,null);
@@ -111,6 +135,20 @@ public class NullIcetizen implements MyIcetizen{
 			System.err.println("Failed to load image");
 		}
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void move(int x, int y){
 		pos.x = x;
