@@ -94,8 +94,7 @@ public class FetchInformation {
 				type = (long) user.get("type");
 
 				// position and timestamp
-				JSONObject last_known_destinantion = (JSONObject) userid
-						.get("last_known_destination");
+				JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
 
 				try { // loop2
 					if (last_known_destinantion.get("timestamp").toString().equals(null)&& last_known_destinantion.get("position").toString().equals(null)) {
@@ -110,7 +109,7 @@ public class FetchInformation {
 						System.out.println("ID with no null:"+key);
 						timestamp =  Long.parseLong( last_known_destinantion.get("timestamp").toString() );
 						String stringPosition = (String) last_known_destinantion.get("position");
-						
+						System.out.println("Timestamp is:"+timestamp);
 						int beginIndex = 1;
 						int endIndex = stringPosition.indexOf(",");
 						int beginIndex2 = endIndex + 1;
@@ -163,7 +162,7 @@ public class FetchInformation {
 							JSONParser clothparser = new JSONParser();
 							JSONObject clothSon = (JSONObject) clothparser.parse(clothString);
 							
-							if(timestamp!=-1 && id.equalsIgnoreCase("66") && id.equalsIgnoreCase("77") ){
+							if(timestamp!=-1 && !id.equalsIgnoreCase("66") && !id.equalsIgnoreCase("77") ){
 								System.out.println("ID:"+key+" =====case1");
 								weapon = clothSon.get("W").toString();
 								body = clothSon.get("B").toString();
@@ -171,7 +170,7 @@ public class FetchInformation {
 								head = clothSon.get("H").toString();
 							}else{
 								System.out.println("ID:"+key+" =====case2");
-
+								System.out.println("timestamp is:"+timestamp);
 								weapon = "W075";
 								body = "B001";
 								shirt ="S019";
