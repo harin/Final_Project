@@ -239,6 +239,22 @@ public class WorldView extends JPanel {
 			}else{
 				System.out.println("Drawing active Icetizen failed");
 			}
+			//draw indicator
+			NullIcetizen n = activeIcetizen;
+			int xPos, yPos;
+			if(n.getPixelPos()!=null){
+				yPos = ((int)Math.floor(n.getPixelPos().y)) - scale.getHeight(null) + tileSide/4; //calculate offset for drawing
+				xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
+			} else{
+				int xCoord = n.getPos().x;
+				int yCoord = n.getPos().y;
+				yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
+				xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/5;
+			}
+			
+			g.drawImage(scaleIndicator, xPos,yPos - scale.getHeight(null),null);
+			
+
 			
 			if(activeIcetizen.getTalkSecondLeft() >0){
 				talk(g, activeIcetizen, activeIcetizen.getTalkMsg());
@@ -247,12 +263,8 @@ public class WorldView extends JPanel {
 			if(activeIcetizen.getYellSecondLeft() >0){
 				yell(g, activeIcetizen, activeIcetizen.getYellMsg());
 			}
-			
-			//draw indicator
-			Point pos = activeIcetizen.getPos();
-			int x = pos.x + tileSide/2;
-			g.drawImage(scaleIndicator,x,pos.y,null);
-			
+
+
 		}
 		
 		public Image scaleToTile(BufferedImage img){
@@ -306,6 +318,7 @@ public class WorldView extends JPanel {
 				int xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
 				g.drawImage(scale, xPos, yPos ,null);
 				
+				
 				//check if destination reached
 				if(n.getPixelPos().equals(tileCoord[nDest.x][nDest.y])){
 					n.getPos().x = nDest.x;
@@ -319,7 +332,8 @@ public class WorldView extends JPanel {
 				int yCoord = n.getPos().y;
 				int yPos = tileCoord[xCoord][yCoord].y - scale.getHeight(null) + tileSide/4;
 				int xPos = tileCoord[xCoord][yCoord].x - scale.getWidth(null)/5;
-				g.drawImage(scale, xPos, yPos ,null);			
+				g.drawImage(scale, xPos, yPos ,null);
+				
 			}
 		}
 //--------------------------------------------------------------------------------------------
