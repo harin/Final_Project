@@ -112,7 +112,7 @@ public class FetchTest2 {
 							  String timestampString = ""+last_known_destinantion.get("timestamp"); 
 							   stringPosition = (String) last_known_destinantion.get("position");
 							   timestamp = Long.parseLong(timestampString);
-							   
+							   System.out.println("timestamp"+timestamp);
 							   int beginIndex = 1;
 							   int endIndex = stringPosition.indexOf(",");
 							   int beginIndex2 = endIndex+1;

@@ -176,7 +176,7 @@ public class WorldView extends JPanel {
 			updateWalkRate();
 			
 		}
-		
+			
 		public void moveOrigin(int x,int y){
 			System.out.print("Change origin from "+xOrigin+","+yOrigin+" to ");
 			xOrigin += x;
@@ -313,11 +313,7 @@ public class WorldView extends JPanel {
 				int yPos = ((int)Math.floor(n.getPixelPos().y)) - scale.getHeight(null) + tileSide/4; //calculate offset for drawing
 				int xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
 				g.drawImage(scale, xPos, yPos ,null);
-				//convert pixelPos to Coordinate and update position of nullicetizen
 				
-				int currentTileY =(int) (( n.getPixelPos().y-yOrigin)/ (tileSide/2));
-				int currentTileX = (int) ((n.getPixelPos().x- xOrigin + (n.getPixelPos().y-yOrigin)) /tileSide) ;
-				n.setPosition(new Point(currentTileX, currentTileY));
 				
 				//check if destination reached
 				if(n.getPixelPos().equals(tileCoord[nDest.x][nDest.y])){
