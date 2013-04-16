@@ -124,6 +124,8 @@ public class FetchInformation {
 						timestamp =-1;
 						System.out.println("IS IT WORK");
 						System.out.println("ID:"+key);
+						System.out.println("Case of null position:"+ (""+last_known_destinantion.get("position")).equals("null") ) ;
+						System.out.println("Case of null timestamp:"+(""+last_known_destinantion.get("timestamp")).equals("null") )	;
 					}
 					else{
 						System.out.println("======================");
