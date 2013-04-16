@@ -47,11 +47,11 @@ public class WorldView extends JPanel {
 		private Image scaleIndicator;
 
 		
-		public WorldView(int width, int height, ICEWorldImmigration im) throws IOException{
+		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni) throws IOException{
 			super();
 			//get fetch
-			FetchInformation fetcher = new FetchInformation();
-			icetizens = fetcher.getCitizen();
+			
+			icetizens = ni;
 			
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);

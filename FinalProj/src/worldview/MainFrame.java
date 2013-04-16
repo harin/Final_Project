@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -23,6 +24,7 @@ public class MainFrame extends JFrame {
 	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
+	private LinkedList<NullIcetizen> icetizens;
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
@@ -35,19 +37,19 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame(){
 		try{
-		String songName = "worldview/BGSong.wav";//
-		song=new AudioPlayer(songName);//
-		song.playLoop();//
+			String songName = "worldview/BGSong.wav";//
+			song=new AudioPlayer(songName);//
+			song.playLoop();//
+				
+			sp=new SplashScreen();
+			activeIcetizen = new NullIcetizen();
+			immigration = new ICEWorldImmigration(activeIcetizen);
 			
-		sp=new SplashScreen();
-		activeIcetizen = new NullIcetizen();
-		immigration = new ICEWorldImmigration(activeIcetizen);
-		
-		setTitle("The Null");
-		setSize(WIDTH,HEIGHT);
-		setLocationRelativeTo(null);
-		setJMenuBar(makeMenuBar());
-		setGUI();
+			setTitle("The Null");
+			setSize(WIDTH,HEIGHT);
+			setLocationRelativeTo(null);
+			setJMenuBar(makeMenuBar());
+			setGUI();
 		}catch(Exception e){
 			System.out.println("Sound in mainframe :   "+e);
 		}
@@ -137,7 +139,10 @@ public class MainFrame extends JFrame {
 		lp.add(zoomOut,new Integer(100));
 		
 		
-		worldView = new WorldView(WIDTH,HEIGHT, immigration);
+		FetchInformation fetcher = new FetchInformation();
+		icetizens = fetcher.getCitizen();
+		
+		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens);
 
 		TextChatBox.createAndShowGUI();
 		
