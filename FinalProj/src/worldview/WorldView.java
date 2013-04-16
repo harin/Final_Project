@@ -16,6 +16,7 @@ import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.Timer;
@@ -43,6 +44,8 @@ public class WorldView extends JPanel {
 		private Image grassTile;
 		private BufferedImage indicator;
 		private Image scaleIndicator;
+		private ArrayList<ArrayList<LinkedList<NullIcetizen>>> charMap; // to tell which coord contain which icetizen
+
 
 		
 		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
@@ -83,6 +86,24 @@ public class WorldView extends JPanel {
 				}
 			});
 			timer.start();
+			
+			
+			charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
+			charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
+			for(int i=0; i<100;i++){
+				charMap.add(new ArrayList<LinkedList<NullIcetizen>>(100));
+			}
+			for(int i=0; i<100;i++){
+				for(int j=0; j<100; j++){
+					charMap.get(i).add(new LinkedList<NullIcetizen>());
+				}
+			}
+			
+			for(NullIcetizen n: icetizens){
+				int x = n.getPos().x;
+				int y = n.getPos().y;
+				charMap.get(x).get(y).add(n);
+			}
 		}
 
 		
@@ -212,7 +233,7 @@ public class WorldView extends JPanel {
 				}
 				//draw ip
 				g.setFont(talkFont);
-				g.drawString(n.getIP(), posCoord.x , posCoord.y + tileSide/3);
+				g.drawString(n.getUsername()+"("+n.getIP()+")", posCoord.x , posCoord.y + tileSide/3);
 			}
 			
 		
@@ -439,7 +460,7 @@ public class WorldView extends JPanel {
 						coordX < size && coordY < size){
 					highlightTile.x = coordX;
 					highlightTile.y = coordY;
-					//repaint();
+
 				}
 			}
 			public void mouseDragged(MouseEvent e){
@@ -467,7 +488,11 @@ public class WorldView extends JPanel {
 			}
 			
 			public void mouseClicked(MouseEvent e){
-				//icetizen.move(highlightTile.x, highlightTile.y);
+				if(!charMap.get(highlightTile.x).get(highlightTile.y).isEmpty()){
+					System.out.println("you cllicked on:"+charMap.get(highlightTile.x).get(highlightTile.y).getFirst().getUsername());
+					return;
+				}
+				
 				Point dest = new Point(highlightTile.x, highlightTile.y);
 				activeIcetizen.setDestination(dest);
 				if (immigration.walk(dest.x, dest.y)){

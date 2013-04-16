@@ -28,7 +28,6 @@ public class MainFrame extends JFrame {
 	private LinkedList<NullIcetizen> icetizens;
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
-	private ArrayList<ArrayList<LinkedList<NullIcetizen>>> charMap;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
 	SplashScreen sp;
@@ -165,22 +164,7 @@ public class MainFrame extends JFrame {
 		FetchInformation fetcher = new FetchInformation();
 		icetizens = fetcher.getCitizen();
 		
-		charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
-		charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
-		for(int i=0; i<100;i++){
-			charMap.add(new ArrayList<LinkedList<NullIcetizen>>(100));
-		}
-		for(int i=0; i<100;i++){
-			for(int j=0; j<100; j++){
-				charMap.get(i).add(new LinkedList<NullIcetizen>());
-			}
-		}
-		
-		for(NullIcetizen n: icetizens){
-			int x = n.getPos().x;
-			int y = n.getPos().y;
-			charMap.get(x).get(y).add(n);
-		}
+
 	}
 	
 	
