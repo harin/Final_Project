@@ -205,6 +205,8 @@ public class WorldView extends JPanel {
 		public void drawIcetizen(Graphics g){
 			for(NullIcetizen n: icetizens){
 				Image scale = n.getScale();
+				Point pos = n.getPos();
+				Point posCoord = tileCoord[pos.x][pos.y];
 				if(scale == null){
 					BufferedImage img = n.getLookImage();
 					n.setScale(scaleToTile(img));
@@ -219,13 +221,16 @@ public class WorldView extends JPanel {
 					System.out.println("talking");
 					talk(g, n, n.getTalkMsg());
 				}
-				
 				if(n.getYellSecondLeft() >0){
 					System.out.println("yelling");
 					yell(g, n, n.getYellMsg());
 				}
-				
+				//draw ip
+				g.setFont(talkFont);
+				g.drawString(n.getIP(), posCoord.x , posCoord.y + tileSide/3);
 			}
+			
+		
 		}
 		public void drawActiveIcetizen(Graphics g){
 			//get image
@@ -342,6 +347,7 @@ public class WorldView extends JPanel {
 //--------------------------------------------------------------------------------------------
 		public void talk(Graphics g, NullIcetizen n, String msg){
 			//get coordinate of the head
+			this.setFont(talkFont);
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
 				p = new Point((int)n.getPixelPos().x, (int)n.getPixelPos().y);
@@ -478,7 +484,7 @@ public class WorldView extends JPanel {
 					System.out.println("Walk OK");
 				}
 				
-				activeIcetizen.setYellMsg("I'm Yelling");
+				//activeIcetizen.setYellMsg("I'm Yelling");
 				activeIcetizen.setTalkMsg("I am walking");
 				
 

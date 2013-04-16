@@ -206,6 +206,10 @@ public class NullIcetizen implements MyIcetizen{
 		return this.yellMsg;
 	}
 	
+	public String getIP(){
+		return ipAddress;
+	}
+	
 	//---------------------------------------------------------------------------------
 	//Setter
 	//---------------------------------------------------------------------------------
