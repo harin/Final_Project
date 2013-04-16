@@ -29,17 +29,15 @@ public class MainFrame extends JFrame {
 	private final int HEIGHT = 800;
 	SplashScreen sp;
 	
-//	JMenuItem sound;//
-//	JSlider BGSound;//
-	//Audioapp song;//
-//	Sound song;
+	JMenuItem sound;//
+	JSlider BGSound;//
+	AudioPlayer song;//
 	
 	public MainFrame(){
 		try{
-//		String songName = "BGSong.wav";
-//		//song=new Audioapp(songName);//
-//		song = new Sound(songName);
-//		song.playSound();//
+		String songName = "worldview/BGSong.wav";//
+		song=new AudioPlayer(songName);//
+		song.playLoop();//
 			
 		sp=new SplashScreen();
 		activeIcetizen = new NullIcetizen();
@@ -80,10 +78,10 @@ public class MainFrame extends JFrame {
 		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));	
 		
 		//sound						
-//		SoundEvent s= new SoundEvent();
-//		sound=new JMenuItem("Sound");
-//		sound.addActionListener(s);
-//		menuMenu.add(sound);		
+		SoundEvent s= new SoundEvent();
+		sound=new JMenuItem("Sound");
+		sound.addActionListener(s);
+		menuMenu.add(sound);		
 		
 		//logout menu
 		logout=new JMenuItem("Log Out");
@@ -213,33 +211,33 @@ public class MainFrame extends JFrame {
 		 }
 	}
 	 
-//	public class SoundEvent implements ActionListener{//
-//		public void actionPerformed(ActionEvent e){
-//			JDialog dialog=new JDialog();
-//			BGSound=new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
-//			BGSound.setMajorTickSpacing(10);
-//			BGSound.setPaintTicks(true);
-//			dialog.add(BGSound);
-//			
-//			SoundControlEvent slide=new SoundControlEvent();
-//			BGSound.addChangeListener(slide);
-//			
-//			dialog.setLocationRelativeTo(null);
-//			dialog.pack();
-//			dialog.setVisible(true);	
-//		}
-//	}
+	public class SoundEvent implements ActionListener{//
+		public void actionPerformed(ActionEvent e){
+			JDialog dialog=new JDialog();
+			BGSound=new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
+			BGSound.setMajorTickSpacing(10);
+			BGSound.setPaintTicks(true);
+			dialog.add(BGSound);
+		
+			SoundControlEvent slide=new SoundControlEvent();
+			BGSound.addChangeListener(slide);
+		
+			dialog.setLocationRelativeTo(null);
+			dialog.pack();
+			dialog.setVisible(true);	
+		}
+	}
 
-//	public class SoundControlEvent implements ChangeListener{//
-//		public void stateChanged(ChangeEvent e){
-//			int value=BGSound.getValue();
-//			if(value<50){
-//				song.increase();
-//			}else{
-//				song.decrease();
-//			}
-//		}
-//	}
+	public class SoundControlEvent implements ChangeListener{//
+		public void stateChanged(ChangeEvent e){
+			
+			int value = BGSound.getValue();
+			if(value >50){
+				song.increase();				
+			}else song.decrease();
+		
+		}	
+	}
 	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
