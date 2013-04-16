@@ -81,7 +81,9 @@ public class FetchThread extends Thread {
 		gui.setVisible(true);
 	}
 	
-
+	public FetchInformation getFetch(){
+		return fetcher;
+	}
 	
 	
 	

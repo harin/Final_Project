@@ -161,10 +161,14 @@ public class MainFrame extends JFrame {
 		revalidate();
 	}
 	public void setupData() throws IOException{
-		FetchInformation fetcher = new FetchInformation();
-		icetizens = fetcher.getCitizen();
+//		FetchInformation fetcher = new FetchInformation();
+//		icetizens = fetcher.getCitizen();
 		
-
+		FetchThread fetcher = new FetchThread();
+		icetizens =  fetcher.getFetch().getCitizen();
+		fetcher.setGUI();
+		fetcher.start();
+		icetizens =  fetcher.getFetch().getCitizen();
 	}
 	
 	
