@@ -1,21 +1,92 @@
 package worldview;
 
+
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
 
 public class FetchThread extends Thread {
-	long refresh_time = 5000;
+	long refresh_time;
 	FetchInformation fetcher;
+	JTextField text;
+
+	public static void main(String[] args) throws MalformedURLException{
+
+		FetchThread fetch = new FetchThread();
+		fetch.setGUI();
+		fetch.start();
+	}
 	
+	public void setGUI(){
+		JFrame gui = new JFrame();
+		gui.setSize(150,150);
+		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		gui.setBounds(100, 100, 40, 165);
+		
+		JPanel buttonPad = new JPanel();
+		
+		buttonPad.setPreferredSize(new Dimension(40,100));
+		buttonPad.setLayout(new BorderLayout());
+		gui.add(buttonPad);
+		
+		
+		
+		
+		JPanel northPanel = new JPanel();
+		buttonPad.add(northPanel,BorderLayout.NORTH);
+		JButton increment = new JButton("+");
+		northPanel.add(increment);
+		incrementEvent i = new incrementEvent();
+		increment.addActionListener(i);
+		
+		
+		
+		JPanel southPanel = new JPanel();
+		buttonPad.add(southPanel,BorderLayout.SOUTH);
+		JButton decrement = new JButton("-");
+		southPanel.add(decrement);
+
+		
+		
+		JPanel centerPanel = new JPanel();
+		buttonPad.add(centerPanel,BorderLayout.CENTER);
+		
+		
+		decrementEvent d = new decrementEvent();
+		decrement.addActionListener(d);
+		
+		
+		
+		//rate of delay
+		Font font1 = new Font("SansSerif", Font.BOLD, 20);
+		text = new JTextField("5");
+		text.setFont(font1);
+		increment.setFont(font1);
+		decrement.setFont(font1);
+		text.setHorizontalAlignment(JTextField.CENTER);
+		text.setPreferredSize( new Dimension(50, 30) );
+		centerPanel.add(text);	
+		
+		gui.setVisible(true);
+	}
+	
+
 	
 	
 	
 	public FetchThread(){
-		refresh_time = 5000;
-		fetcher = new FetchInformation(refresh_time/1000);
+		fetcher = new FetchInformation();
 
 	}
 	
@@ -26,8 +97,11 @@ public class FetchThread extends Thread {
 			
 			if(fetcher.isConnected()){
 				
-				fetcher = new FetchInformation(refresh_time/1000);
+				fetcher.setRefreshTime(refresh_time);
+				fetcher.setTime();
+				fetcher.setFetchState();
 				
+					
 			}else{
 				JOptionPane.showMessageDialog(new JPanel(), "ICE World cannot be reached due to the Internet Connection");
 				System.exit(0);
