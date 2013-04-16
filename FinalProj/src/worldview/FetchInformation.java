@@ -118,7 +118,7 @@ public class FetchInformation {
 				JSONObject last_known_destinantion = (JSONObject) userid.get("last_known_destination");
 
 				try { // loop2
-					if ( (""+last_known_destinantion.get("timestamp")).equals("null")|| (""+last_known_destinantion.get("position")).equals("null")) {
+					if ( (""+last_known_destinantion.get("timestamp")).equals("null")&& (""+last_known_destinantion.get("position")).equals("null")) {
 						position = new Point(0, 0);
 						destination = new Point(0,0);
 						timestamp =-1;
@@ -130,15 +130,16 @@ public class FetchInformation {
 					else{
 						System.out.println("======================");
 						System.out.println("ID with no null:"+key);
-//						if( (""+ last_known_destinantion.get("timestamp")).equals("null") ){
-//							position = new Point(0, 0);
-//							destination = new Point(0,0);
-//							timestamp =-1;
-//							
-//							System.out.println("ID88?");
-//							System.out.println("ID:"+key);
-//						}
-						timestamp =  Long.parseLong(""+ last_known_destinantion.get("timestamp") );
+						if( (""+ last_known_destinantion.get("timestamp")).equals("null") ){
+					
+							timestamp =-1;
+							
+							System.out.println("ID88?");
+							System.out.println("ID:"+key);
+						}
+						else{
+							timestamp =  Long.parseLong(""+ last_known_destinantion.get("timestamp") );
+						}
 						String stringPosition = (String) last_known_destinantion.get("position");
 						System.out.println("Timestamp is:"+timestamp);
 						int beginIndex = 1;
