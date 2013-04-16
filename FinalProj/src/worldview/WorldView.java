@@ -14,11 +14,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
+import java.io.*;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import javax.swing.JFileChooser;
 import javax.swing.Timer;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -45,6 +50,8 @@ public class WorldView extends JPanel {
 		private BufferedImage indicator;
 		private Image scaleIndicator;
 		private ArrayList<ArrayList<LinkedList<NullIcetizen>>> charMap; // to tell which coord contain which icetizen
+		private JFileChooser fc = new JFileChooser();
+		private File selected;
 
 
 		
@@ -438,7 +445,39 @@ public class WorldView extends JPanel {
 			scaleIndicator = indicator.getScaledInstance(tileSide,-1, Image.SCALE_SMOOTH);
 		}
 		
+//------------------------------------------------------------------------------------
+//						filechooser/file transfering methods
+//------------------------------------------------------------------------------------
 		
+		public void showChooser(){
+			int returnVal = fc.showOpenDialog(this);
+			
+			if(returnVal == JFileChooser.APPROVE_OPTION){
+				selected = fc.getSelectedFile();
+				System.out.println("you chose:"+selected);
+				try{
+					ServerSocket server = new ServerSocket(13267);
+					while(true){
+						System.out.println("Waiting");
+						Socket sock = server.accept();
+						System.out.println("Accepted Connection:"+sock);
+						OutputStream os = sock.getOutputStream();
+						byte [] myByteArray = new byte[(int) selected.length() +1];
+						FileInputStream fis = new FileInputStream(selected);
+						BufferedInputStream bis = new BufferedInputStream(fis);
+						bis.read(myByteArray, 0, myByteArray.length);
+						System.out.println("Sending...");
+						os.write(myByteArray, 0,myByteArray.length );
+						os.flush();
+
+					}
+
+				}catch(Exception e){
+					System.err.println(e);
+				}
+				
+			}
+		}
 		
 //--------------------------------------------------------------------------------------------
 //		Handler class
@@ -490,7 +529,8 @@ public class WorldView extends JPanel {
 			public void mouseClicked(MouseEvent e){
 				if(!charMap.get(highlightTile.x).get(highlightTile.y).isEmpty()){
 					System.out.println("you cllicked on:"+charMap.get(highlightTile.x).get(highlightTile.y).getFirst().getUsername());
-					return;
+					showChooser();
+					
 				}
 				
 				Point dest = new Point(highlightTile.x, highlightTile.y);
