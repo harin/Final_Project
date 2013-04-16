@@ -24,9 +24,7 @@ import javax.swing.JPanel;
 
 public class WorldView extends JPanel {
 	
-		//get fetch
-		FetchInformation fetcher = new FetchInformation();
-		LinkedList<NullIcetizen> list = fetcher.getCitizen();
+
 	
 		Font talkFont = this.getFont();
 		Font yellFont = talkFont.deriveFont((float) 120.0);
@@ -38,7 +36,7 @@ public class WorldView extends JPanel {
 		private Point highlightTile;
 		private Point destination;
 		private NullIcetizen activeIcetizen;
-		private NullIcetizen [] icetizens;
+		private LinkedList<NullIcetizen> icetizens;
 		private ICEWorldImmigration immigration;
 		private Timer timer;
 		private int delay = 40;
@@ -51,6 +49,10 @@ public class WorldView extends JPanel {
 		
 		public WorldView(int width, int height, ICEWorldImmigration im) throws IOException{
 			super();
+			//get fetch
+			FetchInformation fetcher = new FetchInformation();
+			icetizens = fetcher.getCitizen();
+			
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
 			immigration = im;
@@ -76,21 +78,7 @@ public class WorldView extends JPanel {
 				System.out.println("load tile failed");
 			}
 			
-			
-			//generated nullicetizen for test
-//			icetizens = new NullIcetizen[10];
-//			for(int i =0; i< 10; i++){
-//				icetizens[i] = new NullIcetizen();
-//				icetizens[i].setPosition(new Point(i+1,i+1));
-//				icetizens[i].setDestination(new Point(i+1,i+1));
-//			}
-			
-			
-			//generated from fetch		
-			icetizens = new NullIcetizen[list.size()];
-			for(int i=0; i<icetizens.length;i++){
-				icetizens[i] = list.pop();
-			}
+			//setup timer (control frame per second)
 			timer = new Timer(delay, new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					repaint();
@@ -414,7 +402,7 @@ public class WorldView extends JPanel {
 			currentWeather = s;
 		}
 		
-		public void updateIcetizens(NullIcetizen [] n){
+		public void updateIcetizens(LinkedList<NullIcetizen> n){
 			icetizens = n;
 		}
 		
