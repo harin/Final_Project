@@ -109,6 +109,8 @@ public class MainFrame extends JFrame {
 	
 	public void switchToWorldView() throws IOException{
 		
+		Dimension d = this.getSize();
+		
 		JLayeredPane lp = this.getLayeredPane();
 		
 		worldViewPanel = new JPanel();
@@ -144,11 +146,11 @@ public class MainFrame extends JFrame {
 		
 		//minimap
 		MiniMap map = new MiniMap(icetizens, activeIcetizen);
-		map.setBounds(this.WIDTH - map.WIDTH, 0, 102, 102);
+		map.setLocation(d.width - map.getWidth()- 50 , 50);
 		lp.add(map, new Integer(100));
 		
 		//worldview
-		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens);
+		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
 
 		TextChatBox.createAndShowGUI();
 		

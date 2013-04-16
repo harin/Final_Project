@@ -24,8 +24,6 @@ import javax.swing.JPanel;
 
 public class WorldView extends JPanel {
 	
-
-	
 		Font talkFont = this.getFont();
 		Font yellFont = talkFont.deriveFont((float) 120.0);
 		private final int size = 100;
@@ -47,7 +45,7 @@ public class WorldView extends JPanel {
 		private Image scaleIndicator;
 
 		
-		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni) throws IOException{
+		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
 			super();
 			//get fetch
 			
@@ -57,7 +55,7 @@ public class WorldView extends JPanel {
 			this.setSize(width,height);
 			immigration = im;
 			
-			walkRateX = tileSide /2.0 / 40;
+			walkRateX = tileSide /2.0 / delay;
 			walkRateY = walkRateX;//for now
 
 			indicator = ImageIO.read(new File("arrow.png"));
@@ -65,7 +63,7 @@ public class WorldView extends JPanel {
 			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
-			activeIcetizen = new NullIcetizen();	
+			activeIcetizen = active	;
 			MouseHandler mh = new MouseHandler();
 			this.addMouseMotionListener(mh);
 			this.addMouseListener(mh);
@@ -150,7 +148,6 @@ public class WorldView extends JPanel {
 				case "Sunny":
 				default:
 					Weather.sunnyBackground(g, this.getWidth(), this.getHeight());
-				
 			} 
 		}
 //--------------------------------------------------------------------------------------------
@@ -271,6 +268,11 @@ public class WorldView extends JPanel {
 			Point nDest = n.getDestination();
 			Image scale = n.getScale();
 			
+			if(nDest.x<0 || nDest.x>100 || nDest.y< 0 || nDest.y> 100){
+				System.out.println("Can't walk to:" +nDest.x+","+nDest.y);
+				return;
+			}
+			
 			// if not at destination, walk
 			if(!n.getPos().equals(nDest)){
 				//System.out.println("trying to walk to dest");
@@ -290,7 +292,7 @@ public class WorldView extends JPanel {
 				Point DestPixel = tileCoord[nDest.x][nDest.y];
 				double xMove = DestPixel.x - n.getPixelPos().x;
 				double yMove = DestPixel.y - n.getPixelPos().y;
-				System.out.println(xMove+","+yMove);
+				//System.out.println(xMove+","+yMove);
 				
 				if(Math.abs(xMove)< walkRateX){
 					n.getPixelPos().x+=xMove;
