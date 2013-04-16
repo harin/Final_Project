@@ -156,7 +156,9 @@ public class MainFrame extends JFrame {
 		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
 		
-		TextChatBox.createAndShowGUI();	
+		TextChatBox chat = new TextChatBox(activeIcetizen);
+		chat.createAndShowGUI();
+		
 		worldViewPanel.add(worldView);		
 		this.setContentPane(worldViewPanel);
 		revalidate();

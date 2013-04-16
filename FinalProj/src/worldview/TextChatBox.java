@@ -18,18 +18,20 @@ public class TextChatBox extends JFrame implements ActionListener{
 	private JTextField textField;
 	private JTextArea textArea;
 	private JScrollPane textAreaScroll;
+	private static NullIcetizen active;
 	
 	
-	public TextChatBox(){
-		super();
+	 public TextChatBox(NullIcetizen a){
+		
+		active = a;
 		this.setPreferredSize(new Dimension(500, 350));
+		this.setEnabled(true);
 		setGUI();
 		
 	}
 	
 	public static void createAndShowGUI(){
-		TextChatBox console = new TextChatBox();
-		console.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		TextChatBox console = new TextChatBox(active);
 		console.pack();
 		console.setVisible(true);
 	}
@@ -80,6 +82,8 @@ public class TextChatBox extends JFrame implements ActionListener{
 			//was a selection in the textArea
 			textArea.setCaretPosition(textArea.getDocument().getLength());
 			
+			active.setYellMsg(text);
+			
 			if(text.equals(clear)){
 				textArea.setText("");
 			}
@@ -97,6 +101,8 @@ public class TextChatBox extends JFrame implements ActionListener{
 			//Make sure the new text is visible, event if there
 			//was a selection in the textArea
 			textArea.setCaretPosition(textArea.getDocument().getLength());
+			
+			active.setTalkMsg(text);
 			
 			if(text.equals(clear)){
 				textArea.setText("");
