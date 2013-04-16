@@ -9,6 +9,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,7 @@ public class MainFrame extends JFrame {
 	private LinkedList<NullIcetizen> icetizens;
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
+	private ArrayList<ArrayList<LinkedList<NullIcetizen>>> charMap;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
 	SplashScreen sp;
@@ -141,8 +143,8 @@ public class MainFrame extends JFrame {
 		lp.add(zoomOut,new Integer(100));
 
 		//fetch info
-		FetchInformation fetcher = new FetchInformation();
-		icetizens = fetcher.getCitizen();
+		setupData();
+		
 		
 		//minimap
 		MiniMap map = new MiniMap(icetizens, activeIcetizen);
@@ -159,6 +161,28 @@ public class MainFrame extends JFrame {
 		this.setContentPane(worldViewPanel);
 		revalidate();
 	}
+	public void setupData() throws IOException{
+		FetchInformation fetcher = new FetchInformation();
+		icetizens = fetcher.getCitizen();
+		
+		charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
+		charMap = new ArrayList<ArrayList<LinkedList<NullIcetizen>>>(100);
+		for(int i=0; i<100;i++){
+			charMap.add(new ArrayList<LinkedList<NullIcetizen>>(100));
+		}
+		for(int i=0; i<100;i++){
+			for(int j=0; j<100; j++){
+				charMap.get(i).add(new LinkedList<NullIcetizen>());
+			}
+		}
+		
+		for(NullIcetizen n: icetizens){
+			int x = n.getPos().x;
+			int y = n.getPos().y;
+			charMap.get(x).get(y).add(n);
+		}
+	}
+	
 	
 	public void activeIcetizenTalk(String s){
 		this.activeIcetizen.setTalkMsg(s);
