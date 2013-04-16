@@ -107,12 +107,19 @@ public class FetchTest2 {
 					   }
 					   else{
 						   
-						
+							if((""+last_known_destinantion.get("timestamp")).equals("null")){
+							    timestamp = -1;
+	
+							}
 							  
-							  String timestampString = ""+last_known_destinantion.get("timestamp"); 
-							   stringPosition = (String) last_known_destinantion.get("position");
-							   timestamp = Long.parseLong(timestampString);
-							   System.out.println("timestamp"+timestamp);
+							else{  String timestampString = ""+last_known_destinantion.get("timestamp"); 
+							 timestamp = Long.parseLong(timestampString);
+							
+							}
+								   stringPosition = (String) last_known_destinantion.get("position");
+								  
+								   System.out.println("timestamp"+timestamp);
+							   
 							   int beginIndex = 1;
 							   int endIndex = stringPosition.indexOf(",");
 							   int beginIndex2 = endIndex+1;
