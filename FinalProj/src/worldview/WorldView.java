@@ -11,6 +11,7 @@ import java.awt.Point;
 import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -41,7 +42,7 @@ public class WorldView extends JPanel {
 		private ICEWorldImmigration immigration;
 		private Timer timer;
 		private int delay = 40;
-		private int walkRateX, walkRateY;
+		private double walkRateX, walkRateY;
 		private String currentWeather ="Snowing";
 		private Image grassTile;
 		
@@ -54,9 +55,9 @@ public class WorldView extends JPanel {
 			this.setSize(width,height);
 			immigration = im;
 			
-			//walkRate = (int)Math.ceil(tileSide /2.0 / 40);
-			walkRateX = 5;
-			walkRateY = 5;
+			walkRateX = tileSide /2.0 / 40;
+			walkRateY = walkRateX;//for now
+
 			
 			bufferImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
 			bufferG = bufferImage.getGraphics();
@@ -130,11 +131,7 @@ public class WorldView extends JPanel {
 			//top plane ------------------------
 			//draw weather
 			
-			drawForegroundWeather(g);
-			
-			
-			
-			
+			drawForegroundWeather(g);		
 		}
 		
 		public void drawForegroundWeather(Graphics g){
@@ -181,6 +178,7 @@ public class WorldView extends JPanel {
 				n.rescale();
 			}
 			repaint();
+			updateWalkRate();
 		}
 		
 		public void zoomOut(){
@@ -190,6 +188,7 @@ public class WorldView extends JPanel {
 				n.rescale();
 			}
 			repaint();
+			updateWalkRate();
 			
 		}
 		
@@ -270,15 +269,17 @@ public class WorldView extends JPanel {
 				//pixelpos,intermediate pos, just for walking, if not walking will equal null
 				if(n.getPixelPos() == null){
 					//instantiate pixelPos for walking in between tiles
-					Point currentPixelPos = tileCoord[n.getPos().x][n.getPos().y];
+					Point2D.Double currentPixelPos = new Point2D.Double();
+					currentPixelPos.x= tileCoord[n.getPos().x][n.getPos().y].x;
+					currentPixelPos.y= tileCoord[n.getPos().x][n.getPos().y].y;
 					n.setPixelPos(currentPixelPos);
 					System.out.println("PixelPos set to :"+currentPixelPos);
 				}
 				//pixelPos already instantiate for walking - do the walking
 				//pixelPos not there yet...
 				Point DestPixel = tileCoord[nDest.x][nDest.y];
-				int xMove = DestPixel.x - n.getPixelPos().x;
-				int yMove = DestPixel.y - n.getPixelPos().y;
+				double xMove = DestPixel.x - n.getPixelPos().x;
+				double yMove = DestPixel.y - n.getPixelPos().y;
 				System.out.println(xMove+","+yMove);
 				
 				if(Math.abs(xMove)< walkRateX){
@@ -297,8 +298,8 @@ public class WorldView extends JPanel {
 					else {}//do nothing
 				}
 				
-				int yPos = n.getPixelPos().y - scale.getHeight(null) + tileSide/4; //calculate offset for drawing
-				int xPos = n.getPixelPos().x - scale.getWidth(null)/5; //calculate offset for drawing
+				int yPos = ((int)Math.floor(n.getPixelPos().y)) - scale.getHeight(null) + tileSide/4; //calculate offset for drawing
+				int xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
 				g.drawImage(scale, xPos, yPos ,null);
 				
 				//check if destination reached
@@ -324,7 +325,8 @@ public class WorldView extends JPanel {
 			//get coordinate of the head
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
-				p = n.getPixelPos();
+				p = new Point((int)n.getPixelPos().x, (int)n.getPixelPos().y);
+
 			}else{//while stationary
 				p = tileCoord[n.getPos().x][n.getPos().y];
 			}
@@ -336,8 +338,6 @@ public class WorldView extends JPanel {
 			Font font = this.getFont();			
 
 			
-			
-	
 			int textwidth = (int)(font.getStringBounds(msg, frc).getWidth());
 			int textheight = (int)(font.getStringBounds(msg, frc).getHeight());
 			g.setColor(Color.WHITE);
@@ -355,10 +355,10 @@ public class WorldView extends JPanel {
 		public void yell(Graphics g, NullIcetizen n, String msg){
 			//get coordinate of the head
 			g.setFont(yellFont);
-			
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
-				p = n.getPixelPos();
+				p = new Point((int)n.getPixelPos().x, (int)n.getPixelPos().y);
+
 			}else{//while stationary
 				p = tileCoord[n.getPos().x][n.getPos().y];
 			}
@@ -397,6 +397,11 @@ public class WorldView extends JPanel {
 			icetizens = n;
 		}
 		
+		public void updateWalkRate(){
+			walkRateX = tileSide /2.0 / 40;
+			walkRateY = walkRateX;//for now
+		}
+		
 //--------------------------------------------------------------------------------------------
 //		Handler class
 //--------------------------------------------------------------------------------------------			
@@ -431,7 +436,7 @@ public class WorldView extends JPanel {
 				lastPress.x = x;
 				lastPress.y = y;
 				moveOrigin(xMoved,yMoved);
-				Point pix = activeIcetizen.getPixelPos();
+				Point2D.Double pix = activeIcetizen.getPixelPos();
 				if(pix!=null){ // is walking
 					pix.x += xMoved;
 					pix.y += yMoved;

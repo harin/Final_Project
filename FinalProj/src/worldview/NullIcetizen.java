@@ -25,7 +25,7 @@ public class NullIcetizen implements MyIcetizen{
 	private long type; //0 for alien, 1 for icetizen
 	private Point destination;//store destination tile coordinate
 	private Point pos;//store current tile coordinate
-	private Point pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
+	private Point2D.Double pixelPos;// store pixel coordinate - use for walking smoothly in between tiles
 	
 	
 	
@@ -161,7 +161,7 @@ public class NullIcetizen implements MyIcetizen{
 	//---------------------------------------------------------------------------------
 	//Getter
 	//---------------------------------------------------------------------------------
-	public Point getPixelPos(){
+	public Point2D.Double getPixelPos(){
 		return pixelPos;
 	}
 	public BufferedImage getLookImage(){
@@ -222,7 +222,7 @@ public class NullIcetizen implements MyIcetizen{
 	//---------------------------------------------------------------------------------
 	//Setter
 	//---------------------------------------------------------------------------------
-	public void setPixelPos(Point p){
+	public void setPixelPos(Point2D.Double p){
 		pixelPos = p;
 	}
 	@Override
