@@ -45,9 +45,9 @@ public class WorldView extends JPanel {
 		private double walkRateX, walkRateY;
 		private String currentWeather ="Snowing";
 		private Image grassTile;
-		
-		private BufferedImage bufferImage;
-		private Graphics bufferG;
+		private BufferedImage indicator;
+		private Image scaleIndicator;
+
 		
 		public WorldView(int width, int height, ICEWorldImmigration im) throws IOException{
 			super();
@@ -58,9 +58,8 @@ public class WorldView extends JPanel {
 			walkRateX = tileSide /2.0 / 40;
 			walkRateY = walkRateX;//for now
 
-			
-			bufferImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
-			bufferG = bufferImage.getGraphics();
+			indicator = ImageIO.read(new File("arrow.png"));
+			scaleIndicator = indicator.getScaledInstance(tileSide,-1, Image.SCALE_SMOOTH);
 			
 			highlightTile = new Point(-1,-1);
 			destination = new Point(0,0);
@@ -248,6 +247,11 @@ public class WorldView extends JPanel {
 			if(activeIcetizen.getYellSecondLeft() >0){
 				yell(g, activeIcetizen, activeIcetizen.getYellMsg());
 			}
+			
+			//draw indicator
+			Point pos = activeIcetizen.getPos();
+			int x = pos.x + tileSide/2;
+			g.drawImage(scaleIndicator,x,pos.y,null);
 			
 		}
 		

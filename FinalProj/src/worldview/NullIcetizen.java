@@ -135,20 +135,7 @@ public class NullIcetizen implements MyIcetizen{
 			System.err.println("Failed to load image");
 		}
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 	public void move(int x, int y){
 		pos.x = x;
