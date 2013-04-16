@@ -473,7 +473,7 @@ public class WorldView extends JPanel {
 				}
 				
 				//activeIcetizen.setYellMsg("I'm Yelling");
-				activeIcetizen.setTalkMsg("I am walking");
+				//activeIcetizen.setTalkMsg("I am walking");
 				
 
 				System.out.println("move to:"+ highlightTile.x +","+highlightTile.y);

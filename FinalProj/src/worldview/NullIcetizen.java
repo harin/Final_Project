@@ -197,7 +197,7 @@ public class NullIcetizen implements MyIcetizen{
 	
 	//yell
 	public int getYellSecondLeft(){
-		return this.talkCountdown;
+		return this.yellCountdown;
 	}
 	
 	public String getYellMsg(){
