@@ -137,11 +137,17 @@ public class MainFrame extends JFrame {
 			}
 		});
 		lp.add(zoomOut,new Integer(100));
-		
-		
+
+		//fetch info
 		FetchInformation fetcher = new FetchInformation();
 		icetizens = fetcher.getCitizen();
 		
+		//minimap
+		MiniMap map = new MiniMap(icetizens, activeIcetizen);
+		map.setBounds(this.WIDTH - map.WIDTH, 0, 102, 102);
+		lp.add(map, new Integer(100));
+		
+		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens);
 
 		TextChatBox.createAndShowGUI();
