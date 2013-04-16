@@ -25,7 +25,7 @@ try
 setSize(ii.getIconWidth(),ii.getIconHeight());
 setLocationRelativeTo(null);
 show();
-Thread.sleep(5000);
+Thread.sleep(2500);
 dispose();
 }
 catch(Exception exception)
