@@ -13,19 +13,22 @@ import javax.swing.*;
 public class TextChatBox extends JFrame implements ActionListener{
 	
 	private final String newline = "\n"	;
+	private JCheckBox yell;
+	private JPanel textingPane;
 	private JTextField textField;
 	private JTextArea textArea;
 	private JScrollPane textAreaScroll;
 	
 	
-	public TextChatBox(String s){
-		super(s);
+	public TextChatBox(){
+		super();
 		this.setPreferredSize(new Dimension(500, 350));
 		setGUI();
+		
 	}
 	
 	public static void createAndShowGUI(){
-		TextChatBox console = new TextChatBox("Chat Box");
+		TextChatBox console = new TextChatBox();
 		console.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		console.pack();
 		console.setVisible(true);
@@ -35,39 +38,71 @@ public class TextChatBox extends JFrame implements ActionListener{
 		
 		LayoutManager manager = new BorderLayout();
 		this.setLayout(manager);
+		textingPane = new JPanel();
+		textingPane.setLayout(new BoxLayout(textingPane, BoxLayout.LINE_AXIS));
 		
-		
+		yell=new JCheckBox("YELL");
+				
 		textField = new JTextField();
 		textField.addActionListener(this);
 
 		textArea = new JTextArea();
 		textArea.setLineWrap(true);	
 		textArea.setEditable(false);
+		textArea.setForeground(Color.BLUE);
 		textAreaScroll = new JScrollPane(textArea);
 		
-		this.add(textField, BorderLayout.SOUTH);
+		
+		textingPane.add(textField);
+		textingPane.add(yell);
+		
+
+		
+		this.add(textingPane, BorderLayout.SOUTH);
 		this.add(textAreaScroll, BorderLayout.CENTER);
 	}
 	
 	public void actionPerformed(ActionEvent evt){
 		
-		String text = textField.getText();
+		String text;
 		String clear = "/clear";
-		textArea.append(">> "+text + newline);
-		textField.setText("");
-		try{
-			textArea.append(fetch(text) + newline);
-		}catch (Exception e){}
-		//Make sure the new text is visible, event if there
-		//was a selection in the textArea
-		textArea.setCaretPosition(textArea.getDocument().getLength());
 		
-		if(text.equals(clear)){
-			textArea.setText("");
+		
+		if(yell.isSelected()){
+						
+			text = textField.getText();
+			textArea.append(">>YELLED : "+text + newline);
+			textField.setText("");
+			try{
+				textArea.append(fetch(text) + newline);
+			}catch (Exception e){}
+			//Make sure the new text is visible, event if there
+			//was a selection in the textArea
+			textArea.setCaretPosition(textArea.getDocument().getLength());
+			
+			if(text.equals(clear)){
+				textArea.setText("");
+			}
 		}
+		else {
 		
-		
-		
+			text = textField.getText();
+			
+			
+			textArea.append(">> "+text + newline);
+			textField.setText("");
+			try{
+				textArea.append(fetch(text) + newline);
+			}catch (Exception e){}
+			//Make sure the new text is visible, event if there
+			//was a selection in the textArea
+			textArea.setCaretPosition(textArea.getDocument().getLength());
+			
+			if(text.equals(clear)){
+				textArea.setText("");
+			}
+			
+		}
 	}
 	
 	public String fetch(String s) throws Exception{
