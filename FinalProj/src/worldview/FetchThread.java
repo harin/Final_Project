@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import worldview.FetchInformation;
+
 
 public class FetchThread extends Thread {
 	long refresh_time;

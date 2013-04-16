@@ -3,11 +3,14 @@ package worldview;
 
 import help__dialog.NonModal;
 import setting.Setting;
+import worldview.FetchThread.decrementEvent;
+import worldview.FetchThread.incrementEvent;
 import iceworld.given.ICEWorldImmigration;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -152,11 +155,9 @@ public class MainFrame extends JFrame {
 		
 		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
-
-		TextChatBox.createAndShowGUI();
 		
-		worldViewPanel.add(worldView);
-		
+		TextChatBox.createAndShowGUI();	
+		worldViewPanel.add(worldView);		
 		this.setContentPane(worldViewPanel);
 		revalidate();
 	}
@@ -165,12 +166,16 @@ public class MainFrame extends JFrame {
 //		icetizens = fetcher.getCitizen();
 		
 		FetchThread fetcher = new FetchThread();
-		icetizens =  fetcher.getFetch().getCitizen();
 		fetcher.setGUI();
 		fetcher.start();
-		icetizens =  fetcher.getFetch().getCitizen();
+		
+		icetizens = fetcher.getFetch().getCitizen();
+	
 	}
 	
+	public void setIcetizens( LinkedList<NullIcetizen> icetizens){
+		this.icetizens= icetizens;
+	}
 	
 	public void activeIcetizenTalk(String s){
 		this.activeIcetizen.setTalkMsg(s);
