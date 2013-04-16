@@ -1,12 +1,19 @@
 package setting;
 
+import iceworld.given.IcetizenLook;
+
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+
+import worldview.NullIcetizen;
+import worldview.MainFrame.LogOutEvent;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -19,15 +26,17 @@ import java.io.IOException;
 public class Setting extends JPanel implements ActionListener{
 	LoadVisualResources avatar;
 	
+	private static NullIcetizen active;
+	IcetizenLook look;
 	
 	JTabbedPane tabbedPane = new JTabbedPane();
     JFrame frame;
 
-    public Setting(JFrame frame) throws IOException{
+    public Setting(JFrame frame,NullIcetizen a) throws IOException{
     	
     	super(new BorderLayout());
     	this.frame = frame;
-    	
+    	active = a;
      	JPanel setting = settingPanel();
         JPanel custom = customPanel();
 
@@ -76,12 +85,16 @@ public class Setting extends JPanel implements ActionListener{
     	JComboBox headBox = new JComboBox(avatar.headS);
     	JComboBox shirtBox = new JComboBox(avatar.shirtS);
     	JComboBox weaponBox = new JComboBox(avatar.weaponS);
+    	JButton select = new JButton("Select");
+    	select.setActionCommand("select");
     	
     	bodyBox.addActionListener(this);
     	headBox.addActionListener(this);
     	shirtBox.addActionListener(this);
     	weaponBox.addActionListener(this);
-      	
+      	select.addActionListener(new SelectEvent());
+    	
+    	
     	LeftPanel.add(bodyLabel);
     	LeftPanel.add(bodyBox);
     	LeftPanel.add(headLabel);
@@ -90,7 +103,8 @@ public class Setting extends JPanel implements ActionListener{
     	LeftPanel.add(shirtBox);
     	LeftPanel.add(weaponLabel);
     	LeftPanel.add(weaponBox);
-    	
+    	LeftPanel.add(select);
+    	    	
     	RightPanel.add(avatar);
     	
     	panel.add(LeftPanel);
@@ -124,7 +138,7 @@ public class Setting extends JPanel implements ActionListener{
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         JDialog dialog = new JDialog(frame, "Setting & Custom");
         //Create and set up the content pane.
-        Setting newContentPane = new Setting(frame);
+        Setting newContentPane = new Setting(frame,active);
         newContentPane.setOpaque(true); //content panes must be opaque
         dialog.setContentPane(newContentPane);
         
@@ -140,10 +154,13 @@ public class Setting extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
     	JComboBox cb = (JComboBox)e.getSource();
         String idResource = (String)cb.getSelectedItem();
-    	
+        int b = 0;
+        int h = 0;
+        int s = 0;
+        int w = 0;
+        
         if(idResource.charAt(0)=='B'){
         	System.out.println("body select");
-        	int b = 0;
         	for(int i=0;i<avatar.bodyS.length;i++){
         		if(avatar.bodyS[i]!=idResource){
         			b++;
@@ -155,7 +172,7 @@ public class Setting extends JPanel implements ActionListener{
         	avatar.repaint();
         }else if(idResource.charAt(0)=='H'){
         	System.out.println("head select");
-        	int h = 0;
+        	
         	for(int i=0;i<avatar.headS.length;i++){
         		if(avatar.headS[i]!=idResource){
         			h++;
@@ -167,7 +184,7 @@ public class Setting extends JPanel implements ActionListener{
         	avatar.repaint();
         }else if(idResource.charAt(0)=='S'){
         	System.out.println("shirt select");
-        	int s = 0;
+        	
         	for(int i=0;i<avatar.shirtS.length;i++){
         		if(avatar.shirtS[i]!=idResource){
         			s++;
@@ -179,7 +196,7 @@ public class Setting extends JPanel implements ActionListener{
         	avatar.repaint();
         }else if(idResource.charAt(0)=='W'){
         	System.out.println("weapon select");
-        	int w = 0;
+        	
         	for(int i=0;i<avatar.weaponS.length;i++){
         		if(avatar.weaponS[i]!=idResource){
         			w++;
@@ -189,8 +206,25 @@ public class Setting extends JPanel implements ActionListener{
         	}System.out.println("index:"+w);
         	avatar.weaponcount= w;
         	avatar.repaint();
-        }else{
-        	System.err.print("ERROR");
+        }else {
+        	System.err.print("this is wrong");
         }             
     }  	
+    public class SelectEvent implements ActionListener{
+		 public void actionPerformed(ActionEvent e){
+			 System.out.println("Select called");
+		     look = new IcetizenLook();
+		     try {
+		     	look.gidH = "http://iceworld.sls-atl.com/"+LoadVisualResources.getHead(avatar.headcount);
+		     	look.gidB = "http://iceworld.sls-atl.com/"+LoadVisualResources.getBody(avatar.bodycount);
+		     	look.gidS = "http://iceworld.sls-atl.com/"+LoadVisualResources.getShirt(avatar.shirtcount);
+		     	look.gidW = "http://iceworld.sls-atl.com/"+LoadVisualResources.getWeapon(avatar.weaponcount);
+			} catch (IOException e1) {
+			e1.printStackTrace();
+			}
+		    active.setIcetizenLook(look);
+		    active.prepareLookImage();
+		 }
+	}
+        
 }
