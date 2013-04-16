@@ -90,9 +90,7 @@ public class WorldView extends JPanel {
 			icetizens = new NullIcetizen[list.size()];
 			for(int i=0; i<icetizens.length;i++){
 				icetizens[i] = list.pop();
-				
 			}
-			
 			timer = new Timer(delay, new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					repaint();
@@ -173,6 +171,7 @@ public class WorldView extends JPanel {
 		public void zoomIn(){
 			tileSide+=5;
 			activeIcetizen.rescale();
+			updateIndicator();
 			for(NullIcetizen n: icetizens){
 				n.rescale();
 			}
@@ -183,6 +182,8 @@ public class WorldView extends JPanel {
 		public void zoomOut(){
 			tileSide-=5;
 			activeIcetizen.rescale();
+			updateIndicator();
+
 			for(NullIcetizen n: icetizens){
 				n.rescale();
 			}
@@ -388,10 +389,6 @@ public class WorldView extends JPanel {
 			FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
 			Font font = yellFont;
 			
-			
-			
-			
-			
 			int textwidth = (int)(font.getStringBounds(msg, frc).getWidth());
 			int textheight = (int)(font.getStringBounds(msg, frc).getHeight());
 			
@@ -419,6 +416,12 @@ public class WorldView extends JPanel {
 			walkRateX = tileSide /2.0 / 40;
 			walkRateY = walkRateX;//for now
 		}
+		
+		public void updateIndicator(){
+			scaleIndicator = indicator.getScaledInstance(tileSide,-1, Image.SCALE_SMOOTH);
+		}
+		
+		
 		
 //--------------------------------------------------------------------------------------------
 //		Handler class
