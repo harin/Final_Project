@@ -11,6 +11,7 @@ import java.awt.image.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ public class FetchInformation {
 	 final String domain3 =  "http://iceworld.sls-atl.com/api/&cmd=gurl&gid=";
 	 final String domain4 = "http://iceworld.sls-atl.com/";
 	  
-	 
+	  long currentTime;
 	  BufferedImage weaponImage;
 	  BufferedImage bodyImage;
 	  BufferedImage shirtImage;
@@ -58,14 +59,16 @@ public class FetchInformation {
 	  
 	  //linkedlist of NullIcetizen
 		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
+		LinkedList<NullAction> actionList = new LinkedList<NullAction>();
 	  
 	public FetchInformation() {
+		setTime();
+		setAction(currentTime);
 		try {
 
 			URL iceworld = new URL(domain);
 			URLConnection con = iceworld.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
+			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String json = in.readLine();
 
 			parser = new JSONParser();
@@ -286,4 +289,84 @@ public class FetchInformation {
 	  public LinkedList<NullIcetizen> getCitizen(){
 		  return (LinkedList<NullIcetizen>) list.clone();
 	  }
+	  
+	  public LinkedList<NullAction>  getAction(){
+			return	(LinkedList<NullAction>) actionList.clone();
+
+		  }
+	  
+	  
+	  
+	  public void setTime(){
+		  try{
+			URL timeDomain = new URL("http://iceworld.sls-atl.com/api/&cmd=time");
+			URLConnection timeCon = timeDomain.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(timeCon.getInputStream()));
+			String json = in.readLine();
+
+			JSONParser parser = new JSONParser();
+			JSONObject jtime = (JSONObject) parser.parse(json);
+			String timedata = (String) jtime.get("data");
+			
+			currentTime = Long.parseLong(""+timedata);
+		  }catch(Exception e){
+			  System.out.println("cannot get current time"+e);
+			  e.printStackTrace();
+		  }
+		}
+	  
+	  public void setAction(long time) {
+			
+		  try{	
+			  	System.out.println("====================");
+			  	System.out.println("action is being set");
+				URL actionDomain = new URL("http://iceworld.sls-atl.com/api/&cmd=actions&from="+(time-300));//300 second back
+				URLConnection actionCon = actionDomain.openConnection();
+				BufferedReader in = new BufferedReader(new InputStreamReader(actionCon.getInputStream()));
+				String json = in.readLine();
+				JSONParser parser = new JSONParser();
+				JSONObject jaction = (JSONObject) parser.parse(json);
+				
+				JSONArray dataArray = (JSONArray) jaction.get("data");
+
+			
+				
+				JSONObject data;
+				
+				for(int i =0 ;i<dataArray.size();i++){
+					data = (JSONObject) dataArray.get(i);
+					
+					long timestamp = Long.parseLong(""+data.get("timestamp"));
+					
+					String uid = ""+data.get("uid");
+					
+					int type = Integer.parseInt(""+data.get("action_type"));
+					
+					long aid = Long.parseLong(""+data.get("aid"));
+					
+					String detail = ""+data.get("detail");
+
+					
+					
+					NullAction action = new NullAction();
+					
+					action.setTimestamp(timestamp);
+					action.setDetail(detail);
+					action.setActionid(aid);
+					action.setType(type);
+					action.setUserid(uid);
+					
+					actionList.add(action);
+			}
+		  }catch(Exception e){
+			  System.out.println("Error in trying to get the action:"+e);
+			  e.printStackTrace();
+		  }
+		  	System.out.println("End setting action");
+			System.out.println("====================");
+		}
+	  
+	 
 }
+
+

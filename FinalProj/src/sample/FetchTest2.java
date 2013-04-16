@@ -101,7 +101,7 @@ public class FetchTest2 {
 //				   System.out.println("fml:"+last_known_destinantion.get("timestamp").toString());
 				   try{//3 try
 					   testsubject++;
-					   if(last_known_destinantion.get("timestamp").equals(null) && last_known_destinantion.get("position").equals(null)){
+					   if((""+last_known_destinantion.get("timestamp")).equals("null") && (""+last_known_destinantion.get("position")).equals("null")){
 						    timestamp = -1;
 						    position = new Point(0,0);
 					   }
