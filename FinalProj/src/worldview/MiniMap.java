@@ -27,22 +27,11 @@ public class MiniMap extends JPanel {
 		
 		g.setColor(Color.BLACK);
 		for(NullIcetizen n: icetizens){
-			if(n.getPixelPos() != null){
-				g.drawRect((int)n.getPixelPos().x, (int)n.getPixelPos().y, 1,1);
-			}else{
 				g.drawRect(n.getPos().x, n.getPos().y, 1, 1);
-			}
+
 		}
 		g.setColor(Color.RED);
-		if(active.getPixelPos() != null){
-			System.out.println("pixelpos not null");
-			
-			
-			g.drawRect((int)active.getPixelPos().x, (int)active.getPixelPos().y, 1,1);
-		}else{
-			
-			g.drawRect(active.getPos().x, active.getPos().y, 1, 1);
-		}
+		g.drawRect(active.getPos().x, active.getPos().y, 1, 1);
 	}
 	
 	public void paintBorder(Graphics g){
