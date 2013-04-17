@@ -457,6 +457,23 @@ public class WorldView extends JPanel {
 		public void updateIndicator(){
 			scaleIndicator = indicator.getScaledInstance(tileSide,-1, Image.SCALE_SMOOTH);
 		}
+		//have to update linkedlist of nullicetizen before doing this.
+		public void updateCharMap(){
+			for(int i=0; i<100;i++){
+				charMap.add(new ArrayList<LinkedList<NullIcetizen>>(100));
+			}
+			for(int i=0; i<100;i++){
+				for(int j=0; j<100; j++){
+					charMap.get(i).add(new LinkedList<NullIcetizen>());
+				}
+			}
+			
+			for(NullIcetizen n: icetizens){
+				int x = n.getPos().x;
+				int y = n.getPos().y;
+				charMap.get(x).get(y).add(n);
+			}
+		}
 		
 //------------------------------------------------------------------------------------
 //						filechooser/file transfering methods
