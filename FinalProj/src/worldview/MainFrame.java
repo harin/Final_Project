@@ -262,6 +262,7 @@ public class MainFrame extends JFrame {
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 effect.play();
+			 JOptionPane.showMessageDialog(new JPanel(), "QuitProgram");
 			 immigration.logout();
 			 System.exit(0);
 		 }

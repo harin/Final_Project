@@ -111,6 +111,7 @@ public class FetchThread extends Thread {
 				fetcher.setRefreshTime(refresh_time);
 				fetcher.setTime();
 				fetcher.setFetchState();
+				mainframe.setIcetizens(fetcher.getCitizen());
 				mainframe.increaseKodhod();
 					
 			}else{
