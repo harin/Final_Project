@@ -296,6 +296,8 @@ public class MainFrameNoFetch extends JFrame {
 	
 	//update icetizens after fetch
 	public void updateIcetizens(LinkedList<NullIcetizen> n){
+		System.out.println("Updating icetizens in worldview");
+
 		worldView.updateIcetizens(n);
 	}
 	

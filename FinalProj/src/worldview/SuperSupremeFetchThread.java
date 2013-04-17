@@ -81,7 +81,8 @@ public class SuperSupremeFetchThread extends Thread {
 							"\t yell:"+ ac1.yellMsg +
 							"\t walkDest:" +ac1.walkDest);
 					for(NullIcetizen n:icetizens){
-						if(n.getUserid() == ac1.uid){
+						if(n.getUserid().equals(ac1.uid)){
+							System.out.println("Setting "+ ac1.uid + n.getUsername()+"walk to" +ac1.walkDest);
 							n.setDestination((Point)ac1.walkDest.clone());
 						}
 					}
