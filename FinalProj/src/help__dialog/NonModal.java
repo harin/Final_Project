@@ -1,17 +1,25 @@
 package help__dialog;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
+
 import java.awt.BorderLayout;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 
 @SuppressWarnings("serial")
-public class NonModal extends JPanel
-{   JTabbedPane tabbedPane = new JTabbedPane();
+public class NonModal extends JPanel{   
+	JTabbedPane tabbedPane = new JTabbedPane();
     JFrame frame;
-
+    
     String logging ="Logging In/Out";
     String components ="Program Components";
     String viewing ="Viewing ICE World";
@@ -20,76 +28,84 @@ public class NonModal extends JPanel
     String features = "Features";
     
         
-    public NonModal(JFrame frame){
+    public NonModal(JFrame frame) throws IOException{
     	
     	super(new BorderLayout());
     	this.frame = frame;
     	
-     	JPanel loggingPanel = createLoggingDialogBox();
-        JPanel componentsPanel = createComponentsDialogBox();
-        JPanel viewingPanel = createViewingDialogBox(); 	
-        JPanel tranferringPanel = createTransferringDialogBox();
-        JPanel customPanel = createCustomDialogBox();
-        JPanel featuresPanel = createFeaturesDialogBox();
-    	
-        tabbedPane.addTab(logging, null,loggingPanel);
-        tabbedPane.addTab(components, null,componentsPanel); 
-        tabbedPane.addTab(viewing, null,viewingPanel); 
-        tabbedPane.addTab(tranferring, null,tranferringPanel);
-        tabbedPane.addTab(custom, null,	customPanel); 
-        tabbedPane.addTab(features, null,featuresPanel); 
+     	JEditorPane loggingPanel = createLoggingDialogBox();
+     	JEditorPane componentsPanel = createComponentsDialogBox();
+     	JEditorPane viewingPanel = createViewingDialogBox(); 	
+     	JEditorPane tranferringPanel = createTransferringDialogBox();
+     	JEditorPane customPanel = createCustomDialogBox();
+     	JEditorPane featuresPanel = createFeaturesDialogBox();
+        
+        JScrollPane loggingscrollPane = new JScrollPane(loggingPanel);
+        JScrollPane componentsscrollPane = new JScrollPane(componentsPanel);
+        JScrollPane viewingscrollPane = new JScrollPane(viewingPanel);
+        JScrollPane tranferringscrollPane = new JScrollPane(tranferringPanel);
+        JScrollPane customscrollPane = new JScrollPane(customPanel);
+        JScrollPane featuresscrollPane = new JScrollPane(featuresPanel);
+        
+        
+        tabbedPane.addTab(logging, null,loggingscrollPane);
+        tabbedPane.addTab(components, null,componentsscrollPane); 
+        tabbedPane.addTab(viewing, null,viewingscrollPane); 
+        tabbedPane.addTab(tranferring, null,tranferringscrollPane);
+        tabbedPane.addTab(custom, null,	customscrollPane); 
+        tabbedPane.addTab(features, null,featuresscrollPane); 
  
         add(tabbedPane, BorderLayout.CENTER);
     }
     
-    private JPanel createLoggingDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("logging in/out description");
+    private JEditorPane createLoggingDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/logging.html"));
     	
-		panel.add(label);
-    	
-    	return panel;
+    	return htmlPane;
     }
-    private JPanel createComponentsDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Map/ Message Typing / Video Control");
+    private JEditorPane createComponentsDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
     	
-		panel.add(label);
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/components.html"));
     	
-    	return panel;
+    	return htmlPane;
     }
-    private JPanel createViewingDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Zooming Methods(pan, drag) zoom short keys");
+    private JEditorPane createViewingDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
     	
-		panel.add(label);
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/viewing.html"));
     	
-    	return panel;
+    	return htmlPane;
     }
-    private JPanel createTransferringDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Transfer files to and from");
+    private JEditorPane createTransferringDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
     	
-		panel.add(label);
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/transferring.html"));
     	
-    	return panel;
+    	return htmlPane;
     }
-    private JPanel createCustomDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Avartar/Sounds");
+    private JEditorPane createCustomDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
     	
-		panel.add(label);
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/custom.html"));
     	
-    	return panel;
+    	return htmlPane;
     }
-    private JPanel createFeaturesDialogBox() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("Chat/yell/walk/special questions");
+    private JEditorPane createFeaturesDialogBox() throws IOException {
+    	JEditorPane htmlPane = new JEditorPane();
     	
-		panel.add(label);
-    	
-    	return panel;
+    	htmlPane.setEditable(false);
+    	htmlPane.setPage(new URL("https://dl.dropboxusercontent.com/u/94849603/features.html"));
+
+    	return htmlPane;
     }
+  
   
     
   //  
@@ -101,11 +117,16 @@ public class NonModal extends JPanel
         //creating and showing this application's GUI.
      javax.swing.SwingUtilities.invokeLater(new Runnable(){
          public void run(){
-             createAndShowGUI();          
+             try {
+				createAndShowGUI();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}          
          }
      });
     }
-    private static void createAndShowGUI() {
+    private static void createAndShowGUI() throws IOException {
         //Create and set up the window.
         JFrame frame = new JFrame("You asked for Help, I'm here!");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -120,5 +141,4 @@ public class NonModal extends JPanel
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);//set it in the center of screen
     }
-     
 }
