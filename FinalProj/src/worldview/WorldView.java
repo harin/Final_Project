@@ -58,7 +58,7 @@ public class WorldView extends JPanel {
 		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
 			super();
 		
-			icetizens = ni;
+			icetizens = (LinkedList<NullIcetizen>)ni.clone();
 			
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
@@ -152,7 +152,6 @@ public class WorldView extends JPanel {
 					Weather.sunny(g, this.getWidth(), this.getHeight());
 					break;
 				case "Cloudy":
-					System.out.println("It's cloudy");
 					Weather.cloudy(g, this.getWidth(), this.getHeight());
 					break;
 				case "Raining":
@@ -217,9 +216,9 @@ public class WorldView extends JPanel {
 //		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 		public void drawIcetizen(Graphics g){
-			System.out.println("###########################");
-			System.out.println("Drawing icetizen:"+iceCount++);
-			System.out.println("###########################");
+//			System.out.println("###########################");
+//			System.out.println("Drawing icetizen:"+iceCount++);
+//			System.out.println("###########################");
 			for(NullIcetizen n: icetizens){
 				Image scale = n.getScale();
 				Point pos = n.getPos();
@@ -346,6 +345,11 @@ public class WorldView extends JPanel {
 				int xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
 				g.drawImage(scale, xPos, yPos ,null);
 				
+				//update position with pixelpos
+				int coordY = (int)(n.getPixelPos().y - yOrigin)/ (tileSide/2);
+				int coordX =(int)((n.getPixelPos().x - xOrigin + (n.getPixelPos().y-yOrigin)) /tileSide );
+				n.setPosition(new Point(coordX, coordY));
+				
 				
 				//check if destination reached
 				if(n.getPixelPos().equals(tileCoord[nDest.x][nDest.y])){
@@ -440,8 +444,13 @@ public class WorldView extends JPanel {
 			currentWeather = s;
 		}
 		
-		public void updateIcetizens(LinkedList<NullIcetizen> n){
+		
+		public void setIcetizens(LinkedList<NullIcetizen> n){
 			icetizens = n;
+		}
+		
+		public void updateIcetizens(LinkedList<NullIcetizen> n){
+			icetizens = (LinkedList<NullIcetizen>)n.clone();
 		}
 		
 		public void updateWalkRate(){
@@ -451,6 +460,23 @@ public class WorldView extends JPanel {
 		
 		public void updateIndicator(){
 			scaleIndicator = indicator.getScaledInstance(tileSide,-1, Image.SCALE_SMOOTH);
+		}
+		//have to update linkedlist of nullicetizen before doing this.
+		public void updateCharMap(){
+			for(int i=0; i<100;i++){
+				charMap.add(new ArrayList<LinkedList<NullIcetizen>>(100));
+			}
+			for(int i=0; i<100;i++){
+				for(int j=0; j<100; j++){
+					charMap.get(i).add(new LinkedList<NullIcetizen>());
+				}
+			}
+			
+			for(NullIcetizen n: icetizens){
+				int x = n.getPos().x;
+				int y = n.getPos().y;
+				charMap.get(x).get(y).add(n);
+			}
 		}
 		
 //------------------------------------------------------------------------------------

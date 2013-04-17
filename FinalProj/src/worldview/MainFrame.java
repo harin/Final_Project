@@ -34,7 +34,7 @@ public class MainFrame extends JFrame {
 	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
-	private LinkedList<NullIcetizen> icetizens;
+	LinkedList<NullIcetizen> icetizens;
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
@@ -149,15 +149,10 @@ public class MainFrame extends JFrame {
 			}
 		});
 		lp.add(zoomOut,new Integer(100));
-
-		//fetch info
-		fetcher = new FetchThread(this);
-		fetcher.setGUI();
-		fetcher.start();
 		
-		while(kodhod==0){
-			
-		}
+		FetchInformation fetcher = new FetchInformation();
+		fetcher.setFetchState();
+		icetizens = fetcher.getCitizen();
 		
 		//minimap
 		MiniMap map = new MiniMap(icetizens, activeIcetizen);
@@ -166,6 +161,9 @@ public class MainFrame extends JFrame {
 		
 		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
+		
+		SuperSupremeFetchThread ssft = new SuperSupremeFetchThread(icetizens,this);
+		ssft.start();
 		
 		chat = new TextChatBox(activeIcetizen,immigration);
 		chat.createAndShowGUI();
@@ -245,27 +243,40 @@ public class MainFrame extends JFrame {
 	public class LogOutEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 effect.play();
-			 if(immigration.logout()){
-				 System.out.println("Log out OK");
-					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
-					//System.exit(0);
-					dispose();
-					fetcher.stop();
-					chat.dispose();
-					main(null);
-					
-			 }else{
-				 System.out.println("Log out failed");
-			 }
+			 Object[] options = { "OK","CANCEL"};
+			 int respond = JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "T_T",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			 if(respond==0){
+				 if(immigration.logout()){
+					 System.out.println("Log out OK");
+						JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
+						//System.exit(0);
+						dispose();
+						fetcher.stop();
+						chat.dispose();
+						main(null);
+						
+				 }else{
+					 System.out.println("Log out failed");
+				 }
+			}
 		 }
 	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 effect.play();
-			 JOptionPane.showMessageDialog(new JPanel(), "QuitProgram");
-			 immigration.logout();
-			 System.exit(0);
+//			 JOptionPane.showMessageDialog(new JPanel(), "QuitProgram");
+//			 immigration.logout();
+//			 System.exit(0);
+			 Object[] options = { "OK","CANCEL"};
+			 int respond = JOptionPane.showOptionDialog(null, "Are you sure you want to quit?", "Bye bye",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			if(respond==0){
+				immigration.logout(); 
+				System.exit(0); 
+			}
+			
+		 
 		 }
+		 
 	}
 	
 	protected void processQuitEvent(WindowEvent e) {
@@ -296,9 +307,15 @@ public class MainFrame extends JFrame {
         }
     }
 	
-	
-	
-	
+	//update icetizens after fetch
+	public void updateIcetizens(LinkedList<NullIcetizen> n){
+		System.out.println("Updating icetizens in worldview");
+
+		worldView.updateIcetizens(n);
+	}
+	public void updateWeather(String s){
+		worldView.updateWeather(s);
+	}
 	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
@@ -362,6 +379,7 @@ public class MainFrame extends JFrame {
 			}
 			usernameBox.setBounds(206, 84, 134, 27);
 			usernameBox.setEditable(true);
+			usernameBox.setSelectedItem("type username here");
 			usernameBox.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {

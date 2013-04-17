@@ -262,9 +262,9 @@ public class NullIcetizen implements MyIcetizen{
 	
 	
 	//compare NullIcetizen "Is he the same person"
-	public boolean compare(NullIcetizen a, NullIcetizen b){
+	public boolean samePerson(NullIcetizen a){
 		
-		if(a.getUserid().equalsIgnoreCase(b.getUserid())){
+		if(this.getUserid().equalsIgnoreCase(a.getUserid())){
 			//same person
 		return true;
 		

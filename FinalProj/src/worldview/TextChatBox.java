@@ -75,9 +75,13 @@ public class TextChatBox extends JFrame implements ActionListener{
 		
 		
 		if(yell.isSelected()){
-				
+			
+			
 			text = textField.getText();
 			
+			if(text.length()>10){
+				text.substring(0, 10);
+			}
 			if(immigration.yell(text)){
 				System.out.println("Sent yell to server:"+text);
 			}
@@ -101,6 +105,10 @@ public class TextChatBox extends JFrame implements ActionListener{
 		else {
 		
 			text = textField.getText();
+			
+			if(text.length()>100){
+				text.substring(0, 100);
+			}
 			
 			if(immigration.talk(text)){
 				System.out.println("Sent talk to server:"+text);
