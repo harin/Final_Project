@@ -237,7 +237,10 @@ public class MainFrame extends JFrame {
 			 if(immigration.logout()){
 				 System.out.println("Log out OK");
 					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
-					System.exit(0);
+					//System.exit(0);
+					dispose();
+					main(null);
+					
 			 }else{
 				 System.out.println("Log out failed");
 			 }
@@ -245,6 +248,7 @@ public class MainFrame extends JFrame {
 	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
+			 immigration.logout();
 			 System.exit(0);
 		 }
 	}

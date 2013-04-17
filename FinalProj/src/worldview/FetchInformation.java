@@ -59,8 +59,8 @@ public class FetchInformation {
 	  long timestamp;
 	  
 	  //linkedlist of NullIcetizen
-		LinkedList<NullIcetizen> list = new LinkedList <NullIcetizen>();
-		LinkedList<NullAction> actionList = new LinkedList<NullAction>();
+		LinkedList<NullIcetizen> list ;
+		LinkedList<NullAction> actionList;
 	
 	
 	public FetchInformation(){
@@ -82,6 +82,7 @@ public class FetchInformation {
 	
 	public void setFetchState() {
 		setTime();
+		list = new LinkedList <NullIcetizen>();
 		try {
 
 			URL iceworld = new URL(domain);
@@ -358,7 +359,7 @@ public class FetchInformation {
 		}
 	  
 	  public void setAction(long time) {
-			
+		  actionList = new LinkedList<NullAction>();
 		  try{	
 			  	System.out.println("====================");
 			  	System.out.println("action is being set");
