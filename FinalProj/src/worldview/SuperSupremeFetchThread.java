@@ -7,9 +7,11 @@ import java.util.LinkedList;
 public class SuperSupremeFetchThread extends Thread {
 	private LinkedList<ActionCommand> commands;
 	private LinkedList<NullIcetizen> icetizens;
+	private MainFrameNoFetch mf;
 	
-	public SuperSupremeFetchThread(LinkedList<NullIcetizen> n){
+	public SuperSupremeFetchThread(LinkedList<NullIcetizen> n, MainFrameNoFetch mf){
 		this.icetizens = n;
+		this.mf = mf;
 	}
 	
 	public void run(){
@@ -78,10 +80,17 @@ public class SuperSupremeFetchThread extends Thread {
 					System.out.println(ac1.uid +" talk:"+ac1.talkMsg +
 							"\t yell:"+ ac1.yellMsg +
 							"\t walkDest:" +ac1.walkDest);
+					for(NullIcetizen n:icetizens){
+						if(n.getUserid().equals(ac1.uid)){
+							System.out.println("Setting "+ ac1.uid + n.getUsername()+"walk to" +ac1.walkDest);
+							n.setDestination((Point)ac1.walkDest.clone());
+						}
+					}
 				}
+				
+				mf.updateIcetizens(icetizens);
 				System.out.println("-----------------------------------------------------");
-				for(NullIcetizen n: icetizens){
-				}
+
 				
 				try{
 					Thread.sleep(10000);

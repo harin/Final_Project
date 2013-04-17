@@ -162,6 +162,9 @@ public class MainFrameNoFetch extends JFrame {
 		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
 		
+		SuperSupremeFetchThread ssft = new SuperSupremeFetchThread(icetizens,this);
+		ssft.start();
+		
 		chat = new TextChatBox(activeIcetizen,immigration);
 		chat.createAndShowGUI();
 		
@@ -291,7 +294,12 @@ public class MainFrameNoFetch extends JFrame {
         }
     }
 	
-	
+	//update icetizens after fetch
+	public void updateIcetizens(LinkedList<NullIcetizen> n){
+		System.out.println("Updating icetizens in worldview");
+
+		worldView.updateIcetizens(n);
+	}
 	
 	
 	

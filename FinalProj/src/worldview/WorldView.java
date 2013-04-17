@@ -217,9 +217,9 @@ public class WorldView extends JPanel {
 //		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 		public void drawIcetizen(Graphics g){
-			System.out.println("###########################");
-			System.out.println("Drawing icetizen:"+iceCount++);
-			System.out.println("###########################");
+//			System.out.println("###########################");
+//			System.out.println("Drawing icetizen:"+iceCount++);
+//			System.out.println("###########################");
 			for(NullIcetizen n: icetizens){
 				Image scale = n.getScale();
 				Point pos = n.getPos();
