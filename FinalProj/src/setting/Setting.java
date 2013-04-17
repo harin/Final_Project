@@ -49,16 +49,47 @@ public class Setting extends JPanel implements ActionListener{
     }
     
     private JPanel settingPanel() {
-    	JPanel panel = new JPanel();
-    	JLabel label = new JLabel("BGM/soundFX");
+    	JPanel panel = new JPanel(new GridLayout(7,1,2,2));
+    	JLabel label = new JLabel("BGM/SoundFX");
+    	panel.add(label);
     	
+    	JLabel bgmLabel = new JLabel("Background Music");
+    	panel.add(bgmLabel);
     	
+    	JSlider bgmSlide=new JSlider(JSlider.HORIZONTAL,-60,6,6);
+    	bgmSlide.addChangeListener(new ChangeListener(){
+    		public void stateChanged(ChangeEvent e){
+    			MainFrame.effect.play();
+    			JSlider source=(JSlider)e.getSource();
+    			if(!source.getValueIsAdjusting()){
+    				int val=(int)source.getValue();
+    				MainFrame.music.adjustVolume(val);
+    			}
+    		}
+    	});
+    	panel.add(bgmSlide);
     	
+    	JLabel nothing1=new JLabel("");
+    	panel.add(nothing1);
     	
+    	JLabel sfxLabel=new JLabel("Sound Effect Music");
+    	panel.add(sfxLabel);
     	
-		panel.add(label);
+    	JSlider sfxSlide=new JSlider(JSlider.HORIZONTAL,-60,6,6);
+    	sfxSlide.addChangeListener(new ChangeListener(){
+    		public void stateChanged(ChangeEvent e){
+    			MainFrame.effect.play();
+    			JSlider source=(JSlider)e.getSource();
+    			if(!source.getValueIsAdjusting()){
+    				int val=(int)source.getValue();
+    				//MainFrame.music.adjustVolume(val);
+    			}
+    		}
+    	});
+    	panel.add(sfxSlide);
     	
     	return panel;
+    
     }
     
     private JPanel customPanel() throws IOException {
