@@ -312,6 +312,10 @@ public class MainFrame extends JFrame {
 		
 	}
 	
+	public void updateWeather(String s){
+		worldView.updateWeather(s);
+	}
+	
 	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
