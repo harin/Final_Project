@@ -36,6 +36,7 @@ public class MainFrame extends JFrame {
 	private NullIcetizen activeIcetizen;
 	LinkedList<NullIcetizen> icetizens;
 	LinkedList<NullIcetizen> dummy;
+	private MiniMap map ;
 
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
@@ -160,9 +161,11 @@ public class MainFrame extends JFrame {
 		while(kodhod==0){
 			
 		}
-		
+		System.out.println("************************");
+		System.out.println("Creating map");
+		System.out.println("************************");
 		//minimap
-		MiniMap map = new MiniMap(icetizens, activeIcetizen);
+		map = new MiniMap(icetizens, activeIcetizen);
 		map.setLocation(d.width - map.getWidth()- 50 , 50);
 		lp.add(map, new Integer(100));
 		
@@ -302,7 +305,12 @@ public class MainFrame extends JFrame {
     }
 	
 	
-	
+	//method to update linkedlist of icetizen in worldview and minimap
+	public void updateIcetizens(LinkedList<NullIcetizen> n){
+		worldView.updateIcetizens(n);
+		map.updateMiniMap(n);
+		
+	}
 	
 	
 	public static void main (String[] args){

@@ -445,6 +445,11 @@ public class WorldView extends JPanel {
 			currentWeather = s;
 		}
 		
+		
+		public void setIcetizens(LinkedList<NullIcetizen> n){
+			icetizens = n;
+		}
+		
 		public void updateIcetizens(LinkedList<NullIcetizen> n){
 			icetizens = (LinkedList<NullIcetizen>)n.clone();
 		}

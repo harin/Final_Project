@@ -134,7 +134,9 @@ public class FetchThread extends Thread {
 						
 						for(NullIcetizen second: mainframe.dummy){
 							if(stillhave==1){
+								System.out.println("Remove!!!!");
 								break;
+							
 							}
 							if(first.samePerson(second)){
 								stillhave++;
@@ -174,6 +176,8 @@ public class FetchThread extends Thread {
 				}
 				
 				
+				//mainframe.icetizens
+				mainframe.updateIcetizens(mainframe.icetizens);
 				
 				System.out.println("**********************");
 				System.out.println("Fetch finish"+fetchCount++);

@@ -16,6 +16,10 @@ public class MiniMap extends JPanel {
 		this.setSize(new Dimension(101,101));
 	}
 	
+	public void setIcetizen(LinkedList<NullIcetizen> n){
+		icetizens = n;
+	}
+	
 	public void updateMiniMap(LinkedList<NullIcetizen> i){
 		icetizens =(LinkedList<NullIcetizen>)i.clone();
 
