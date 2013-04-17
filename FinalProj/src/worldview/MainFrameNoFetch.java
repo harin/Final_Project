@@ -149,8 +149,10 @@ public class MainFrameNoFetch extends JFrame {
 			}
 		});
 		lp.add(zoomOut,new Integer(100));
-
-		icetizens = new LinkedList<NullIcetizen>();
+		
+		FetchInformation fetcher = new FetchInformation();
+		fetcher.setFetchState();
+		icetizens = fetcher.getCitizen();
 		
 		//minimap
 		MiniMap map = new MiniMap(icetizens, activeIcetizen);

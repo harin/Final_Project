@@ -321,7 +321,7 @@ public class FetchInformation {
 		  return (LinkedList<NullIcetizen>) list.clone();
 	  }
 	  
-	  public LinkedList<NullAction>  getAction(){
+	  public LinkedList<NullAction> getAction(){
 			return	(LinkedList<NullAction>) actionList.clone();
 
 		  }
@@ -376,7 +376,7 @@ public class FetchInformation {
 				
 				JSONObject data;
 				
-				for(int i =0 ;i<dataArray.size();i++){
+				for(int i =dataArray.size()-1 ;i>0;i--){
 					data = (JSONObject) dataArray.get(i);
 					
 					long timestamp = Long.parseLong(""+data.get("timestamp"));
