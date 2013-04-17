@@ -112,8 +112,69 @@ public class FetchThread extends Thread {
 				fetcher.setRefreshTime(refresh_time);
 				fetcher.setTime();
 				fetcher.setFetchState();
+				
+				// for first time
+				if(fetchCount==0){
 				mainframe.setIcetizens(fetcher.getCitizen());
 				mainframe.increaseKodhod();
+				}
+				//later
+				else{
+					mainframe.setDummy(fetcher.getCitizen());
+				}
+				
+				//we have to compare the attribute
+				if(fetchCount>0){
+					//compare linklist					
+					// two parameter		mainframe.icetizens; ,		mainframe.dummy;
+					
+					//remove people
+					for(NullIcetizen first: mainframe.icetizens){
+						int stillhave=0;
+						
+						for(NullIcetizen second: mainframe.dummy){
+							if(stillhave==1){
+								break;
+							}
+							if(first.samePerson(second)){
+								stillhave++;
+							}		
+						}
+						
+						if(stillhave==0){
+						 int removePosition =mainframe.icetizens.indexOf(first);
+						mainframe.icetizens.remove(removePosition);
+						}
+						
+						
+					}
+					
+					
+					
+					//add people
+					for(NullIcetizen second: mainframe.dummy){
+						int found =0;
+						
+						for(NullIcetizen first: mainframe.icetizens){
+							if(found==1){
+								break;
+							}
+							if(first.samePerson(second)){
+								first.setDestination(second.getDestination());
+								found++;
+							}		
+							
+						}
+						
+						
+						//new people!!!!!!
+						mainframe.icetizens.add(second);
+					}
+				
+				}
+				
+				
+				
 				System.out.println("**********************");
 				System.out.println("Fetch finish"+fetchCount++);
 				System.out.println("**********************");

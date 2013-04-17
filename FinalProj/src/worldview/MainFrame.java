@@ -34,7 +34,9 @@ public class MainFrame extends JFrame {
 	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
-	private LinkedList<NullIcetizen> icetizens;
+	LinkedList<NullIcetizen> icetizens;
+	LinkedList<NullIcetizen> dummy;
+
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
@@ -183,6 +185,9 @@ public class MainFrame extends JFrame {
 	
 	public void setIcetizens( LinkedList<NullIcetizen> icetizens){
 		this.icetizens= icetizens;
+	}
+	public void setDummy(LinkedList<NullIcetizen> dummy){
+		this.dummy= dummy;
 	}
 	
 	public void activeIcetizenTalk(String s){
