@@ -7,9 +7,9 @@ import java.util.LinkedList;
 public class SuperSupremeFetchThread extends Thread {
 	private LinkedList<ActionCommand> commands;
 	private LinkedList<NullIcetizen> icetizens;
-	private MainFrameNoFetch mf;
+	private MainFrame mf;
 	
-	public SuperSupremeFetchThread(LinkedList<NullIcetizen> n, MainFrameNoFetch mf){
+	public SuperSupremeFetchThread(LinkedList<NullIcetizen> n, MainFrame mf){
 		this.icetizens = n;
 		this.mf = mf;
 	}
@@ -24,7 +24,7 @@ public class SuperSupremeFetchThread extends Thread {
 			f.setAction(f.getTime());
 			LinkedList<NullAction> a = f.getAction();
 			System.out.println(a.size());
-			f.setFetchState();
+			f.setFetchNoPic();
 			
 			//update weather
 			String weather = f.getWeatherCondition();
