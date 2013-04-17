@@ -380,11 +380,10 @@ public class MainFrame extends JFrame {
 				public void actionPerformed(ActionEvent e) {
 					effect.play();
 						JComboBox<String> cb = (JComboBox<String>)e.getSource();
-						username = (String) cb.getSelectedItem();
+						username = ""+ cb.getSelectedItem();
 						activeIcetizen.setUsername(username);
 						System.out.println("username:"+activeIcetizen.getUsername());
-						
-						if(!userHistory.contains(username)){
+						if(!userHistory.contains(""+username)){
 							System.out.println("New username:"+username);
 							usernameBox.addItem(username);
 							userHistory.add(username);
@@ -422,6 +421,8 @@ public class MainFrame extends JFrame {
 						
 					}else{
 						System.out.println("Login failed");
+						System.out.println("username:"+username);
+						System.out.println("password:"+password);
 					}
 				}
 			});
