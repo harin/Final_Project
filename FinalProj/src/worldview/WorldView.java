@@ -346,6 +346,11 @@ public class WorldView extends JPanel {
 				int xPos = ((int)Math.floor(n.getPixelPos().x)) - scale.getWidth(null)/5; //calculate offset for drawing
 				g.drawImage(scale, xPos, yPos ,null);
 				
+				//update position with pixelpos
+				int coordY = (int)(n.getPixelPos().y - yOrigin)/ (tileSide/2);
+				int coordX =(int)((n.getPixelPos().x - xOrigin + (n.getPixelPos().y-yOrigin)) /tileSide );
+				n.setPosition(new Point(coordX, coordY));
+				
 				
 				//check if destination reached
 				if(n.getPixelPos().equals(tileCoord[nDest.x][nDest.y])){
