@@ -43,6 +43,7 @@ public class WorldView extends JPanel {
 		private LinkedList<NullIcetizen> icetizens;
 		private ICEWorldImmigration immigration;
 		private Timer timer;
+		private int iceCount =0;
 		private int delay = 40;
 		private double walkRateX, walkRateY;
 		private String currentWeather ="Snowing";
@@ -216,6 +217,9 @@ public class WorldView extends JPanel {
 //		Drawing Icetizen methods
 //--------------------------------------------------------------------------------------------
 		public void drawIcetizen(Graphics g){
+			System.out.println("###########################");
+			System.out.println("Drawing icetizen:"+iceCount++);
+			System.out.println("###########################");
 			for(NullIcetizen n: icetizens){
 				Image scale = n.getScale();
 				Point pos = n.getPos();

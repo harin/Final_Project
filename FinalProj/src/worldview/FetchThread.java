@@ -22,12 +22,19 @@ public class FetchThread extends Thread {
 	long refresh_time;
 	FetchInformation fetcher;
 	JTextField text;
+	MainFrame mainframe;
 
 	public static void main(String[] args) throws MalformedURLException{
 
 		FetchThread fetch = new FetchThread();
 		fetch.setGUI();
 		fetch.start();
+	}
+	
+	
+	public FetchThread(MainFrame mainframe){
+		this.mainframe=mainframe;
+		fetcher = new FetchInformation();		
 	}
 	
 	public void setGUI(){
