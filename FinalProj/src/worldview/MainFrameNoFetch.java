@@ -276,7 +276,7 @@ public class MainFrameNoFetch extends JFrame {
 			
 		 
 		 }
-		 }
+		 
 	}
 	
 	protected void processQuitEvent(WindowEvent e) {
