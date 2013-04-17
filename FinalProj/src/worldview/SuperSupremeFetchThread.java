@@ -25,9 +25,23 @@ public class SuperSupremeFetchThread extends Thread {
 			LinkedList<NullAction> a = f.getAction();
 			System.out.println(a.size());
 			f.setFetchState();
+			
+			//update weather
 			String weather = f.getWeatherCondition();
 			System.out.println("set weather to "+weather);
 			mf.updateWeather(weather);
+			
+			//update icetizen
+//			LinkedList<NullIcetizen> temp = f.getCitizen();
+//			for(NullIcetizen n: temp){
+//				boolean match =false;
+//				for(NullIcetizen current: mf.icetizens){
+//					if(current.getUserid().equals(n.getUserid())) match = true;
+//				}
+//				//if no match, add to current list
+//				mf.icetizens.add(n);
+//				System.out.println("Added " +n.getUserid() +n.getUsername() +"to icetizens list");
+//			}
 			
 			/**
 			 * ActionType
@@ -87,7 +101,12 @@ public class SuperSupremeFetchThread extends Thread {
 					for(NullIcetizen n:icetizens){
 						if(n.getUserid().equals(ac1.uid)){
 							System.out.println("Setting "+ ac1.uid + n.getUsername()+"walk to" +ac1.walkDest);
-							n.setDestination((Point)ac1.walkDest.clone());
+							if(ac1.walkDest!=null)
+								n.setDestination((Point)ac1.walkDest.clone());
+							if(ac1.talkMsg!=null)
+								n.setTalkMsg(ac1.talkMsg);
+							if(ac1.yellMsg!=null)
+								n.setYellMsg(ac1.yellMsg);
 						}
 					}
 				}

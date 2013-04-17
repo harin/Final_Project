@@ -152,7 +152,6 @@ public class WorldView extends JPanel {
 					Weather.sunny(g, this.getWidth(), this.getHeight());
 					break;
 				case "Cloudy":
-					System.out.println("It's cloudy");
 					Weather.cloudy(g, this.getWidth(), this.getHeight());
 					break;
 				case "Raining":

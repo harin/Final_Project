@@ -34,7 +34,7 @@ public class MainFrameNoFetch extends JFrame {
 	public WorldView worldView;
 	private LoginPage loginPage;
 	private NullIcetizen activeIcetizen;
-	private LinkedList<NullIcetizen> icetizens;
+	LinkedList<NullIcetizen> icetizens;
 	private ICEWorldImmigration immigration;
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
@@ -368,6 +368,7 @@ public class MainFrameNoFetch extends JFrame {
 			}
 			usernameBox.setBounds(206, 84, 134, 27);
 			usernameBox.setEditable(true);
+			usernameBox.setSelectedItem("type username here");
 			usernameBox.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
