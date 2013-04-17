@@ -24,6 +24,10 @@ public class SuperSupremeFetchThread extends Thread {
 			f.setAction(f.getTime());
 			LinkedList<NullAction> a = f.getAction();
 			System.out.println(a.size());
+			f.setFetchState();
+			String weather = f.getWeatherCondition();
+			System.out.println("set weather to "+weather);
+			mf.updateWeather(weather);
 			
 			/**
 			 * ActionType

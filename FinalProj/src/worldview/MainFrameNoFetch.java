@@ -300,6 +300,9 @@ public class MainFrameNoFetch extends JFrame {
 
 		worldView.updateIcetizens(n);
 	}
+	public void updateWeather(String s){
+		worldView.updateWeather(s);
+	}
 	
 	
 	
