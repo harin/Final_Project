@@ -2,6 +2,8 @@ package worldview;
 
 
 import help__dialog.NonModal;
+import setting.BGSound;
+import setting.EffectSound;
 import setting.Setting;
 import worldview.FetchThread.decrementEvent;
 import worldview.FetchThread.incrementEvent;
@@ -34,7 +36,7 @@ public class MainFrame extends JFrame {
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
 	private FetchThread fetcher;
-	SplashScreen sp;
+	SplashScreen sp;	
 	TextChatBox chat;
 	
 	public static BGSound music=new BGSound();
@@ -78,7 +80,7 @@ public class MainFrame extends JFrame {
 		setting=new JMenuItem("Setting");
 		setting.addActionListener(new SettingEvent());
 		menuMenu.add(setting);
-		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));			
+		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));		
 		
 		//logout menu
 		logout=new JMenuItem("Log Out");
@@ -131,7 +133,6 @@ public class MainFrame extends JFrame {
 		zoomOut.setBounds(this.WIDTH - zoomWidth -10	,this.HEIGHT - zoomHeight*2,zoomWidth,zoomHeight);
 		zoomOut.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				effect.play();
 				worldView.zoomOut();
 			}
 		});
@@ -152,9 +153,8 @@ public class MainFrame extends JFrame {
 		chat = new TextChatBox(activeIcetizen,immigration);
 		chat.createAndShowGUI();
 		
-		worldViewPanel.add(worldView);
-		
-		music.start();//////////////BG Music
+		worldViewPanel.add(worldView);	
+		music.start();////////////start BGsound////////
 		
 		this.setContentPane(worldViewPanel);
 		revalidate();
@@ -214,26 +214,27 @@ public class MainFrame extends JFrame {
 			effect.play();
 			System.out.println("about called");
 			showAuthorDialog();
+			
 		}
 	} 
 	public class HelpEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
-		 	effect.play();
+			 effect.play();
 			 System.out.println("help called");
 			 NonModal.main(null);
 		} 
 	}
 	
 	public class SettingEvent implements ActionListener {
-		 public void actionPerformed(ActionEvent e) {	
-		 	effect.play();
+		 public void actionPerformed(ActionEvent e) {
+			 effect.play();
 			System.out.println("setting called");
 			Setting.main(null);
 		 } 
 	}
 	public class LogOutEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
-		 	effect.play();
+			 effect.play();
 			 if(immigration.logout()){
 				 System.out.println("Log out OK");
 					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
@@ -250,12 +251,12 @@ public class MainFrame extends JFrame {
 	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
-		 	effect.play();
+			 effect.play();
 			 immigration.logout();
 			 System.exit(0);
 		 }
 	}
-
+	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -310,6 +311,7 @@ public class MainFrame extends JFrame {
 			usernameBox.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					effect.play();
 						JComboBox<String> cb = (JComboBox<String>)e.getSource();
 						username = (String) cb.getSelectedItem();
 						activeIcetizen.setUsername(username) ;
@@ -324,6 +326,7 @@ public class MainFrame extends JFrame {
 			loginBut.setBounds(216, 166, 117, 29); 
 			loginBut.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e) {
+					effect.play();
 					password = new String(passwordField.getPassword());
 					
 					if(immigration.login(password)){
@@ -345,6 +348,7 @@ public class MainFrame extends JFrame {
 			JButton loginAlienBut = new JButton("Alien Login");
 			loginAlienBut.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					effect.play();
 					if (immigration.loginAlien()){
 						System.out.println("Login Alien OK");
 						try {
