@@ -57,8 +57,7 @@ public class WorldView extends JPanel {
 		
 		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
 			super();
-			//get fetch
-			
+		
 			icetizens = ni;
 			
 			tileCoord = new Point[size][size];
@@ -122,6 +121,7 @@ public class WorldView extends JPanel {
 			//middle plane---------------------
 			//draw tile
 			g.setColor(Color.BLACK);
+			//IsometricPlane.fillPlane(g, xOrigin, yOrigin, tileSide);
 			IsometricPlane.drawBoardTile(g, xOrigin, yOrigin, size, tileSide, tileCoord );
 			//IsometricPlane.drawBoardTileImage(g, xOrigin, yOrigin, size, tileSide, grassTile);
 			//show FPS

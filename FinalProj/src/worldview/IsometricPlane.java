@@ -49,5 +49,13 @@ public class IsometricPlane{
 		g.fillPolygon(xCor, yCor, 4);
 	}
 	
+	public static void fillPlane(Graphics g, int x, int y, int side){
+		System.out.println("filling plane");
+		g.setColor(Color.GREEN);
+		int [] xCor = {x, x+side*100, x + (side/2)*100, x-(side/2)*100};
+		int [] yCor = {y*100, y*100, y + (side/2)*100 , y+(side/2)*100};
+		g.fillPolygon(xCor, yCor, 4);
+	}
+	
 	
 }
