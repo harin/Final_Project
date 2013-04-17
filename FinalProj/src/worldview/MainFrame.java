@@ -45,6 +45,8 @@ public class MainFrame extends JFrame {
 	
 	public static BGSound music=new BGSound();
 	public static EffectSound effect=new EffectSound();
+	private int kodhod =0;
+	
 	
 	public MainFrame(){
 		try{	
@@ -143,8 +145,13 @@ public class MainFrame extends JFrame {
 		lp.add(zoomOut,new Integer(100));
 
 		//fetch info
-		setupData();
+		fetcher = new FetchThread();
+		fetcher.setGUI();
+		fetcher.start();
 		
+		while(kodhod==0){
+			
+		}
 		
 		//minimap
 		MiniMap map = new MiniMap(icetizens, activeIcetizen);
@@ -167,11 +174,7 @@ public class MainFrame extends JFrame {
 //		FetchInformation fetcher = new FetchInformation();
 //		icetizens = fetcher.getCitizen();
 		
-		fetcher = new FetchThread();
-		fetcher.setGUI();
-		fetcher.start();
-		
-		icetizens = fetcher.getFetch().getCitizen();
+
 	
 	}
 	
