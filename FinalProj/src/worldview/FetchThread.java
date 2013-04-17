@@ -111,7 +111,7 @@ public class FetchThread extends Thread {
 				fetcher.setRefreshTime(refresh_time);
 				fetcher.setTime();
 				fetcher.setFetchState();
-				
+				mainframe.increaseKodhod();
 					
 			}else{
 				JOptionPane.showMessageDialog(new JPanel(), "ICE World cannot be reached due to the Internet Connection");
