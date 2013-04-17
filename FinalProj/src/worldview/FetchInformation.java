@@ -32,7 +32,7 @@ public class FetchInformation {
 	 final String domain2 = "http://iceworld.sls-atl.com/api/&cmd=gresources&uid=";
 	 final String domain3 =  "http://iceworld.sls-atl.com/api/&cmd=gurl&gid=";
 	 final String domain4 = "http://iceworld.sls-atl.com/";
-	 long refreshtime = 5; //5 second delay
+	 long refreshtime = 15; //5 second delay
 	
 	  long currentTime;
 	  BufferedImage weaponImage;
@@ -314,7 +314,7 @@ public class FetchInformation {
 	  
 	  
 	  public long getTime(){
-		  return timestamp;
+		  return currentTime;
 	  }
 	  
 	  public LinkedList<NullIcetizen> getCitizen(){
@@ -364,6 +364,7 @@ public class FetchInformation {
 			  	System.out.println("====================");
 			  	System.out.println("action is being set");
 				URL actionDomain = new URL("http://iceworld.sls-atl.com/api/&cmd=actions&from="+(time-refreshtime));//depend on refreshtime
+				System.out.println("fetch from time:"+(time-refreshtime));
 				URLConnection actionCon = actionDomain.openConnection();
 				BufferedReader in = new BufferedReader(new InputStreamReader(actionCon.getInputStream()));
 				String json = in.readLine();
