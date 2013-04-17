@@ -35,18 +35,13 @@ public class MainFrame extends JFrame {
 	private final int HEIGHT = 800;
 	private FetchThread fetcher;
 	SplashScreen sp;
-	
 	TextChatBox chat;
-	JMenuItem sound;//
-	JSlider BGSound;//
-	AudioPlayer song;//
+	
+	public static BGSound music=new BGSound();
+	public static EffectSound effect=new EffectSound();
 	
 	public MainFrame(){
-		try{
-			String songName = "worldview/BGSong.wav";//
-			song=new AudioPlayer(songName);//
-			song.playLoop();//
-				
+		try{	
 			sp=new SplashScreen();
 			activeIcetizen = new NullIcetizen();
 			immigration = new ICEWorldImmigration(activeIcetizen);
@@ -83,13 +78,7 @@ public class MainFrame extends JFrame {
 		setting=new JMenuItem("Setting");
 		setting.addActionListener(new SettingEvent());
 		menuMenu.add(setting);
-		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));	
-		
-		//sound						
-		SoundEvent s= new SoundEvent();
-		sound=new JMenuItem("Sound");
-		sound.addActionListener(s);
-		menuMenu.add(sound);		
+		setting.setAccelerator(KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.Event.CTRL_MASK));			
 		
 		//logout menu
 		logout=new JMenuItem("Log Out");
@@ -131,6 +120,7 @@ public class MainFrame extends JFrame {
 		zoomIn.setBounds(this.WIDTH - zoomWidth -10	,this.HEIGHT - zoomHeight*3,zoomWidth,zoomHeight);
 		zoomIn.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				effect.play();
 				worldView.zoomIn();
 			}
 		});
@@ -141,6 +131,7 @@ public class MainFrame extends JFrame {
 		zoomOut.setBounds(this.WIDTH - zoomWidth -10	,this.HEIGHT - zoomHeight*2,zoomWidth,zoomHeight);
 		zoomOut.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				effect.play();
 				worldView.zoomOut();
 			}
 		});
@@ -161,7 +152,10 @@ public class MainFrame extends JFrame {
 		chat = new TextChatBox(activeIcetizen,immigration);
 		chat.createAndShowGUI();
 		
-		worldViewPanel.add(worldView);		
+		worldViewPanel.add(worldView);
+		
+		music.start();//////////////BG Music
+		
 		this.setContentPane(worldViewPanel);
 		revalidate();
 	}
@@ -217,12 +211,14 @@ public class MainFrame extends JFrame {
 //------------------------------------------------------------------------
 	public class AboutEvent implements ActionListener {
 		public void actionPerformed (ActionEvent e){
+			effect.play();
 			System.out.println("about called");
 			showAuthorDialog();
 		}
 	} 
 	public class HelpEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
+		 	effect.play();
 			 System.out.println("help called");
 			 NonModal.main(null);
 		} 
@@ -230,12 +226,14 @@ public class MainFrame extends JFrame {
 	
 	public class SettingEvent implements ActionListener {
 		 public void actionPerformed(ActionEvent e) {	
+		 	effect.play();
 			System.out.println("setting called");
 			Setting.main(null);
 		 } 
 	}
 	public class LogOutEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
+		 	effect.play();
 			 if(immigration.logout()){
 				 System.out.println("Log out OK");
 					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
@@ -252,39 +250,12 @@ public class MainFrame extends JFrame {
 	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
+		 	effect.play();
 			 immigration.logout();
 			 System.exit(0);
 		 }
 	}
-	 
-	public class SoundEvent implements ActionListener{//
-		public void actionPerformed(ActionEvent e){
-			JDialog dialog=new JDialog();
-			BGSound=new JSlider(SwingConstants.HORIZONTAL, 0, 100, 50);
-			BGSound.setMajorTickSpacing(10);
-			BGSound.setPaintTicks(true);
-			dialog.add(BGSound);
-		
-			SoundControlEvent slide=new SoundControlEvent();
-			BGSound.addChangeListener(slide);
-		
-			dialog.setLocationRelativeTo(null);
-			dialog.pack();
-			dialog.setVisible(true);	
-		}
-	}
 
-	public class SoundControlEvent implements ChangeListener{//
-		public void stateChanged(ChangeEvent e){
-			
-			int value = BGSound.getValue();
-			if(value >50){
-				song.increase();				
-			}else song.decrease();
-		
-		}	
-	}
-	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
