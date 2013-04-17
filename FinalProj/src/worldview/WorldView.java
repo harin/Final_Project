@@ -54,7 +54,6 @@ public class WorldView extends JPanel {
 		private JFileChooser fc = new JFileChooser();
 		private File selected;
 
-
 		
 		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
 			super();
@@ -64,6 +63,7 @@ public class WorldView extends JPanel {
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
 			immigration = im;
+
 			
 			walkRateX = tileSide /2.0 / delay;
 			walkRateY = walkRateX;//for now
