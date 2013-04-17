@@ -268,6 +268,22 @@ public class MainFrame extends JFrame {
 		 }
 	}
 	
+	protected void processWindowEvent(WindowEvent e) {
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            int exit = JOptionPane.showConfirmDialog(this, "Confirm Exit?");
+            if (exit == JOptionPane.YES_OPTION) {
+                System.exit(0);
+            }
+        } else {
+            super.processWindowEvent(e);
+        }
+    }
+	
+	
+	
+	
+	
 	public static void main (String[] args){
 		MainFrame gui=new MainFrame();
 		gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
