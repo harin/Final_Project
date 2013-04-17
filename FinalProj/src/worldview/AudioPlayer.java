@@ -46,12 +46,12 @@ public class AudioPlayer {
    
    public void increase(){
 	   FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(+5.0f);// Reduce volume by 10 decibels.
+		gainControl.setValue(+8.0f);// Reduce volume by 10 decibels.
    }
    
    public void decrease(){
 	   FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		gainControl.setValue(-5.0f);// Reduce volume by 10 decibels.
+		gainControl.setValue(-8.0f);// Reduce volume by 10 decibels.
    }
    
    

@@ -365,10 +365,7 @@ public class WorldView extends JPanel {
 //--------------------------------------------------------------------------------------------
 		public void talk(Graphics g, NullIcetizen n, String msg){
 			//get coordinate of the head
-			if(immigration.talk(msg)){
-				System.out.println("Sent talk to server:"+msg);
-			}
-			
+						
 			this.setFont(talkFont);
 			Point p;
 			if(n.getPixelPos()!= null){//while walking
@@ -400,10 +397,7 @@ public class WorldView extends JPanel {
 //		yell methods not checked for bug yet
 //--------------------------------------------------------------------------------------------		
 		public void yell(Graphics g, NullIcetizen n, String msg){
-			if(immigration.yell(msg)){
-				System.out.println("Sent yell to server:"+msg);
-			}
-			
+					
 			
 			//get coordinate of the head
 			g.setFont(yellFont);
@@ -427,7 +421,8 @@ public class WorldView extends JPanel {
 			
 			
 			x = x-textwidth/2;			
-			g.setColor(Color.YELLOW);
+			Color backcolor = new Color(250,250,210,200);
+			g.setColor(backcolor);
 			g.fillRoundRect(x, y-textheight, textwidth+20, textheight+5, 50, 50);
 			g.setColor(Color.RED);
 			g.drawString(msg, x+5, y-textheight/4);	

@@ -33,8 +33,10 @@ public class MainFrame extends JFrame {
 	private JPanel worldViewPanel;
 	private final int WIDTH = 900;
 	private final int HEIGHT = 800;
+	private FetchThread fetcher;
 	SplashScreen sp;
 	
+	TextChatBox chat;
 	JMenuItem sound;//
 	JSlider BGSound;//
 	AudioPlayer song;//
@@ -156,7 +158,7 @@ public class MainFrame extends JFrame {
 		//worldview
 		worldView = new WorldView(WIDTH,HEIGHT, immigration, icetizens, activeIcetizen);
 		
-		TextChatBox chat = new TextChatBox(activeIcetizen);
+		chat = new TextChatBox(activeIcetizen,immigration);
 		chat.createAndShowGUI();
 		
 		worldViewPanel.add(worldView);		
@@ -167,7 +169,7 @@ public class MainFrame extends JFrame {
 //		FetchInformation fetcher = new FetchInformation();
 //		icetizens = fetcher.getCitizen();
 		
-		FetchThread fetcher = new FetchThread();
+		fetcher = new FetchThread();
 		fetcher.setGUI();
 		fetcher.start();
 		
@@ -239,6 +241,8 @@ public class MainFrame extends JFrame {
 					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
 					//System.exit(0);
 					dispose();
+					fetcher.stop();
+					chat.dispose();
 					main(null);
 					
 			 }else{

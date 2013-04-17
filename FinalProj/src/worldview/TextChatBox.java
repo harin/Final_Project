@@ -1,5 +1,7 @@
 package worldview;
 
+import iceworld.given.ICEWorldImmigration;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.BufferedReader;
@@ -19,10 +21,12 @@ public class TextChatBox extends JFrame implements ActionListener{
 	private JTextArea textArea;
 	private JScrollPane textAreaScroll;
 	private static NullIcetizen active;
+	private static ICEWorldImmigration immigration;
 	
 	
-	 public TextChatBox(NullIcetizen a){
+	 public TextChatBox(NullIcetizen a,ICEWorldImmigration im){
 		
+		immigration = im;
 		active = a;
 		this.setPreferredSize(new Dimension(500, 350));
 		this.setEnabled(true);
@@ -31,7 +35,7 @@ public class TextChatBox extends JFrame implements ActionListener{
 	}
 	
 	public static void createAndShowGUI(){
-		TextChatBox console = new TextChatBox(active);
+		TextChatBox console = new TextChatBox(active,immigration);
 		console.pack();
 		console.setVisible(true);
 	}
@@ -71,8 +75,14 @@ public class TextChatBox extends JFrame implements ActionListener{
 		
 		
 		if(yell.isSelected()){
-						
+				
 			text = textField.getText();
+			
+			if(immigration.yell(text)){
+				System.out.println("Sent yell to server:"+text);
+			}
+			
+			
 			textArea.append(">>YELLED : "+text + newline);
 			textField.setText("");
 			try{
@@ -92,6 +102,9 @@ public class TextChatBox extends JFrame implements ActionListener{
 		
 			text = textField.getText();
 			
+			if(immigration.talk(text)){
+				System.out.println("Sent talk to server:"+text);
+			}
 			
 			textArea.append(">> "+text + newline);
 			textField.setText("");
