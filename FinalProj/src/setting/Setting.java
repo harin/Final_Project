@@ -8,9 +8,13 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JPanel;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
+import worldview.MainFrame;
 import worldview.NullIcetizen;
 import worldview.MainFrame.LogOutEvent;
 
