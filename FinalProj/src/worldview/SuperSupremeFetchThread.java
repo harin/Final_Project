@@ -6,6 +6,11 @@ import java.util.LinkedList;
 
 public class SuperSupremeFetchThread extends Thread {
 	private LinkedList<ActionCommand> commands;
+	private LinkedList<NullIcetizen> icetizens;
+	
+	public SuperSupremeFetchThread(LinkedList<NullIcetizen> n){
+		this.icetizens = n;
+	}
 	
 	public void run(){
 		commands = new LinkedList<ActionCommand>();
@@ -75,6 +80,9 @@ public class SuperSupremeFetchThread extends Thread {
 							"\t walkDest:" +ac1.walkDest);
 				}
 				System.out.println("-----------------------------------------------------");
+				for(NullIcetizen n: icetizens){
+				}
+				
 				try{
 					Thread.sleep(10000);
 	
@@ -84,7 +92,5 @@ public class SuperSupremeFetchThread extends Thread {
 		}
 	}
 	
-	public static void main(String [] args){
-		new SuperSupremeFetchThread().start();
-	}
+
 }
