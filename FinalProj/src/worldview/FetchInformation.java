@@ -65,7 +65,7 @@ public class FetchInformation {
 	
 	public FetchInformation(){
 		setTime();
-		setFetchState();
+	
 	}	
 	
 		
@@ -125,8 +125,8 @@ public class FetchInformation {
 						timestamp =-1;
 						System.out.println("IS IT WORK");
 						System.out.println("ID:"+key);
-						System.out.println("Case of null position:"+ (""+last_known_destinantion.get("position")).equals("null") ) ;
-						System.out.println("Case of null timestamp:"+(""+last_known_destinantion.get("timestamp")).equals("null") )	;
+			//			System.out.println("Case of null position:"+ (""+last_known_destinantion.get("position")).equals("null") ) ;
+		//				System.out.println("Case of null timestamp:"+(""+last_known_destinantion.get("timestamp")).equals("null") )	;
 					}
 					else{
 						System.out.println("======================");
@@ -221,7 +221,7 @@ public class FetchInformation {
 							String shirtURL = domain4 + getURL(shirt);
 							String headURL =  domain4 + getURL(head);
 							
-							System.out.println("weaponURL is"+weaponURL);	
+					//		System.out.println("weaponURL is"+weaponURL);	
 							
 							weaponImage = fetchImageFromCloud(weaponURL);
 							bodyImage = fetchImageFromCloud(bodyURL);
@@ -265,7 +265,7 @@ public class FetchInformation {
 	  
 	public BufferedImage fetchImageFromCloud(String url){
 		BufferedImage image = null;
-		System.out.println("URL is:"+url);
+//		System.out.println("URL is:"+url);
 		try {
 			image = ImageIO.read(new URL(url));
 		} catch (IOException e) {
@@ -281,18 +281,18 @@ public class FetchInformation {
 			
 			
 		URL thelink = new URL(domain3+serial);
-		 System.out.println(thelink);
+	//	 System.out.println(thelink);
 		 
 		 URLConnection con2 = thelink.openConnection();
 		 BufferedReader receive = new BufferedReader(new InputStreamReader(con2.getInputStream()));
 		 String image = receive.readLine();
-		 System.out.println("Image:"+image);
+	//	 System.out.println("Image:"+image);
 		 
 		 JSONParser dream2 = new JSONParser();
 		 JSONObject linkReturn = (JSONObject) dream2.parse(image);
 		 		 
 		 JSONObject findLink = (JSONObject) linkReturn.get("data");
-		 System.out.println("FindLink:"+findLink);
+	//	 System.out.println("FindLink:"+findLink);
 		 URL = findLink.get("location").toString();
 			
 		}catch(Exception e){

@@ -268,11 +268,27 @@ public class MainFrame extends JFrame {
 		 }
 	}
 	
+	protected void processQuitEvent(WindowEvent e) {
+
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            int exit = JOptionPane.showConfirmDialog(this, "Confirm Exit?");
+            if (exit == JOptionPane.YES_OPTION) {
+       		 immigration.logout();
+                System.exit(0);
+            }
+        } else {
+            super.processWindowEvent(e);
+        }
+    }
+	
+	
+	
 	protected void processWindowEvent(WindowEvent e) {
 
         if (e.getID() == WindowEvent.WINDOW_CLOSING) {
             int exit = JOptionPane.showConfirmDialog(this, "Confirm Exit?");
             if (exit == JOptionPane.YES_OPTION) {
+       		 immigration.logout();
                 System.exit(0);
             }
         } else {

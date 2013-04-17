@@ -23,6 +23,7 @@ public class FetchThread extends Thread {
 	FetchInformation fetcher;
 	JTextField text;
 	MainFrame mainframe;
+	int fetchCount=0;
 
 	public static void main(String[] args) throws MalformedURLException{
 
@@ -113,6 +114,10 @@ public class FetchThread extends Thread {
 				fetcher.setFetchState();
 				mainframe.setIcetizens(fetcher.getCitizen());
 				mainframe.increaseKodhod();
+				System.out.println("**********************");
+				System.out.println("Fetch finish"+fetchCount++);
+				System.out.println("**********************");
+
 					
 			}else{
 				JOptionPane.showMessageDialog(new JPanel(), "ICE World cannot be reached due to the Internet Connection");
