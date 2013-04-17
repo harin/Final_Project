@@ -110,6 +110,12 @@ public class MainFrame extends JFrame {
 		add(loginPage);
 	}
 	
+	
+	public void increaseKodhod(){
+		kodhod++;
+	}
+	
+	
 	public void switchToWorldView() throws IOException{
 		
 		Dimension d = this.getSize();
@@ -145,7 +151,7 @@ public class MainFrame extends JFrame {
 		lp.add(zoomOut,new Integer(100));
 
 		//fetch info
-		fetcher = new FetchThread();
+		fetcher = new FetchThread(this);
 		fetcher.setGUI();
 		fetcher.start();
 		
@@ -173,9 +179,6 @@ public class MainFrame extends JFrame {
 	public void setupData() throws IOException{
 //		FetchInformation fetcher = new FetchInformation();
 //		icetizens = fetcher.getCitizen();
-		
-
-	
 	}
 	
 	public void setIcetizens( LinkedList<NullIcetizen> icetizens){
