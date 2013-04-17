@@ -11,11 +11,15 @@ import iceworld.given.ICEWorldImmigration;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -54,7 +58,7 @@ public class MainFrame extends JFrame {
 			setJMenuBar(makeMenuBar());
 			setGUI();
 		}catch(Exception e){
-			System.out.println("Sound in mainframe :   "+e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -269,16 +273,31 @@ public class MainFrame extends JFrame {
 	
 	public class LoginPage extends JPanel {
 		private JPasswordField passwordField;
-		private String [] userHistory;
+		private LinkedList<String> userHistory;
 		private String username;
 		private String password;
-		private JComboBox<String> usernameBox;	
+		private JComboBox<String> usernameBox;
+		private String history = "usernameHistory.txt";
 
 		/**
 		 * Create the panel.
 		 */
 		public LoginPage() {
 			setLayout(null); 
+			userHistory = new LinkedList<String>();
+
+			//load userHistory
+			try{
+				Scanner in = new Scanner(new File(history));
+				while(in.hasNext()){
+					userHistory.add(in.nextLine());
+				}
+				System.out.print("userHistory="+userHistory);
+			}catch (Exception e){
+				e.printStackTrace();
+			}
+			
+			
 			
 			JLabel lblUsername = new JLabel("Username");
 			lblUsername.setBounds(122, 88, 72, 16);
@@ -290,22 +309,15 @@ public class MainFrame extends JFrame {
 			
 			passwordField = new JPasswordField();
 			passwordField.setBounds(206, 123, 134, 28);
-//			passwordField.addActionListener(new ActionListener(){
-//
-//				@Override
-//				public void actionPerformed(ActionEvent e) {
-//					// TODO Auto-generated method stub
-//					JTextField f = (JTextField) e.getSource();
-//					password = f.getText();
-//				}
-//				
-//			});
+
 			add(passwordField);
 			passwordField.setColumns(10);
-			
-			
+
 			
 			usernameBox = new JComboBox<String>();
+			for(String s: userHistory){
+				usernameBox.addItem(s);
+			}
 			usernameBox.setBounds(206, 84, 134, 27);
 			usernameBox.setEditable(true);
 			usernameBox.addActionListener(new ActionListener(){
@@ -314,9 +326,16 @@ public class MainFrame extends JFrame {
 					effect.play();
 						JComboBox<String> cb = (JComboBox<String>)e.getSource();
 						username = (String) cb.getSelectedItem();
-						activeIcetizen.setUsername(username) ;
-						usernameBox.addItem(username);
+						activeIcetizen.setUsername(username);
 						System.out.println("username:"+activeIcetizen.getUsername());
+						
+						if(!userHistory.contains(username)){
+							System.out.println("New username:"+username);
+							usernameBox.addItem(username);
+							userHistory.add(username);
+
+						}
+						System.out.println(userHistory);
 				}
 			});
 			add(usernameBox);
@@ -332,6 +351,15 @@ public class MainFrame extends JFrame {
 					if(immigration.login(password)){
 						System.out.println("Login OK");
 						try {
+							try{
+								BufferedWriter out = new BufferedWriter(new FileWriter(history));
+								for(String s: userHistory){
+									out.write(username+"\n");
+								}
+								out.close();
+							}catch(Exception ex){
+								ex.printStackTrace();
+							}
 							switchToWorldView();
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -352,6 +380,18 @@ public class MainFrame extends JFrame {
 					if (immigration.loginAlien()){
 						System.out.println("Login Alien OK");
 						try {
+							try{
+								BufferedWriter out = new BufferedWriter(new FileWriter(history));
+								System.out.print("writing to file:");
+								for(String s: userHistory){
+									System.out.print(s);
+									out.write(s+"\n");
+								}
+								System.out.println("");
+								out.close();
+							}catch(Exception ex){
+								ex.printStackTrace();
+							}
 							switchToWorldView();
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
