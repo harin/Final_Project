@@ -253,26 +253,39 @@ public class MainFrame extends JFrame {
 	public class LogOutEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 effect.play();
-			 if(immigration.logout()){
-				 System.out.println("Log out OK");
-					JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
-					//System.exit(0);
-					dispose();
-					fetcher.stop();
-					chat.dispose();
-					main(null);
-					
-			 }else{
-				 System.out.println("Log out failed");
-			 }
+			 Object[] options = { "OK","CANCEL"};
+			 int respond = JOptionPane.showOptionDialog(null, "Are you sure you want to log out?", "T_T",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			 if(respond==0){
+				 if(immigration.logout()){
+					 System.out.println("Log out OK");
+						JOptionPane.showMessageDialog(new JPanel(), "Log out complete!");
+						//System.exit(0);
+						dispose();
+						fetcher.stop();
+						chat.dispose();
+						main(null);
+						
+				 }else{
+					 System.out.println("Log out failed");
+				 }
+			}
+			 
 		 }
 	}
 	public class QuitEvent implements ActionListener{
 		 public void actionPerformed(ActionEvent e){
 			 effect.play();
-			 JOptionPane.showMessageDialog(new JPanel(), "QuitProgram");
-			 immigration.logout();
-			 System.exit(0);
+//			 JOptionPane.showMessageDialog(new JPanel(), "QuitProgram");
+//			 immigration.logout();
+//			 System.exit(0);
+			 Object[] options = { "OK","CANCEL"};
+			 int respond = JOptionPane.showOptionDialog(null, "Are you sure you want to quit?", "Bye bye",JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			if(respond==0){
+				immigration.logout(); 
+				System.exit(0); 
+			}
+			
+		 
 		 }
 	}
 	
