@@ -295,8 +295,11 @@ public class MainFrame extends JFrame {
 			//load userHistory
 			try{
 				Scanner in = new Scanner(new File(history));
+				String temp;
 				while(in.hasNext()){
-					userHistory.add(in.nextLine());
+					temp = in.nextLine();
+					if(!userHistory.contains(temp))
+						userHistory.add(temp);
 				}
 				System.out.print("userHistory="+userHistory);
 			}catch (Exception e){
@@ -339,7 +342,6 @@ public class MainFrame extends JFrame {
 							System.out.println("New username:"+username);
 							usernameBox.addItem(username);
 							userHistory.add(username);
-
 						}
 						System.out.println(userHistory);
 				}
@@ -357,15 +359,15 @@ public class MainFrame extends JFrame {
 					if(immigration.login(password)){
 						System.out.println("Login OK");
 						try {
-							try{
-								BufferedWriter out = new BufferedWriter(new FileWriter(history));
-								for(String s: userHistory){
-									out.write(username+"\n");
-								}
-								out.close();
-							}catch(Exception ex){
-								ex.printStackTrace();
+							BufferedWriter out = new BufferedWriter(new FileWriter(history));
+							System.out.print("writing to file:");
+							for(String s: userHistory){
+								System.out.print(s);
+								out.write(s+"\n");
 							}
+							System.out.println("");
+							out.close();
+							System.out.println("Switching to worldView");
 							switchToWorldView();
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
@@ -386,20 +388,16 @@ public class MainFrame extends JFrame {
 					if (immigration.loginAlien()){
 						System.out.println("Login Alien OK");
 						try {
-							try{
-								BufferedWriter out = new BufferedWriter(new FileWriter(history));
-								System.out.print("writing to file:");
-								for(String s: userHistory){
-									System.out.print(s);
-									out.write(s+"\n");
-								}
-								System.out.println("");
-								out.close();
-							}catch(Exception ex){
-								ex.printStackTrace();
+							BufferedWriter out = new BufferedWriter(new FileWriter(history));
+							System.out.print("writing to file:");
+							for(String s: userHistory){
+								System.out.print(s);
+								out.write(s+"\n");
 							}
+							System.out.println("");
+							out.close();
 							switchToWorldView();
-						} catch (IOException e1) {
+						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
