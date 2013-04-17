@@ -11,14 +11,14 @@ public class MiniMap extends JPanel {
 	private NullIcetizen active;
 	
 	public MiniMap(LinkedList<NullIcetizen> i,NullIcetizen a ){
-		icetizens = i;
+		icetizens = (LinkedList<NullIcetizen>)i.clone();
 		active = a;
 		this.setSize(new Dimension(101,101));
 	}
 	
-	public void updateMiniMap(LinkedList<NullIcetizen> i, NullIcetizen a){
-		icetizens =i;
-		active = a;
+	public void updateMiniMap(LinkedList<NullIcetizen> i){
+		icetizens =(LinkedList<NullIcetizen>)i.clone();
+
 	}
 	
 	public void paintComponent(Graphics g){

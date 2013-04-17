@@ -58,7 +58,7 @@ public class WorldView extends JPanel {
 		public WorldView(int width, int height, ICEWorldImmigration im, LinkedList<NullIcetizen> ni, NullIcetizen active) throws IOException{
 			super();
 		
-			icetizens = ni;
+			icetizens = (LinkedList<NullIcetizen>)ni.clone();
 			
 			tileCoord = new Point[size][size];
 			this.setSize(width,height);
@@ -446,7 +446,7 @@ public class WorldView extends JPanel {
 		}
 		
 		public void updateIcetizens(LinkedList<NullIcetizen> n){
-			icetizens = n;
+			icetizens = (LinkedList<NullIcetizen>)n.clone();
 		}
 		
 		public void updateWalkRate(){
